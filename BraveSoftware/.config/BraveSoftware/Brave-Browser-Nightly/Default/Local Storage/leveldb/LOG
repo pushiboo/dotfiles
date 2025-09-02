@@ -1,24 +1,3 @@
-2025/09/02-07:57:00.493 5 Reusing MANIFEST /home/push/dotfiles/BraveSoftware/.config/BraveSoftware/Brave-Browser-Nightly/Default/Local Storage/leveldb/MANIFEST-000001
-2025/09/02-07:57:00.502 5 Recovering log #66
-2025/09/02-07:57:00.503 5 Reusing old log /home/push/dotfiles/BraveSoftware/.config/BraveSoftware/Brave-Browser-Nightly/Default/Local Storage/leveldb/000066.log 
-2025/09/02-07:58:00.518 7 Level-0 table #70: started
-2025/09/02-07:58:00.523 7 Level-0 table #70: 27155 bytes OK
-2025/09/02-07:58:00.530 7 Delete type=0 #66
-2025/09/02-08:34:08.511 7 Level-0 table #72: started
-2025/09/02-08:34:08.521 7 Level-0 table #72: 44006 bytes OK
-2025/09/02-08:34:08.533 7 Delete type=0 #69
-2025/09/02-08:34:08.534 7 Compacting 4@0 + 1@1 files
-2025/09/02-08:34:08.558 7 Generated table #73@0: 438 keys, 875168 bytes
-2025/09/02-08:34:08.558 7 Compacted 4@0 + 1@1 files => 875168 bytes
-2025/09/02-08:34:08.567 7 compacted to: files[ 0 1 1 0 0 0 0 ]
-2025/09/02-08:34:08.568 7 Delete type=2 #72
-2025/09/02-08:34:08.568 7 Delete type=2 #62
-2025/09/02-08:34:08.569 7 Delete type=2 #64
-2025/09/02-08:34:08.569 7 Delete type=2 #67
-2025/09/02-08:34:08.569 7 Delete type=2 #70
-2025/09/02-08:57:32.677 7 Level-0 table #75: started
-2025/09/02-08:57:32.687 7 Level-0 table #75: 20027 bytes OK
-2025/09/02-08:57:32.697 7 Delete type=0 #71
-2025/09/02-09:12:32.598 7 Level-0 table #77: started
-2025/09/02-09:12:32.604 7 Level-0 table #77: 20358 bytes OK
-2025/09/02-09:12:32.610 7 Delete type=0 #74
+2025/09/02-11:42:07.879 5 Reusing MANIFEST /home/push/dotfiles/BraveSoftware/.config/BraveSoftware/Brave-Browser-Nightly/Default/Local Storage/leveldb/MANIFEST-000001
+2025/09/02-11:42:07.887 5 Recovering log #76
+2025/09/02-11:42:07.888 5 Reusing old log /home/push/dotfiles/BraveSoftware/.config/BraveSoftware/Brave-Browser-Nightly/Default/Local Storage/leveldb/000076.log 
