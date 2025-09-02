@@ -1,0 +1,6 @@
+2025/09/02-07:29:24.331 5 Reusing MANIFEST /home/push/dotfiles/BraveSoftware/.config/BraveSoftware/Brave-Browser-Nightly/Default/Local Storage/leveldb/MANIFEST-000001
+2025/09/02-07:29:24.340 5 Recovering log #63
+2025/09/02-07:29:24.341 5 Reusing old log /home/push/dotfiles/BraveSoftware/.config/BraveSoftware/Brave-Browser-Nightly/Default/Local Storage/leveldb/000063.log 
+2025/09/02-07:30:24.357 7 Level-0 table #67: started
+2025/09/02-07:30:24.361 7 Level-0 table #67: 44017 bytes OK
+2025/09/02-07:30:24.365 7 Delete type=0 #63

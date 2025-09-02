@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 2,
+  "gracePeriod": "72h",
+  "campaigns": [
+    {
+      "version": 1,
+      "advertiserId": "216c5e8c-434d-4c72-a9c5-3a11343dde48",
+      "campaignId": "b4cf58f1-49db-4075-9963-471524585c82",
+      "startAt": "2025-09-01T04:00:00.000Z",
+      "endAt": "2025-09-03T03:59:00.000Z",
+      "dailyCap": 20,
+      "priority": 1,
+      "ptr": 1,
+      "metrics": "confirmation",
+      "geoTargets": [
+        "AU",
+        "DE",
+        "FR",
+        "GB"
+      ],
+      "creativeSets": [
+        {
+          "creativeSetId": "12f0520f-3582-4c52-9aa1-afa264801896",
+          "perDay": 20,
+          "perMonth": 0,
+          "perWeek": 0,
+          "totalMax": 20,
+          "value": "0",
+          "creatives": [
+            {
+              "creativeInstanceId": "e49e5dc5-75ee-4fa2-9c95-9b5f12ba0d75",
+              "targetUrl": "https://account.brave.com/?intent=checkout&product=vpn",
+              "alt": "Brave VPN can help you access your favorite content no matter where you are in the world.",
+              "companyName": "Brave",
+              "wallpaper": {
+                "type": "image",
+                "relativeUrl": "32655658-3f9e-4103-82c8-e1aec5d978bf/9c96771f-738d-495c-afbd-758cfd4e7278.jpg",
+                "button": {
+                  "image": {
+                    "relativeUrl": "32655658-3f9e-4103-82c8-e1aec5d978bf/cfb3e99f-2d02-4462-852f-20fef09e22f7.png"
+                  }
+                },
+                "focalPoint": {
+                  "x": 1280,
+                  "y": 720
+                }
+              }
+            },
+            {
+              "creativeInstanceId": "4af7c405-4f77-4e7a-80cb-3887610bed3a",
+              "targetUrl": "https://account.brave.com/?intent=checkout&product=vpn",
+              "alt": "Brave VPN can help you access your favorite content no matter where you are in the world.",
+              "companyName": "Brave",
+              "wallpaper": {
+                "type": "image",
+                "relativeUrl": "36e9854b-24a3-4ef8-9c09-d621c871cce2/91426378-7bab-400a-8e58-c7ab34891ad4.jpg",
+                "button": {
+                  "image": {
+                    "relativeUrl": "36e9854b-24a3-4ef8-9c09-d621c871cce2/cfb3e99f-2d02-4462-852f-20fef09e22f7.png"
+                  }
+                },
+                "focalPoint": {
+                  "x": 1280,
+                  "y": 720
+                }
+              }
+            },
+            {
+              "creativeInstanceId": "9c84a82d-c345-4290-a9c2-744233f628af",
+              "targetUrl": "https://account.brave.com/?intent=checkout&product=vpn",
+              "alt": "Brave VPN can help you access your favorite content no matter where you are in the world.",
+              "companyName": "Brave",
+              "wallpaper": {
+                "type": "image",
+                "relativeUrl": "f18b27ac-2574-4211-95ec-2841d5914c82/00e3fc68-ebe0-40e4-9217-0a7e1c44fca2.jpg",
+                "button": {
+                  "image": {
+                    "relativeUrl": "f18b27ac-2574-4211-95ec-2841d5914c82/cfb3e99f-2d02-4462-852f-20fef09e22f7.png"
+                  }
+                },
+                "focalPoint": {
+                  "x": 1280,
+                  "y": 720
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

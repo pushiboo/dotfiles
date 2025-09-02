@@ -1,0 +1,38 @@
+2025/08/17-18:33:10.882 4 Creating DB /home/push/.config/chromium/Default/Local Storage/leveldb since it was missing.
+2025/08/17-18:33:11.303 4 Reusing MANIFEST /home/push/.config/chromium/Default/Local Storage/leveldb/MANIFEST-000001
+2025/08/17-19:39:35.445 5 Level-0 table #5: started
+2025/08/17-19:39:35.453 5 Level-0 table #5: 94014 bytes OK
+2025/08/17-19:39:35.461 5 Delete type=0 #3
+2025/08/17-19:42:09.189 5 Level-0 table #7: started
+2025/08/17-19:42:09.195 5 Level-0 table #7: 68038 bytes OK
+2025/08/17-19:42:09.202 5 Delete type=0 #4
+2025/08/17-19:42:49.526 5 Level-0 table #9: started
+2025/08/17-19:42:49.532 5 Level-0 table #9: 192507 bytes OK
+2025/08/17-19:42:49.536 5 Delete type=0 #6
+2025/08/17-19:42:58.567 4 Level-0 table #11: started
+2025/08/17-19:42:58.598 4 Level-0 table #11: 51394 bytes OK
+2025/08/17-19:42:58.609 4 Delete type=0 #8
+2025/08/17-19:44:53.969 5 Level-0 table #13: started
+2025/08/17-19:44:53.973 5 Level-0 table #13: 41879 bytes OK
+2025/08/17-19:44:53.977 5 Delete type=0 #10
+2025/08/17-19:45:24.928 4 Level-0 table #15: started
+2025/08/17-19:45:24.939 4 Level-0 table #15: 337643 bytes OK
+2025/08/17-19:45:24.945 4 Delete type=0 #12
+2025/08/17-19:45:24.947 4 Compacting 4@0 + 1@1 files
+2025/08/17-19:45:24.959 4 Generated table #16@0: 83 keys, 415140 bytes
+2025/08/17-19:45:24.959 4 Compacted 4@0 + 1@1 files => 415140 bytes
+2025/08/17-19:45:24.963 4 compacted to: files[ 0 1 1 0 0 0 0 ]
+2025/08/17-19:45:24.964 4 Delete type=2 #15
+2025/08/17-19:45:24.964 4 Delete type=2 #9
+2025/08/17-19:45:24.964 4 Delete type=2 #7
+2025/08/17-19:45:24.964 4 Delete type=2 #13
+2025/08/17-19:45:24.964 4 Delete type=2 #11
+2025/08/17-20:40:16.388 5 Level-0 table #18: started
+2025/08/17-20:40:16.396 5 Level-0 table #18: 92878 bytes OK
+2025/08/17-20:40:16.402 5 Delete type=0 #14
+2025/08/17-21:24:01.382 5 Level-0 table #20: started
+2025/08/17-21:24:01.389 5 Level-0 table #20: 70523 bytes OK
+2025/08/17-21:24:01.396 5 Delete type=0 #17
+2025/08/17-22:09:10.514 5 Level-0 table #22: started
+2025/08/17-22:09:10.521 5 Level-0 table #22: 49400 bytes OK
+2025/08/17-22:09:10.528 5 Delete type=0 #19

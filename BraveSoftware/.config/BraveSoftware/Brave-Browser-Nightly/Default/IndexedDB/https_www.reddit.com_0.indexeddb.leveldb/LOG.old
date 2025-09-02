@@ -1,0 +1,7 @@
+2025/08/26-22:34:42.604 13d8 Reusing MANIFEST /home/push/.config/BraveSoftware/Brave-Browser-Nightly/Default/IndexedDB/https_www.reddit.com_0.indexeddb.leveldb/MANIFEST-000001
+2025/08/26-22:34:42.604 13d8 Recovering log #3
+2025/08/26-22:34:42.605 13d8 Reusing old log /home/push/.config/BraveSoftware/Brave-Browser-Nightly/Default/IndexedDB/https_www.reddit.com_0.indexeddb.leveldb/000003.log 
+2025/08/26-22:35:14.617 13c8 Level-0 table #5: started
+2025/08/26-22:35:14.621 13c8 Level-0 table #5: 2511 bytes OK
+2025/08/26-22:35:14.626 13c8 Delete type=0 #3
+2025/08/26-22:35:14.626 13c8 Manual compaction at level-0 from (begin) .. (end); will stop at (end)
