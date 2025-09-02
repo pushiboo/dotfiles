@@ -1,5 +1,6 @@
 # ignore Brave Chache Folder
 BraveSoftware/.config/BraveSoftware/
+BraveSoftware/.config/BraveSoftware/*
 
 
 *.log
