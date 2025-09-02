@@ -1,0 +1,7 @@
+# ignore Brave Chache Folder
+# ignor BraveSoftware
+BraveSoftware/.config/BraveSoftware/
+# ignore  Chromium 
+chromium/.config/chromium/
+# Ignore log files
+*.log
