@@ -1266,3 +1266,237 @@ clear
 systemctl enable omarchy-seamless-login.service 
 systemctl start omarchy-seamless-login.service 
 cd dotfiles/
+cd
+ll .config/
+ll 
+ll .config/BraveSoftware/
+rm -rf .config/BraveSoftware/
+rm -rf .config/brave-flags.conf 
+ll
+ll .config/
+rm -rf .config/btop/
+rm -rf .config/chromium
+rm -rf .config/chromium-flags.conf 
+rm -rf .config/chromium-flags.conf
+rm -rf .config/fastfetch/
+rm -rf .config/fontconfig/
+rm -rf .config/ghostty/
+rm -rf .config/git/
+rm -rf .config/hypr/
+brave
+cd dotfiles/
+git branch create archbookpro
+git branch --help
+git branch create 
+git branch create -d
+git branch archbookpro
+git checkout archbookpro 
+git add .
+alias 
+gcam
+gcam "New Branch | This is my branch for my arch config" 
+git config --global user.email "info@andreasplichta.de"
+git config --global user.name "push"
+gcam "New Branch | This is my branch for my arch config" 
+git push
+git push --set-upstream origin archbookpro 
+ssh-add -l
+clear
+ll
+stow BraveSoftware/
+clear
+ll 
+stow hzpr
+stow hypr/
+yay -Sy ghostty
+cd dotfiles/
+stow ghostty/
+rm ~/.config/ghostty/
+rm -rf ~/.config/ghostty/
+stow ghostty/
+rm .config/lazygit/
+rm -rf .config/lazygit/
+lazygit 
+yay -Symacchina
+yay -Sy macchina
+macchina 
+ll .config/
+machina
+nacchina
+macchina
+nm
+networkctl 
+ll
+ll ssh/
+rmdir ssh/
+ll .config
+macchina 
+ll .config
+rm -rf .config/nvim/
+ll .config
+rm -rf .config/omarchy
+ll .config
+rm -rf .config/pulse/
+cd .config/
+ll systemd/
+ll
+mv systemd ~/dotfiles/systemd/.config/
+ll
+ll uwsm/
+ll uwsm/* ~/dotfiles/uwsm/.config/
+mv uwsm/* ~/dotfiles/uwsm/.config/
+ll uwsm/* ~/dotfiles/uwsm/.config/
+ll
+ll uwsm/* 
+ll uwsm/
+rm uwsm/
+rmdir uwsm/
+ll uwsm/
+ll
+rm -rf swayosd/
+ll
+ll -1
+cat mimeapps.list 
+ll -1
+qalc 
+ll -1
+rm -rf waybar/
+ll
+ll -1
+walker
+exit
+vom dotfiles/ghostty/.config/ghostty/
+vim dotfiles/ghostty/.config/ghostty/config 
+cd dotfiles/
+ll
+stow btop/
+stow chromium/
+stow fastfetch/
+stow fontconfig/
+stow git
+ll
+stow lazygit/
+lazygit
+mkdir macchina
+vim macchina/.config/machina/macchina.toml
+vim hypr/.config/hypr/input.conf 
+machinectl 
+macchina
+stow macchina/
+macchina
+vim macchina/.config/machina/macchina.toml 
+ll /etc/udev/rules.d/
+sudo touch /etc/udev/rules.d/10-network-rules
+cat /sys/class/net/enp124s0u2u4c2/address 
+cat /sys/class/net/enp124s0u2u4c2/address >> /etc/udev/rules.d/10-network-rules 
+sudo cat /sys/class/net/enp124s0u2u4c2/address >> /etc/udev/rules.d/10-network-rules 
+sudo vim /etc/udev/rules.d/10-network-rules
+sudo nvim /etc/udev/rules.d/10-network-rules
+sudo cat /sys/class/net/enp124s0u2u4c2/address >> /etc/udev/rules.d/10-network-rules 
+sudo cat /sys/class/net/enp124s0u2u4c2/address 
+sudo cat /sys/class/net/enp124s0u2u4c2/address >> /etc/udev/rules.d/10-network-rules 
+sudo nvim /etc/udev/rules.d/10-network-rules
+ip a
+ip a | more
+clear
+alacritty 
+ll
+git macchina/
+stow macchina
+ll macchina/
+ll macchina/.config/
+stow -D macchina
+mkdir macchina/.config/macchina
+mv macchina/.config/machina/macchina.toml macchina/.config/macchina/
+rmdir macchina/.config/machina/
+stow macchina/
+ll
+rm -rf neofetch/
+stow nvim/
+ll
+vim README.md 
+stow omarchy/
+ll
+stow pulse/
+stow spotify/
+ll starship/
+ll starship/.config/
+ll
+mkdir -p systemd/.config 
+stow systemd/
+ll uwsm/
+ll uwsm/.config/
+ll uwsm/.config/uwsm/env 
+ll uwsm/.config/uwsm/
+ll
+ll uwsm/.config/
+mv uwsm/.config/default uwsm/.config/uwsm/
+mv uwsm/.config/env uwsm/.config/uwsm/
+stow uwsm/
+stow swayosd/
+ll
+rm -rf Pinta/
+stow waybar/
+ll
+stow walker/
+mkdir alacritty
+mkdir alacritty/.config
+ll alacritty/
+ll alacritty/.config/
+stow alacritty/
+ll alacritty/
+ll alacritty/.config/
+stow -D alacritty/
+mkdir alacritty/.config/alacritty
+mvr alacritty/.config/alacritty.toml alacritty/.config/alacritty
+mv alacritty/.config/alacritty.toml alacritty/.config/alacritty
+stow alacritty/
+ll
+stow BraveSoftware/
+mkdir -p Signal/.config
+rm Signal/
+rmdir Signal/
+rmdir Signal/.config/
+rmdir Signal/
+clear
+cd .cd
+cd 
+cd .c
+ls -1
+rm -rf walker/
+ls -1
+mv alacritty/alacritty.toml ~/dotfiles/alacritty/.config/
+ls -1
+ls -1 alacritty/
+rmdir alacritty/
+ls -1 alacritty/
+ls -1
+ls -1 alacritty/
+ls -1
+alacritty
+rm -rfBraveSoftware/
+rm -rf BraveSoftware/
+ls -1
+ls -1 environment.d/
+cat environment.d/fcitx.conf 
+ll nautilus/
+ll S
+ll Signal/
+ll
+ssh-add -l
+cl
+ll
+cd ~/dotfiles/
+ll
+vim bash/.bashrc 
+cat /mnt/ds923plus/andreas/arch/archbookpro/.bash
+cat /mnt/ds923plus/andreas/arch/archbookpro/.bashrc
+ll /mnt/ds923plus/andreas/arch/archbookpro/.bashrc
+ll /mnt/ds923plus/andreas/arch/
+df -h
+sudo mount -a
+ll /mnt/ds923plus/andreas/arch/
+vim /etc/fstab 
+cat /mnt/ds923plus/andreas/arch/archbookpro/.bashrc >> bash/.bashrc 
+vim bash/.bashrc 
+vim .bashrc 
