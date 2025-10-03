@@ -30,6 +30,16 @@
   opacity: 0.5;
 }
 
+.custom-spotify {
+    padding: 0 10px;
+    margin: 0 4px;
+    /* background-color: #1DB954; */
+    /* color: black; */
+    color: @foreground;
+    /* opacity: 0.8 */
+
+}
+
 #tray,
 #cpu,
 #battery,
@@ -37,7 +47,6 @@
 #bluetooth,
 #pulseaudio,
 #custom-omarchy,
-#custom-screenrecording-indicator,
 #custom-update {
   min-width: 12px;
   margin: 0 7.5px;
@@ -61,14 +70,4 @@ tooltip {
 
 .hidden {
   opacity: 0;
-}
-
-#custom-screenrecording-indicator {
-  min-width: 12px;
-  margin-left: 8.75px;
-  font-size: 10px;
-}
-
-#custom-screenrecording-indicator.active {
-  color: #a55555;
 }
