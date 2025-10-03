@@ -1237,3 +1237,32 @@ echo $SSH_AUTH_SOCK
 printenv
 printenv | sort
 printenv | sort | more
+arch install starship
+vim .bashrc
+. .bashrc
+cd dotfiles/
+stow starship
+stow
+ll starship/
+ll starship/.config/
+rm ~/.config/starship.toml 
+stow starship/
+clear
+stow bash/
+ll bash/
+ll
+ll ~
+mkdir /mnt/ds923plus/andreas/arch/archbookpro
+mkdir /mnt/ds923plus/andreas/arch/archbookpro/bash
+mv ~/.bas* /mnt/ds923plus/andreas/arch/archbookpro/bash/
+ll ~
+ll ~/test 
+rm ~/test 
+stow bash
+id
+sudo userdel tworemove 
+sudo visudo 
+clear
+systemctl enable omarchy-seamless-login.service 
+systemctl start omarchy-seamless-login.service 
+cd dotfiles/
