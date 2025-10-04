@@ -1,0 +1,49 @@
+# File system
+alias ls='eza -lh --group-directories-first --icons=auto'
+alias ll='ls -al'
+alias lsa='ls -a'
+alias lt='eza --tree --level=2 --long --icons --git'
+alias lta='lt -a'
+alias ff="fzf --preview 'bat --style=numbers --color=always {}'"
+alias cd="zd"
+zd() {
+  if [ $# -eq 0 ]; then
+    builtin cd ~ && return
+  elif [ -d "$1" ]; then
+    builtin cd "$1"
+  else
+    z "$@" && printf "\U000F17A9 " && pwd || echo "Error: Directory not found"
+  fi
+}
+open() {
+  xdg-open "$@" >/dev/null 2>&1 &
+}
+
+# Directories
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
+# Tools
+alias d='docker'
+alias r='rails'
+n() { if [ "$#" -eq 0 ]; then nvim .; else nvim "$@"; fi; }
+
+# Git
+alias g='git'
+alias gcm='git commit -m'
+alias gcam='git commit -a -m'
+alias gcad='git commit -a --amend'
+
+# alias p='python'
+alias cl=clear
+alias vim=nvim
+alias vi=nvim
+alias dfnfs="df -Th | grep nfs"
+alias dfstat="nfsstat -m"
+alias arch="cd /mnt/ds923plus/andreas/arch"
+alias andreas="cd /mnt/ds923plus/andreas"
+
+# ssh connections
+alias ds923plus="ssh -i ~/.ssh/omarchy_ed25219 ds923plus.fritz.box"
+
