@@ -26,18 +26,31 @@
   min-width: 9px;
 }
 
+#workspaces button.urgent {
+  background-color: @red;
+  color: #079C3E;
+}
 #workspaces button.empty {
   opacity: 0.5;
 }
 
+#custom-spotify {
+  padding: 0 10px;
+  margin: 0 4px;
+  opacity: 0.8;
+/*     color: @foreground; */
+  color: #079C3E;
+}
+
+#custom-omarchy {
+  color: #079C3E;
+}
 #tray,
 #cpu,
 #battery,
 #network,
 #bluetooth,
 #pulseaudio,
-#custom-omarchy,
-#custom-screenrecording-indicator,
 #custom-update {
   min-width: 12px;
   margin: 0 7.5px;
@@ -47,7 +60,7 @@
   margin-right: 7px;
 }
 
-tooltip {
+#tooltip {
   padding: 2px;
 }
 
@@ -61,14 +74,4 @@ tooltip {
 
 .hidden {
   opacity: 0;
-}
-
-#custom-screenrecording-indicator {
-  min-width: 12px;
-  margin-left: 8.75px;
-  font-size: 10px;
-}
-
-#custom-screenrecording-indicator.active {
-  color: #a55555;
 }

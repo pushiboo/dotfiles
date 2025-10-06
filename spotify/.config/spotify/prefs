@@ -11,5 +11,5 @@ app.window.position.saved=true
 app.window.position.height=515
 app.window.position.y=19
 storage.last-location="/home/push/.cache/spotify/Storage"
-app.window.position.x=6
+app.window.position.x=966
 app.last-launched-version="1.2.63.394.g126b0d89"

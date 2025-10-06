@@ -1,12 +1,11 @@
 [Unit]
-Description= This is my service to change my background wallpaper with swaybg
+Description=This is my service to change my background wallpaper with swaybg
+Wants=changeBackground.timer
 After=graphical-session.target
 
 [Service]
 Type=oneshot
-ExecStart=%h/scripts/changeBackground.sh
-; Environment=DISPLAY=:0
+ExecStart=/bin/sh %h/scripts/changeBackground.sh
 
 [Install]
-WantedBy=graphical-session.target:wq
-#WantedBy=default.target
+WantedBy=graphical-session.target

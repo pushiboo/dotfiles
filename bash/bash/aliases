@@ -39,11 +39,13 @@ alias gcad='git commit -a --amend'
 alias cl=clear
 alias vim=nvim
 alias vi=nvim
+alias svim='sudo -E nvim'
+alias sedit='sudo -E EDITOR=vim'
 alias dfnfs="df -Th | grep nfs"
 alias dfstat="nfsstat -m"
 alias arch="cd /mnt/ds923plus/andreas/arch"
 alias andreas="cd /mnt/ds923plus/andreas"
-
+alias syazi='sudo -E yazi'
 # ssh connections
 alias ds923plus="ssh -i ~/.ssh/omarchy_ed25219 ds923plus.fritz.box"
 

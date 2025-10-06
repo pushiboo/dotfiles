@@ -3,9 +3,9 @@ Description=Run wallpaper change hourly
 Requires=changeBackground.service
 
 [Timer]
-; OnActiveSec=60m
-OnActiveSec=60m
-OnUnitActiveSec=60m
+; OnCalendar=*-*-* 00/1:00:00
+OnCalendar=*:0/2
+Persistent=true
 
 [Install]
 WantedBy=timers.target
