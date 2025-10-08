@@ -1,12 +1,12 @@
-autologin.blob="qjmqIzxtms5CZl39/Aj7ohyZ7wpbJxInyWCn4JJok0H7+n7LyH0tuBMVR8Sz72i8aDJpkWLlwRHbK+5k+bxbz+fistlRxHP9VJPmG+xzIu00ryqEYXeXeBZ/Y/0freNE4m/cfEi+37rPcJ9dArpcMhZUKs+8V318c/RM/EGgg2R7SJSH1YSxGqzffllUHJ1t6hgnpYHKf4iWCjVNW/uzBNp1/4ZJAOjqPSK49uBJjquHHN3wAC+mRLFUhp+9Q6bf503VQVOxt/hwAT5QvRFn9g=="
-autologin.canonical_username="andreasplichta"
+autologin.username="andreasplichta"
 autologin.saved_credentials="{\"andreasplichta\":[\"andreasplichta\",\"qjmqIzxtms5CZl39/Aj7ohyZ7wpbJxInyWCn4JJok0H7+n7LyH0tuBMVR8Sz72i8aDJpkWLlwRHbK+5k+bxbz+fistlRxHP9VJPmG+xzIu00ryqEYXeXeBZ/Y/0freNE4m/cfEi+37rPcJ9dArpcMhZUKs+8V318c/RM/EGgg2R7SJSH1YSxGqzffllUHJ1t6hgnpYHKf4iWCjVNW/uzBNp1/4ZJAOjqPSK49uBJjquHHN3wAC+mRLFUhp+9Q6bf503VQVOxt/hwAT5QvRFn9g==\"]}"
+autologin.canonical_username="andreasplichta"
 app.window.state.saved=true
 app.window.position.width=948
 app.rollback-to-sc=true
+autologin.blob="qjmqIzxtms5CZl39/Aj7ohyZ7wpbJxInyWCn4JJok0H7+n7LyH0tuBMVR8Sz72i8aDJpkWLlwRHbK+5k+bxbz+fistlRxHP9VJPmG+xzIu00ryqEYXeXeBZ/Y/0freNE4m/cfEi+37rPcJ9dArpcMhZUKs+8V318c/RM/EGgg2R7SJSH1YSxGqzffllUHJ1t6hgnpYHKf4iWCjVNW/uzBNp1/4ZJAOjqPSK49uBJjquHHN3wAC+mRLFUhp+9Q6bf503VQVOxt/hwAT5QvRFn9g=="
 es.send-on-startup=true
 core.clock_delta=0
-autologin.username="andreasplichta"
 app.window.position.saved=true
 app.window.position.height=515
 app.window.position.y=19
