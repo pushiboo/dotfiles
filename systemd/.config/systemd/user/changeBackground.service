@@ -1,11 +1,12 @@
 [Unit]
-Description=This is my service to change my background wallpaper with swaybg
+Description=Change hourly wallpaper with hyprpaper
 Wants=changeBackground.timer
-After=graphical-session.target
+; After=graphical-session.target
+After=default.target
 
 [Service]
 Type=oneshot
 ExecStart=/bin/sh %h/scripts/changeBackground.sh
 
 [Install]
-WantedBy=graphical-session.target
+WantedBy=default.target

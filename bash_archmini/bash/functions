@@ -7,7 +7,7 @@ checkKeys=$(
   echo $?
 )
 # define the keys you want to load, include like this var=("firstkey" "secondkey" ...)
-keys2Load=("${HOME}/.ssh/omarchy_ed25219" "")
+keys2Load=("${HOME}/.ssh/archmini_ed25519")
 # validate if a running socket exist
 if [[ -z $SSH_AUTH_SOCK ]]; then
   echo "WARNING: Your ssh agent service is not up and running."

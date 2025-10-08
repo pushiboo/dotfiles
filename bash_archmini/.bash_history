@@ -1339,3 +1339,330 @@ systemctl --user list-timers -all
 systemctl --user daemon-reload 
 systemctl --user list-timers -all
 y
+tradingview
+tradingview --ozone-platform=wayland
+which tradingview
+/var/lib/snapd/snap/bin/tradingview --ozone-platform=wayland
+sudo /var/lib/snapd/snap/bin/tradingview --ozone-platform=wayland
+span
+snap
+snap connect tradingview:wayland
+tradingview
+tradingview --ozone-platform=wayland
+snap info tradingview 
+tradingview --enable-features=WaylandWindowDecorations --ozone-platform=wayland
+sudo pacman -Q | grep devel
+yay -S tradingview
+sudo pacman -Rns snapd
+sudo rm -rf /var/snap
+sudo rm -rf /snap
+sudo rm -rf /var/lib/snapd   
+sudo snap remove $(snap list | awk '!/^Name|^core|^snapd/ {print $1}')   
+sudo pacman -Sy snap
+sudo pacman -U snap
+git clone https://aur.archlinux.org/snapd.git
+cd snapd
+makepkg -si
+snap list
+snap
+snap list
+snap list --all
+snap install tradingview
+sudo systemctl enable --now snapd.socket
+sudo systemctl enable --now 
+sudo systemctl enable --now snapd.apparmor.service 
+sudo ln -s /var/lib/snapd/snap /snap
+snap list
+snap 
+snap install tradingview
+sudo pacman -Rns snapd   
+sudo rm -rf /var/snap
+sudo rm -rf /snap
+sudo rm -rf /var/lib/snapd   
+cl
+..
+ll
+rmdir snap
+ll snap/tradingview/current/
+rm -rf snap
+ll
+cd dotfiles/
+lazgit
+lazygit
+git status
+git log
+git add .
+git status
+git diff
+git difftool 
+git difftool main 
+git
+git log
+ll
+lazygit
+mv .git .ogi_old
+ll
+git init
+ll
+mv .ogi_old/ .git_old
+ll
+y
+qgit status 
+git status 
+git fetch
+git status
+git log
+y
+ll
+..
+ll
+rm .git
+rm -rf .git
+mv .git_old/ .git
+git stauts
+git status
+git add .
+git status
+lazgit
+lazygit
+y
+ps aux | grep swaybg
+ps aux | grep push
+uwsm --help
+uwsm 
+ps aux | grep push grep uwsm
+ps aux | grep push | grep uwsm
+ps aux | grep uwsm
+systemctl daemon-reload 
+ll .config/
+ll .config/hypr/
+uwsm app --- hyprpaper
+uwsm app -- hyprpaper
+uwsm app -- hyprpaper &
+ps aux | grep uwsm
+uwsm 
+uwsm --help
+uwsm check
+uwsm check hyprpaer
+uwsm check hyprpaper
+uwsm app --help
+systemctl --user list
+systemctl --user list-unit
+systemctl --user list-units 
+uwsm stop hyprpaper
+cd
+ssh-add -l
+arch
+ll
+ll archmini/
+..
+cd andreas/
+ll
+ll mac/
+ll andreas/
+cd 
+ssh-keygen --help
+ssh-keygen -t edd25519 -C "archmini"
+ssh-keygen -t ed25519 -C "archmini"
+ll .ssh/
+cd .ssh/
+mv id_ed25519 archmini_ed25519
+mv id_ed25519.pub archmini_ed25519.pub
+ll
+ssh-copy-id --help
+ssh-copy-id -i archmini_ed25519.pub ledroot@ds923plus.frit.box
+ssh-copy-id -i archmini_ed25519.pub ledroot@ds923plus.fritz.box
+q
+ssh-keygen -t ed25519 -C "archmini@andreasplichta.de"
+host
+hostname
+ll
+rm archmini_ed25519*
+mv id_ed25519 archmini_ed25519
+mv id_ed25519.pub archmini_ed25519.pub
+ssh-copy-id -i archmini_ed25519.pub ledroot@ds923plus.fritz.box
+y
+cd 
+. .bashrc 
+ssh-add -l
+systemctl --user list-units 
+systemctl --user list-timers 
+y
+ds923plus
+y
+ssh ledroot@ds923plus.fritz.box
+f
+y
+. ~/.bashrc 
+sd923plus
+ds923plus
+. ~/.bashrc 
+alias
+ds923plus
+ssh ledroot@ds923plus.fritz.box
+y
+. ~/.bashrc 
+ds923plus
+cd
+rm  .ssh/omarchy_ed25219*
+cp .ssh/archmini_ed25519 /mnt/ds923plus/andreas/andreas/.ssh/
+cp .ssh/archmini_ed25519.pub /mnt/ds923plus/andreas/andreas/.ssh/
+ll /mnt/ds923plus/
+sudo chmod -R o-x /mnt/ds923plus/
+sudo chmod -R o+x /mnt/ds923plus/
+sudo chmod -R o+x /mnt/ds923plus/andreas/
+ll /mnt/ds923plus/
+sudo chmod -R o+x /mnt/ds923plus/andreas
+ll .config/hypr/
+ll /mnt/ds923plus/
+sudo chmod -R o-w /mnt/ds923plus/andreas
+sudo chmod -R o-x /mnt/ds923plus/andreas
+ll /mnt/ds923plus/
+sudo chmod -R o-r /mnt/ds923plus/andreas
+ll /mnt/ds923plus/
+sudo chmod -R g-w /mnt/ds923plus/andreas
+ll /mnt/ds923plus/
+cd /mnt/ds923plus/andreas/
+ll
+ls -al
+cd andreas/
+ll
+sudo chown
+ll
+touch zzz
+ll
+..
+sudo chmod -R 750 andreas 
+ll
+ll andreas/
+sudo chmod -R 700 andreas/.ssh/
+ll andreas/
+ds923plus
+pacman -S threema-desktop
+sudo pacman -S threema-desktop
+yay -S threema-desktop
+threema 
+threema &
+ll
+which signal-desktop 
+ll .config/
+ll .config/Signal/
+y .config/Signal/config.json 
+signal-desktop 
+y
+. .bashrc 
+. ~/.bashrc 
+ssh-add ~/.ssh/archmini_ed25519
+ssh-add -l
+ssh-add -h
+ssh-add --help
+manssh-add 
+man ssh-add 
+ssh-add -D
+ssh-add ~/.ssh/archmini_ed25519
+ssh-add -l
+..
+git status
+git log
+ssh -T git@github.com 
+git fetch
+cl
+arch
+ll
+..
+ll
+mkdir synology
+cd synology/
+git clone git@github.com:007revad/Synology_enable_M2_volume.git
+ll
+cd Synology_enable_M2_volume/
+ll
+ll info/
+ll images/
+ll
+pwd
+..
+mv ~/Downloads/Synology_HDD_db-3.6.111.tar.gz ./synology/
+cd synology/
+ll
+tar -xvzf Synology_HDD_db-3.6.111.tar.gz ./
+tar -xvzf Synology_HDD_db-3.6.111.tar.gz 
+ll
+..
+cd
+ll 
+ll .ssh/
+#/volume1/scripts/Synology_HDD_db-main/syno_hdd_db.sh -n
+vim 
+threema & 
+yay --help
+yay -l
+yay -R threema-desktop 
+yay --help
+yay -c
+yay -Scc
+yay -c
+yay -Ycc
+ll .ssh/
+y
+ssh -T git@github.com 
+df -h
+lsblk -f
+mount /dev/sdb1 /mnt/1/
+mount /dev/sdb1 /mnt/1
+sudo mount /dev/sdb1 /mnt/1
+cp /mnt/1/04076_menhirstation_3840x2160.jpg backgrounds/menhirstation_4840x2160.png
+y
+ll arch/
+arch
+öll
+cd
+rsync -a /home/push/backgrouds/ backgrounds/
+arch
+ll
+rsync -a /home/push/backgrouds/ backgrounds/
+rsync -a /home/push/backgrounds/ backgrounds/
+ll backgrounds/
+df -h 
+ayazi
+syazi
+touch zz
+ll
+rm zz
+df -h
+mount
+cl
+mount | grep ds923
+systemctl --user list-timers 
+systemctl --user status changeBackground.service
+systemctl --user enable changeBackground.service
+systemctl --user status changeBackground.service
+history 
+history | more 
+systemctl --user enable --now changeBackground.service
+systemctl --user status changeBackground.service
+systemctl --user 
+systemctl --user status changeBackground.service
+y
+systemctl --user 
+systemctl
+systemctl --user 
+systemctl --user status changeBackground.service 
+journalctl --user -u changeBackground.service changeBackground.service 
+journalctl --user -u changeBackground.service  
+y
+systemctl --user daemon-reload 
+systemctl --user enable changeBackground.service
+systemctl --user status changeBackground.service 
+y
+systemctl --user daemon-reload 
+systemctl --user enable changeBackground.service
+systemctl --user status changeBackground.service 
+y
+systemctl --user status changeBackground.service 
+systemctl --user daemon-reload 
+systemctl --user ewenable changeBackground.service
+systemctl --user reenable changeBackground.service
+systemctl --user status changeBackground.service 
+ping ds923plus.dscloud.met
+ping ds923plus.dscloud.me
