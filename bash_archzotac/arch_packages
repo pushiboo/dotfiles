@@ -6,6 +6,7 @@ sudo pacman -S ghostty
 sudo pacman -S thunderbird
 sudo pacman -S python-gobject gobject-introspection playerctl
 sudo pacman -S hyfetch
+sudo pacman -S hyprpaper
 sudo pacman -S tree
 sudo pacman -S stow
 sudo pacman -S yazi

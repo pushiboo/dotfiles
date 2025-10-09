@@ -1,0 +1,7 @@
+source ~/dotfiles/bash_archzotac/bash/shell
+source ~/dotfiles/bash_archzotac/bash/aliases
+source ~/dotfiles/bash_archzotac/bash/functions
+source ~/dotfiles/bash_archzotac/bash/prompt
+source ~/dotfiles/bash_archzotac/bash/init
+source ~/dotfiles/bash_archzotac/bash/envs
+[[ $- == *i* ]] && bind -f ~/dotfiles/bash_archzotac/bash/inputrc

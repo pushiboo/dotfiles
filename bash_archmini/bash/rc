@@ -1,7 +1,0 @@
-source ~/dotfiles/bash/bash/shell
-source ~/dotfiles/bash/bash/aliases
-source ~/dotfiles/bash/bash/functions
-source ~/dotfiles/bash/bash/prompt
-source ~/dotfiles/bash/bash/init
-source ~/dotfiles/bash/bash/envs
-[[ $- == *i* ]] && bind -f ~/dotfiles/bash/bash/inputrc

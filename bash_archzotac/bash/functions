@@ -7,7 +7,7 @@ checkKeys=$(
   echo $?
 )
 # define the keys you want to load, include like this var=("firstkey" "secondkey" ...)
-keys2Load=("${HOME}/.ssh/archmini_ed25519")
+keys2Load=("${HOME}/.ssh/archzotac_ed25519")
 # validate if a running socket exist
 if [[ -z $SSH_AUTH_SOCK ]]; then
   echo "WARNING: Your ssh agent service is not up and running."
@@ -96,4 +96,17 @@ y() {
 	IFS= read -r -d '' cwd < "$tmp"
 	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
 	rm -f -- "$tmp"
+}
+
+zd() {
+  if [ $# -eq 0 ]; then
+    builtin cd ~ && return
+  elif [ -d "$1" ]; then
+    builtin cd "$1"
+  else
+    z "$@" && printf "\U000F17A9 " && pwd || echo "Error: Directory not found"
+  fi
+}
+open() {
+  xdg-open "$@" >/dev/null 2>&1 &
 }

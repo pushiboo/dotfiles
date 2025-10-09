@@ -1,11 +1,10 @@
 [Unit]
-Description=Run wallpaper change hourly
+Description=Change wallpaper hourly
 Requires=changeBackground.service
 
 [Timer]
-; OnActiveSec=60m
-OnActiveSec=60m
-OnUnitActiveSec=60m
+OnActiveSec=2m
+OnUnitActiveSec=2m
 
 [Install]
 WantedBy=timers.target

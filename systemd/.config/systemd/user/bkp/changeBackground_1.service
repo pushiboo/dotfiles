@@ -1,10 +1,13 @@
 [Unit]
 Description=Change hourly wallpaper with hyprpaper
 Wants=changeBackground.timer
+; After=graphical-session.target
+; After=default.target
+After=xdg-desktop-autostart.target
 
 [Service]
 Type=oneshot
 ExecStart=/bin/sh %h/scripts/changeBackground.sh
 
 [Install]
-WantedBy=graphical-session.target
+WantedBy=default.target
