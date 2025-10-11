@@ -1,6 +1,6 @@
 # All the default Omarchy aliases and functions
 # (don't mess with these directly, just overwrite them here!)
-source ~/dotfiles/bash/bash/rc
+source ~/dotfiles/bash_archmini/bash/rc
 
 # set editor
 # export EDITOR=nvim

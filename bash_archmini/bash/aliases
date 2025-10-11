@@ -47,5 +47,5 @@ alias arch="cd /mnt/ds923plus/andreas/arch"
 alias andreas="cd /mnt/ds923plus/andreas"
 alias syazi='sudo -E yazi'
 # ssh connections
-alias ds923plus="ssh -i ~/.ssh/archmini_ed25519 ledroot@ds923plus.fritz.box"
+alias ds923plus="TERM=xterm-256color ssh -i ~/.ssh/archmini_ed25519 ledroot@ds923plus.fritz.box"
 

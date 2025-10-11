@@ -1666,3 +1666,309 @@ systemctl --user reenable changeBackground.service
 systemctl --user status changeBackground.service 
 ping ds923plus.dscloud.met
 ping ds923plus.dscloud.me
+history | grep "pacman"
+history | grep "yay"
+cat arch_packages.txt 
+history | grep "pacman"
+history | grep "sudo pacman"
+cat arch_packages.txt 
+history | grep "55"
+history | grep "55"| more
+cat arch_packages.txt 
+history | more
+pacman -Q | more
+pacman -Q 
+yay --help | more
+yay -Q 
+ll
+cat install 
+mv install install_omarchy 
+cat arch_packages.txt 
+grep "pacman -S" arch_packages.txt 
+grep "sudo pacman -S" arch_packages.txt 
+grep "sudo pacman -S" arch_packages.txt > arch_packages.new 
+history | grep "sudo pacman -S"
+history | grep "sudo yay -S"
+history | grep "yay -S"
+history | grep "yay -S" >> arch_packages.new 
+y arch_packages.new 
+cat arch_packages.new  | cut -d " " -f234
+cat arch_packages.new  | cut -d " " -f1
+cat arch_packages.new  | cut -d " " -f2
+cat arch_packages.new  | cut -d " " -f3,4,5,6,
+cat arch_packages.new  | cut -d " " -f3,4,5,
+cat arch_packages.new  | cut -d " " -f3,4,
+cat arch_packages.new  | cut -d " " -f 3 -f4
+cat arch_packages.new  | cut -d " " -f3
+cat arch_packages.new  | cut -d " " -f1
+cat arch_packages.new  | cut -d " " -f0
+cat arch_packages.new  | cut -d " " -f1
+cat arch_packages.new  | cut -d " " -f1,2
+cat arch_packages.new  | cut -d " " -f1,2$
+cat arch_packages.new  | cut -d " " -f1,$
+cat arch_packages.new  
+y arch_packages.new 
+mv arch_packages.new arch_packages
+rm arch_packages.txt 
+ll
+cat arch_packages 
+mv install_omarchy dotfiles/bash/bash/
+cd dotfiles/
+cd bash/
+ll
+..
+ll
+mv bash/ bash_archmini
+ll
+ll ~¨
+ll ~
+mv bash_archmini bash
+ll
+ll ~
+stow -D bash
+ll ~
+mv bash/ bash_archmini
+stow bash_archmini/
+ll ~
+..
+stow -D bash
+ll
+unlink bash
+ll
+cd dotfiles/
+ll
+cd bash_archmini/
+ll
+ll bash/
+mv bash/install_omarchy ./
+mv bash/arch_packages ./
+ll
+..
+stow -D bash_archmini/
+stow bash_archmini/
+ll ~
+ll
+ll ~/.config/+
+ll ~/.config/
+lazygit
+clear
+ll
+stow -D spotify/
+lazygit
+lsblk -f
+sudo mount /dev/sdb /mnt/1
+lsblk -f
+sudo mount -t msdos /dev/sdb /mnt/1
+df -h
+lsblk -f
+sudo mount /dev/sdb1 /mnt/1
+cp bash_archmini/install_omarchy /mnt/1
+sudo cp bash_archmini/install_omarchy /mnt/1
+sudo cp bash_archmini/arch_packages /mnt/1
+sudo umount /mnt/1 
+sudo pacman -Scc --noconfirm
+sudo pacman --help
+sudo pacman -U --noconfirm
+sudo pacman -u --noconfirm
+sudo pacman -U
+sudo pacman -Syu
+mkdir fstab
+ssh-add -l
+y
+history | grep clone
+y
+..
+ll
+stow -D chromium/
+mv ll
+ll
+ll spotify/
+ll spotify/.config/
+mv  spotify/.config/spotify ~/.config/
+mv chromium/.config/chromium ~/.config/
+mv chromium/.config/chromium-flags.conf ~/.config/
+ll
+rmdir chromium/
+rmdir -f chromium/
+ll chromium/
+ll chromium/.config/
+rm -rf chromium/
+ll spotify/
+ll spotify/.config/
+rm -rf spotify/
+ll
+lazygit
+ll 
+ll bash_archmini/
+ll ~
+y
+ll
+ll ~
+y
+ll
+y
+systemctl --user status changeBackground.
+systemctl --user status changeBackground.service 
+history changeBackground
+history | grep  changeBackground
+sudo ufw 
+sudo ufw status
+sudo ufw allow 22/TCP
+syazi
+systemctl status sshd
+systemctl start sshd
+systemctl status sshd
+cd
+pwd
+ll
+ssh-copy-id -i ~/.ssh/archmini_ed25519.pub push@archzotac
+ping archzotac
+scp /etc/fstab archzotac
+scp -v /etc/fstab archzotac
+scp -v /etc/fstab archzotac:~/
+ssh-copy-id -i ~/.ssh/archmini_ed25519.pub push@archzotac
+ssh push@archzotac
+ssh-copy-id -i ~/.ssh/archmini_ed25519.pub push@archzotac
+scp -v /etc/fstab archzotac:~/
+systemctl --user list-automounts 
+systemctl  list-automounts 
+history | grep autom
+networkctl status enp3s0f0 
+dnsdomainname 
+cat /etc/idmapd.conf 
+grep -i domain /etc/idmapd.conf 
+cat /etc/hostname 
+cat /etc/hosts
+domain
+hostnamectl 
+systemd-resolve 
+systemd-resolve status
+systemd-resolve --help
+systemd-resolve --status
+cat /etc/systemd/network/20-ethernet.network 
+route
+routel 
+ping archzotac
+ssh push@archzotac 
+systemctl status sshd
+systemctl start sshd
+systemctl status sshd.service 
+systemctl start sshd.service 
+cat .ssh/known_hosts
+sudo cat hosts >> /etc/host
+sudo cat hosts >> /etc/hosts
+syazi 
+id
+rsync -s scripts ds923plus/andreas/arch/
+hyprctl systeminfo 
+blkid 
+cryptsetup /dev/sda
+cryptsetup luksDump /dev/sda
+sudo cryptsetup luksDump /dev/sda
+sudo cryptsetup luksDump /dev/sda1 
+sudo cryptsetup luksDump /dev/sda2
+sudo cryptsetup luksDump /dev/sda3
+sudo cryptsetup luksDump /dev/sda4
+sudo cryptsetup luksDump /dev/sda5
+ll
+pacman --help
+sudo pacman -Sy nodejs npm
+node -v
+npm -v
+yay -S bun
+ll
+mkdir webdev
+cd webdev/
+lazygit
+ll
+ls -al
+git clone git@githum.com:pushiboo/vueauthmemgmt.git
+ll
+git clone git@githum.com:pushiboo/vueauthmgmt.git
+git clone -v git@githum.com:pushiboo/vueauthmgmt.git
+ssh -t git@githuh.com
+ssh-add -l
+ssh -t git@githuh.com
+vim ~/.ssh/
+yazi ~/.ssh/authorized_keys 
+ssh -t git@githuh.com
+ssh -T git@githuh.com
+systemctl status sshd.service 
+systemctl --user daemon-reload 
+systemctl  daemon-reload 
+ssh -T git@githuh.com
+ssh -T git@github.com
+git clone -v git@githum.com:pushiboo/vueauthmgmt.git
+ll
+git clone git@githum.com:pushiboo/vueauthmgmt.git
+git clone git@github.com:pushiboo/vueauthmgmt.git
+git clone git@github.com:pushiboo/andreasplichta.de
+git clone git@github.com:pushiboo/andreasplichta.git
+ll
+ll andreasplichta.de/
+ll andreasplichta
+cd vueauthmgmt/
+bun install
+bun run dev
+ll
+..
+ll
+cd andreasplichta
+ll
+bun run dev
+yazi
+bun run dbAPI
+bun install
+bun run dbAPI
+bun run dev
+bun run dbAPI
+y
+lsblk -f
+exit
+reboot
+lsblk
+lsblk -f
+ll /boot/
+ll /mnt/
+mount /dev/sdb1 /mnt/2
+mount /dev/sdb1 /mnt/1
+sudo mount /dev/sdb1 /mnt/1
+lsblk -f
+#/volume1/scripts/Synology_HDD_db-main/syno_hdd_db.sh -n
+lsblk -f
+sudo mount /dev/sdc2 /mnt/1
+ll /mnt/1/
+touch /mnt/1/zzz
+sudo mount /dev/sdc1 /mnt/2
+df -h
+touch /mnt/2/zzz
+sudo umount /mnt/1
+sudo umount /mnt/2
+sudo mount -o rw/dev/sdc1 /mnt/1
+sudo mount -o rw /dev/sdc1 /mnt/1
+mount
+touch /mnt/1/zzz
+sudo touch /mnt/1/zzz
+ll /mnt/1/
+lsblk -f
+sudo mount -o rw /dev/sdc2 /mnt/2
+cp /boot/in* /mnt/2/
+ll /mnt/2
+tocuh /mnt/2/zzz
+touch /mnt/2/zzz
+mount
+df -h
+cp /boot/initramfs-linux* /mnt/1/
+sudo rsync  /boot/initramfs-linux* /mnt/1/
+df -h /boot/
+cd /boot/
+ll
+sudo rsync  /boot/vmlinuz-linux  /mnt/1/
+sudo rsync  /boot/initramfs-linux.img   /mnt/1/
+ll /mnt/1/
+umount /mnt/1
+sudo umount /mnt/1
+sudo umount /mnt/2
+ds923plus
+printenc
+printenv

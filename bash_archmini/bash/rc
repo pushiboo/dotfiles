@@ -1,7 +1,7 @@
-source ~/dotfiles/bash/bash/shell
-source ~/dotfiles/bash/bash/aliases
-source ~/dotfiles/bash/bash/functions
-source ~/dotfiles/bash/bash/prompt
-source ~/dotfiles/bash/bash/init
-source ~/dotfiles/bash/bash/envs
-[[ $- == *i* ]] && bind -f ~/dotfiles/bash/bash/inputrc
+source ~/dotfiles/bash_archmini/bash/shell
+source ~/dotfiles/bash_archmini/bash/aliases
+source ~/dotfiles/bash_archmini/bash/functions
+source ~/dotfiles/bash_archmini/bash/prompt
+source ~/dotfiles/bash_archmini/bash/init
+source ~/dotfiles/bash_archmini/bash/envs
+[[ $- == *i* ]] && bind -f ~/dotfiles/bash_archmini/bash/inputrc
