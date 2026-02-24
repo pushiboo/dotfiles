@@ -46,3 +46,6 @@ background = 000200
 # resize-overlay-duration = 4s 200ms
 window-inherit-working-directory = true
 
+
+# Slowdown mouse scrolling
+mouse-scroll-multiplier = 0.95

@@ -1,0 +1,8 @@
+[Unit]
+Description=Rsync jackup job for each arch sys 
+StopWhenUnneeded=yes
+
+[Service]
+Type=oneshot
+User=push
+ExecStart=/home/push/ds923plus/andreas/arch/scripts/rsync_arch.sh

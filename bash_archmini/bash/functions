@@ -3,21 +3,26 @@
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 # check if ssh-add has already some keys loaded 
 checkKeys=$(
-  ssh-add -l >/dev/null
+  ssh-add -l &>/dev/null
   echo $?
 )
+# echo "checkKeys: $checkKeys"
 # define the keys you want to load, include like this var=("firstkey" "secondkey" ...)
 keys2Load=("${HOME}/.ssh/archmini_ed25519")
+# echo "keys2Load: $keys2Load"
 # validate if a running socket exist
-if [[ -z $SSH_AUTH_SOCK ]]; then
-  echo "WARNING: Your ssh agent service is not up and running."
+if [[ -z "$SSH_AUTH_SOCK" ]]; then
+  echo "###----------------------------------------------------###"
+  echo "  WARNING: Your ssh agent service is not up and running."
+  echo "  Please check: systemctl --user status ssh-agent.service"
+  echo "###----------------------------------------------------###"
 else
-  # if ! ssh-add -l >/dev/null; then
-  if [[ "$checkKeys" -ne 0 ]]; then
+  if [ "$checkKeys" -ne 0 ]; then
     ssh-add ${keys2Load[@]} #| sed 's/,//g' # >/dev/null
-    [[ $? -ne 0 ]] && echo "WARNING: not able to load ssh keys"
-    # else
-    # echo "SUCCESFULL: Added keys to ssh agent service"
+    [ $? -ne 0 ] && echo "WARNING: not able to load ssh keys"
+  # else
+  #   echo -e "SUCCESFULL: Added keys to ssh agent service"
+  #   # echo -e "$(ssh-add -l)"
   fi
 fi
 
@@ -97,3 +102,25 @@ y() {
 	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
 	rm -f -- "$tmp"
 }
+
+sy() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	sudo -E yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+	rm -f -- "$tmp"
+}
+zd() {
+  if [ $# -eq 0 ]; then
+    builtin cd ~ && return
+  elif [ -d "$1" ]; then
+    builtin cd "$1"
+  else
+    z "$@" && printf "\U000F17A9 " && pwd || echo "Error: Directory not found"
+  fi
+}
+open() {
+  xdg-open "$@" >/dev/null 2>&1 &
+}
+
+n() { if [ "$#" -eq 0 ]; then nvim .; else nvim "$@"; fi; }
