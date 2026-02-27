@@ -4103,3 +4103,166 @@ journalctl -n
 journalctl -n 100
 ps aux | grep waybar
 waybar -l trace
+cd dotfiles/
+stow -D omarchy/
+waybar -l trace
+stow omarchy
+ll
+y
+stow -D omarchy
+y
+stow omarchy
+ll
+ll ~/
+ll ~/.config/
+stow omarchy
+stow -D omarchy
+stow omarchy/
+stow -D omarchy
+ll ~/
+y
+..
+stow omarchy/
+uwsm app -- waybar &
+ll ~
+cd 
+cp 04076_menhirstation_3840x2160.jpg backgrounds/
+cp menhirstation* backgrounds/
+ll ~
+ll ~/.config/
+cd dotfiles/
+git status 
+alias
+gcam
+git list
+lazygit
+reboot now 
+sudo reboot now 
+y
+..
+y
+cl
+y
+ll
+unlink backgrounds
+ll
+ll backgrounds_bkp/
+rmdir backgrounds_bkp/
+ll
+cd current/
+ll
+cd theme/
+ll
+rm -rf backgrounds/
+ln -s ~/backgrounds/ backgrounds
+ll
+..
+ll
+..
+ll
+ln -s ~/.config/omarchy/current/theme/backgrounds/2_menhirstation.jpg 
+ll
+ln -s ~/.config/omarchy/current/theme/backgrounds/2_menhirstation.jpg background
+unlink 2_menhirstation.jpg 
+ll
+ll theme
+ll themes/
+rmdir themes/
+ll
+cd dotfiles/
+y
+..
+cd dotfiles/omarchy/.config/omarchy/
+ll
+mv backgrounds backgrounds_bkp
+ll
+ln -s ~/backgrounds backgrounds
+ll
+cd current/
+ll
+unlink background 
+..
+l
+ll
+cd .config/
+ll
+cd omarchy/current/
+ll
+cd theme/
+ll
+pwd
+..
+öö
+ll
+..
+cd current/
+ydotfiles/omarchy.c
+ll
+y
+echo "λ"
+y
+diff starship.toml themes/gruvbox-rainbow.toml 
+diff -y starship.toml themes/gruvbox-rainbow.toml 
+y
+nvom
+nvim
+y
+sy
+nvim
+sy
+clear
+cl
+sy
+cl
+<
+y
+ll
+y
+y
+nvim
+y
+uuu
+cd dotfiles/
+asd
+cd dotfiles/
+y
+cd dotfiles/
+y
+cd dotfiles/
+cd starship/
+y
+tty
+ps -o comm= -p $(ps -o ppid= -p $$)   
+y
+asd
+cd dotfiles/starship/.config/
+y
+nvim
+y
+y dotfiles/hypr/.config/hypr/
+ps aux | grep ghos
+y
+nvim
+ps aux 
+uwsm --help
+uwsm app --help
+uwsm
+uwsm --help
+uwsm check
+uwsm check -h
+hyprctl -h
+ps aux | grep ghos
+ghostty 
+y dotfiles/hypr/.config/hypr/
+eza
+eza -l
+try ~/dotfiles/
+lazydocker 
+y
+fzf
+y
+btop
+tailscale --h
+tailscale up
+tailscale up --accept-routes
+sudo tailscale up --accept-routes
