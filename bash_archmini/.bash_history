@@ -4266,3 +4266,38 @@ tailscale --h
 tailscale up
 tailscale up --accept-routes
 sudo tailscale up --accept-routes
+cd dotfiles/
+git status
+lazygit
+y
+lazygit
+alias
+ds923plus
+y
+cd dotfiles/
+stow hypr/
+cd
+sudo pacman -Ss bruno
+yay -Ss bruno
+yay -S bruno
+Bruno
+bruno
+yay -Ss insomnua
+yay -Ss insomnia
+y
+sudo pacman -Ss insimnia
+sudo pacman -Ss insomnia
+sudo yay -Ss insomnia
+sudo yay -Ss aur/insomnia
+sudo yay -Ss insomnia
+sudo yay -S insomnia
+yay -S insomnia
+yay -Ss insomnia
+/opt/Insomnia/insomnia --enable-features=UseOzonePlatform --ozone-platform=wayland   
+y
+yay -S insomnia
+yay -Rss insomnia
+y
+which bruno
+y
+ds923plus

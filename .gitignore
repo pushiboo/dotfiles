@@ -6,4 +6,5 @@ chromium/.config/chromium/
 # Ignore log files
 *.log
 # Omit the .bash_history file 
-*.bash_history
+.bash_history
+.bash_logouts
