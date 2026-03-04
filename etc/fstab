@@ -27,11 +27,11 @@ UUID=f274df55-0f3c-4200-81be-ca7499f98848	none      	swap      	defaults  	0 0
 #ds923plus.fritz.box:/volume1/andreas /mnt/ds923plus/andreas nfs4  rw,vers=4.1,soft,timeo=600,retrans=3,rsize=262144,wsize=262144,noatime,nocto,actimeo=600,sec=sys  0 0   
 # mount this export via systemd automount, which provides the functionallity just to mount thist export when accessed by program or user it self.
 # ds923plus.fritz.box:/volume1/andreas /mnt/ds923plus/andreas nfs _netdev,noauto,x-systemd.automount,x-systemd.device-timeout=10s,x-systemd.mount-timeout=30s,x-systemd.idle-timeout=10min,vers=4.1 0 0
-ds923plus.fritz.box:/volume1/andreas /mnt/ds923plus/andreas nfs4 x-systemd.automount,x-systemd.device-timeout=1s,x-systemd.mount-timeout=1s,x-systemd.idle-timeout=60min,vers=4.1,noatime,nocto,sec=sys,_netdev  0 0
-ds923plus.fritz.box:/volume1/docker /mnt/ds923plus/docker nfs4 x-systemd.automount,x-systemd.device-timeout=1s,x-systemd.mount-timeout=1s,x-systemd.idle-timeout=60min,vers=4.1,noatime,nocto,sec=sys,_netdev  0 0
-ds923plus.fritz.box:/volume5/homes /mnt/ds923plus/homes nfs4 x-systemd.automount,x-systemd.device-timeout=1s,x-systemd.mount-timeout=1s,x-systemd.idle-timeout=60min,vers=4.1,noatime,nocto,sec=sys,_netdev  0 0
-ds923plus.fritz.box:/volume5/photos_shared /mnt/ds923plus/photos_shared nfs4 x-systemd.automount,x-systemd.device-timeout=1s,x-systemd.mount-timeout=1s,x-systemd.idle-timeout=60min,vers=4.1,noatime,nocto,sec=sys,_netdev  0 0
-ds923plus.fritz.box:/volume1/web /mnt/ds923plus/web nfs4 x-systemd.automount,x-systemd.device-timeout=1s,x-systemd.mount-timeout=1s,x-systemd.idle-timeout=60min,vers=4.1,noatime,nocto,sec=sys,_netdev  0 0
+ds923plus:/volume1/andreas /mnt/ds923plus/andreas nfs4 x-systemd.automount,x-systemd.device-timeout=1s,x-systemd.mount-timeout=1s,x-systemd.idle-timeout=60min,vers=4.1,noatime,nocto,sec=sys,_netdev  0 0
+ds923plus:/volume1/docker /mnt/ds923plus/docker nfs4 x-systemd.automount,x-systemd.device-timeout=1s,x-systemd.mount-timeout=1s,x-systemd.idle-timeout=60min,vers=4.1,noatime,nocto,sec=sys,_netdev  0 0
+ds923plus:/volume5/homes /mnt/ds923plus/homes nfs4 x-systemd.automount,x-systemd.device-timeout=1s,x-systemd.mount-timeout=1s,x-systemd.idle-timeout=60min,vers=4.1,noatime,nocto,sec=sys,_netdev  0 0
+ds923plus:/volume5/photos_shared /mnt/ds923plus/photos_shared nfs4 x-systemd.automount,x-systemd.device-timeout=1s,x-systemd.mount-timeout=1s,x-systemd.idle-timeout=60min,vers=4.1,noatime,nocto,sec=sys,_netdev  0 0
+ds923plus:/volume1/web /mnt/ds923plus/web nfs4 x-systemd.automount,x-systemd.device-timeout=1s,x-systemd.mount-timeout=1s,x-systemd.idle-timeout=60min,vers=4.1,noatime,nocto,sec=sys,_netdev  0 0
 
 # cifs share, still missing acl 
 #//ds923plus.fritz.box/andreas /mnt/andreas cifs credentials=~/.smbcredentials,iocharset=utf8,sec=ntlm	0 	0	

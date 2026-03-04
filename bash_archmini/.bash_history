@@ -4301,3 +4301,184 @@ y
 which bruno
 y
 ds923plus
+y
+y
+lazygit
+cd 
+lazygit
+cd dotfiles/
+lazygit
+y
+lazygit
+y
+lazygit
+y
+lazygit
+ping :3003
+ping 192.168.20.23:3003
+ping 192.168.20.23
+telnet 192.168.20.23 3003
+telnet 192.168.20.23 5001
+telnet 192.168.20.23 3003
+ds923plus
+mongosh 
+mongosh --hlep
+mongosh --help | more
+mongosh --host 
+mongosh --host mongodb://192.168.20.23:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.10
+mongosh  mongodb://192.168.20.23:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.10
+mongosh  mongodb://192.168.20.23:17017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.10
+mongosh  mongodb://192.168.20.23:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.10
+mongosh  mongodb://192.168.20.23:3002/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.10
+mongosh  mongodb://192.168.20.23:27018/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.10
+y
+dfnfs
+y
+ll
+..
+ll
+ll /etc/fstab 
+ll /etc/
+cl
+sy
+nvim
+y
+cd dotfiles/etc/
+diff -y fstab bkp/fstab 
+cat fstab 
+..
+stow etc/
+ll /etc
+cl
+ds923plus
+mount -a
+fastfetch
+ip a
+mount -a
+mkdir -p /mnt/ds923plus/Backup_SSD
+sudo visudo
+mkdir -p /mnt/ds923plus/Backup_SSD
+systemctl --user daemon-reload 
+mkdir -p /mnt/ds923plus/Backup_SSD
+sudo mkdir -p /mnt/ds923plus/Backup_SSD
+mount -a
+systemctl --user daemon-reload 
+sudo systemctl --user daemon-reload 
+sudo systemctl daemon-reload 
+mount -a
+mount -vad
+ll /mnt/ds923plus/
+ount -va
+sudo mount -va
+y
+cd 
+ln -s /mnt/ds923plus/andreas andreas
+ll
+cd dotfiles/
+stow -D etc/
+..
+ll
+ln -s /mnt/ds923plus/Backup_SSD backup_SSD
+ll
+y
+waybar -l trace
+cd dotfiles/waybar/.config/waybar/
+ll
+cd org/
+ll
+diff -y style_org.css style.css 
+ll
+cd 
+y
+dot
+cd
+dot
+. .bashrc 
+dot
+öll
+ll
+cd 
+y
+dot
+stow -D omarchy
+stow omarchy
+dot
+stow -D waybar/
+ll ~/.config/
+ll ~/.config/waybar_bkp/
+cat ~/.config/waybar_bkp/style.css 
+ll
+dot
+stow waybar/
+y
+cat /home/push/dotfiles/omarchy/.config/omarchy/current/theme/waybar.css 
+omarchy-restart-waybar 
+y
+omarchy-refresh-waybar 
+omarchy-start-waybar 
+omarchy-restart-waybar 
+omarchy-restart-waybar -v
+omarchy-restart-waybar --help
+omarchy-restart-waybar -h
+waybar -l trace
+omarchy-restart-waybar 
+hyprctl reload
+waybar -l trace
+echo $XDG_CONFIG_HOME
+cat ~/.config/waybar/config.jsonc 
+waybar -l trace
+echo $XDG_CONFIG_HOME
+waybar -l trace
+waybar -l trace --help
+waybar -l trace -c ~/.config/waybar/config.jsonc 
+waybar -l trace
+q
+waybar -l trace
+;11;27~
+y
+y
+waybar -l trace
+uwsm app -- waybar &
+y
+..
+y
+pwd
+dot
+cd starship/
+cd .config/
+ll
+dot
+y
+cd dotfiles/omarchy/.config/omarchy/themes/push-tokio-night/
+ll
+ln -s ~/backgrounds/ backgrounds
+ll
+pwd
+..
+ll 
+ll waybar/
+ll waybar/.config/
+ll waybar/.config/waybar/
+ll walker/
+ll walker/.config/
+ll walker/.config/walker/
+ll ~/.config/
+cat ~/.config/walker/config.toml 
+omarchy-restart-walker 
+omarchy-refresh-walker 
+omarchy-restart-walker 
+cat ~/.config/walker/config.toml 
+ll ~/.config/walker/
+cp  ~/.config/walker/config.toml ~/dotfiles/walker/.config/walker/config.toml
+omarchy-restart-walker 
+ll ~/.config/walker/
+ll ~/dotfiles/walker/.config/walker/config.toml
+rm -rf ~/.config/walker/
+dozt
+dot
+y
+dot
+stow walker
+y
+btop 
+y

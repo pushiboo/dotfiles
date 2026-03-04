@@ -29,6 +29,9 @@ $time\
 $line_break$character"""
 
 
+# adjust scan time
+scan_timeout = 1000
+
 palette = 'pastel_push'
 
 [palettes.pastel_push]

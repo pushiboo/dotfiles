@@ -1,5 +1,6 @@
-@import "../omarchy/current/theme/waybar.css";
-
+/* @import "../omarchy/current/theme/waybar.css"; */
+/* @import "/home/push/dotfiles/omarchy/.config/omarchy/current/theme/waybar.css"; */
+@import "waybar.css";
 * {
   background-color: @background;
   color: @foreground;
@@ -7,7 +8,7 @@
   border: none;
   border-radius: 0;
   min-height: 0;
-  font-family: CaskaydiaMono Nerd Font;
+  font-family: 'CaskaydiaMono Nerd Font';
   font-size: 12px;
 }
 
@@ -28,7 +29,7 @@
 
 #workspaces button.urgent {
   background-color: @red;
-  color: #079C3E;
+  color: @spotify;
 }
 #workspaces button.empty {
   opacity: 0.5;
@@ -39,12 +40,13 @@
   margin: 0 4px;
   opacity: 0.8;
 /*     color: @foreground; */
-  color: #079C3E;
+  color: @spotify;
 }
 
 #custom-omarchy {
-  color: #079C3E;
+  color: @spotify;
 }
+
 #tray,
 #cpu,
 #battery,
