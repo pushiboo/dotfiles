@@ -4482,3 +4482,202 @@ stow walker
 y
 btop 
 y
+dot
+lazgit
+lazygit
+reboot now
+ll .config/
+grep men backgrounds/
+grep men backgrounds/*
+ll backgrounds/ | grep men
+rm backgrounds/menhirstation
+mv backgrounds/2_menhirstation.jpg backgrounds/menhirstation.jpg
+ll backgrounds/ | grep men
+y
+ps aux | more
+cl
+ps aux | more
+ps aux | grep -v root | more
+mako --help
+mako 
+swayosd-client 
+man swayosd-client 
+swayosd-server 
+swayosd-server --help
+y
+systemctl status avahi
+systemctl status avahid
+systemctl list-unit
+systemctl list-units
+wl-copy --help
+uwsm 
+uwsm --help
+hyprctl systeminfo 
+uwsm-app --help
+y
+yay -Q | grep inso
+sudo pacman -Rns insomnia 
+yay -Q | grep inso
+paccache 
+paccache -h
+paccache -d
+paccache -vd
+paccache -h
+paccache -rv
+paccache -vd
+ongosh  "mongodb://192.168.20.23:3002"
+mongosh  "mongodb://192.168.20.23:3002"
+mongosh  "mongodb://192.168.20.23:3003"
+mongosh  mongodb://192.168.20.23:27018/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.10
+mongosh  mongodb://192.168.20.23:3003/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.10
+telnet 192.168.20.23 3003
+telnet 192.168.20.23:3003
+telnet 192.168.20.23 3003
+telnet 192.168.20.23 
+ds923plus
+y
+ds923plus
+ps aux  grep brave
+ps aux |  grep brave
+kill brave
+killall brave
+mongosh  mongodb://192.168.20.23:27018/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.10
+mongosh  "mongodb://192.168.20.23:27018/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.10"
+mongosh  "mongodb://192.168.20.23:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.10"
+y
+cd Learning/
+git clone https://github.com/pushiboo/react.git
+wev
+showkey
+showkey --scancondes
+showkey --scancodes
+y
+printenv
+printenv | grep -i omarchy
+ll
+sudo pacman lazygit
+sudo pacman -S lazygit
+sudo pacman -S lazydocker
+y
+lazygit
+cd 
+cd dotfiles/
+ll
+y
+git status
+omarchy-update -f
+omarchy-update ?
+omarchy-update --help
+lazydocker 
+sy
+cd .local/state/omarchy/
+git status
+ll
+ls -al
+..
+ll
+cd share/omarchy
+git status
+ll
+cd default/hypr/
+ll
+rm 'autostart.conf~Updated upstream' 
+ll
+git status
+git rm autostart.conf autostart.conf~Updated\ upstream 
+git status
+git rm autostart.bkp 
+ll
+git status
+git stauts
+git status
+omarchy-update -f
+btop
+df -ah
+sudo df -ah
+sudo journalctl --vacuum-time=7d
+sudo df -ah
+ll /var/lib/systemd/coredump/
+sudo pacman -Sc
+df -ah
+sudo pacman -Rns $(pacman -Qtdq)
+sudo pacman -Qtdq
+sudo pacman -Rns 
+ncdu
+sudo pacman -S ncdu
+ncdu
+du -sh .cache/
+ll
+y
+sy
+y
+yay install yazi
+yay se yazi
+yazi -v
+yazi --version
+sudo pacman -S yazi ffmpeg 7zip jq poppler fd ripgrep fzf zoxide resvg imagemagick
+sudo pacman -Sy
+sudo pacman -Syu
+y
+..
+ll
+cat yazi.toml 
+nvim yazi.toml 
+y
+nvim yazi.toml 
+y
+nvim yazi.toml 
+ll
+mv yazi.toml yazi.toml.old
+vim yazi.toml
+y
+sy
+ll ds923plus/
+whoami
+sudo chown -R push ds923plus/Learning
+ll ds923plus/
+lazygit
+cd ds923plus/
+ll
+cd Learning/
+lazygit
+git@github.com:pushiboo/NetNinja.git
+https://github.com/pushiboo/NetNinja.git
+git clone https://github.com/pushiboo/NetNinja.git
+ssh-add -l
+git clone https://github.com/pushiboo/NetNinja.git
+ssh -T git@github.com
+git clone https://github.com/pushiboo/NetNinja.git
+cd ~
+git clone https://github.com/pushiboo/NetNinja.git
+git config 
+cd ds923plus/Learning/
+git condif --list
+git config --list
+git config --global --list
+git clone https://github.com/pushiboo/NetNinja.git
+ll
+cd NetNinja/
+ll
+lazygit 
+ll
+..
+ll
+..
+ll
+cd Learning/
+ll
+cd NetNinja/
+ll
+y
+yay -S bitwarden
+uwsm app -- brave 
+yazi 
+yazi
+yazi 
+y 
+y dotfiles/
+y
+yazi 
+systemctl status bluetooth.service 
+bluetui 
