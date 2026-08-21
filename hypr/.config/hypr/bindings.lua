@@ -43,6 +43,7 @@ hl.unbind("SUPER + SHIFT + E")
 o.bind("SUPER + SHIFT + E", "Email", { launch = "thunderbird", focus = "^thunderbird$" })
 hl.unbind("SUPER + SHIFT + K")
 o.bind("SUPER + SHIFT + K", "Bitwared ", { launch = "bitwarden-desktop", focus = "^bitwarden-desktop$" })
+o.bind("SUPER + SHIFT + T", "Tradingview ", { launch = "tradingview", focus = "^tradingvire$" })
 --$terminal = uwsm app -- ghostty
 
 -- Logitech MX Keys examples:
