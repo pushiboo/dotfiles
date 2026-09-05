@@ -1,8 +1,0 @@
-# Static table lookup for hostnames.
-# See hosts(5) for details.
-#127.0.0.1        localhost
-127.0.0.1         archzotac
-192.168.20.23     ds923plus
-192.168.20.12     ds1812
-192.168.20.200    archmini
-::1               localhost

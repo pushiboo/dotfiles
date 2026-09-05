@@ -4103,3 +4103,1478 @@ journalctl -n
 journalctl -n 100
 ps aux | grep waybar
 waybar -l trace
+cd dotfiles/
+stow -D omarchy/
+waybar -l trace
+stow omarchy
+ll
+y
+stow -D omarchy
+y
+stow omarchy
+ll
+ll ~/
+ll ~/.config/
+stow omarchy
+stow -D omarchy
+stow omarchy/
+stow -D omarchy
+ll ~/
+y
+..
+stow omarchy/
+uwsm app -- waybar &
+ll ~
+cd 
+cp 04076_menhirstation_3840x2160.jpg backgrounds/
+cp menhirstation* backgrounds/
+ll ~
+ll ~/.config/
+cd dotfiles/
+git status 
+alias
+gcam
+git list
+lazygit
+reboot now 
+sudo reboot now 
+y
+..
+y
+cl
+y
+ll
+unlink backgrounds
+ll
+ll backgrounds_bkp/
+rmdir backgrounds_bkp/
+ll
+cd current/
+ll
+cd theme/
+ll
+rm -rf backgrounds/
+ln -s ~/backgrounds/ backgrounds
+ll
+..
+ll
+..
+ll
+ln -s ~/.config/omarchy/current/theme/backgrounds/2_menhirstation.jpg 
+ll
+ln -s ~/.config/omarchy/current/theme/backgrounds/2_menhirstation.jpg background
+unlink 2_menhirstation.jpg 
+ll
+ll theme
+ll themes/
+rmdir themes/
+ll
+cd dotfiles/
+y
+..
+cd dotfiles/omarchy/.config/omarchy/
+ll
+mv backgrounds backgrounds_bkp
+ll
+ln -s ~/backgrounds backgrounds
+ll
+cd current/
+ll
+unlink background 
+..
+l
+ll
+cd .config/
+ll
+cd omarchy/current/
+ll
+cd theme/
+ll
+pwd
+..
+öö
+ll
+..
+cd current/
+ydotfiles/omarchy.c
+ll
+y
+echo "λ"
+y
+diff starship.toml themes/gruvbox-rainbow.toml 
+diff -y starship.toml themes/gruvbox-rainbow.toml 
+y
+nvom
+nvim
+y
+sy
+nvim
+sy
+clear
+cl
+sy
+cl
+<
+y
+ll
+y
+y
+nvim
+y
+uuu
+cd dotfiles/
+asd
+cd dotfiles/
+y
+cd dotfiles/
+y
+cd dotfiles/
+cd starship/
+y
+tty
+ps -o comm= -p $(ps -o ppid= -p $$)   
+y
+asd
+cd dotfiles/starship/.config/
+y
+nvim
+y
+y dotfiles/hypr/.config/hypr/
+ps aux | grep ghos
+y
+nvim
+ps aux 
+uwsm --help
+uwsm app --help
+uwsm
+uwsm --help
+uwsm check
+uwsm check -h
+hyprctl -h
+ps aux | grep ghos
+ghostty 
+y dotfiles/hypr/.config/hypr/
+eza
+eza -l
+try ~/dotfiles/
+lazydocker 
+y
+fzf
+y
+btop
+tailscale --h
+tailscale up
+tailscale up --accept-routes
+sudo tailscale up --accept-routes
+cd dotfiles/
+git status
+lazygit
+y
+lazygit
+alias
+ds923plus
+y
+cd dotfiles/
+stow hypr/
+cd
+sudo pacman -Ss bruno
+yay -Ss bruno
+yay -S bruno
+Bruno
+bruno
+yay -Ss insomnua
+yay -Ss insomnia
+y
+sudo pacman -Ss insimnia
+sudo pacman -Ss insomnia
+sudo yay -Ss insomnia
+sudo yay -Ss aur/insomnia
+sudo yay -Ss insomnia
+sudo yay -S insomnia
+yay -S insomnia
+yay -Ss insomnia
+/opt/Insomnia/insomnia --enable-features=UseOzonePlatform --ozone-platform=wayland   
+y
+yay -S insomnia
+yay -Rss insomnia
+y
+which bruno
+y
+ds923plus
+y
+y
+lazygit
+cd 
+lazygit
+cd dotfiles/
+lazygit
+y
+lazygit
+y
+lazygit
+y
+lazygit
+ping :3003
+ping 192.168.20.23:3003
+ping 192.168.20.23
+telnet 192.168.20.23 3003
+telnet 192.168.20.23 5001
+telnet 192.168.20.23 3003
+ds923plus
+mongosh 
+mongosh --hlep
+mongosh --help | more
+mongosh --host 
+mongosh --host mongodb://192.168.20.23:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.10
+mongosh  mongodb://192.168.20.23:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.10
+mongosh  mongodb://192.168.20.23:17017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.10
+mongosh  mongodb://192.168.20.23:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.10
+mongosh  mongodb://192.168.20.23:3002/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.10
+mongosh  mongodb://192.168.20.23:27018/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.10
+y
+dfnfs
+y
+ll
+..
+ll
+ll /etc/fstab 
+ll /etc/
+cl
+sy
+nvim
+y
+cd dotfiles/etc/
+diff -y fstab bkp/fstab 
+cat fstab 
+..
+stow etc/
+ll /etc
+cl
+ds923plus
+mount -a
+fastfetch
+ip a
+mount -a
+mkdir -p /mnt/ds923plus/Backup_SSD
+sudo visudo
+mkdir -p /mnt/ds923plus/Backup_SSD
+systemctl --user daemon-reload 
+mkdir -p /mnt/ds923plus/Backup_SSD
+sudo mkdir -p /mnt/ds923plus/Backup_SSD
+mount -a
+systemctl --user daemon-reload 
+sudo systemctl --user daemon-reload 
+sudo systemctl daemon-reload 
+mount -a
+mount -vad
+ll /mnt/ds923plus/
+ount -va
+sudo mount -va
+y
+cd 
+ln -s /mnt/ds923plus/andreas andreas
+ll
+cd dotfiles/
+stow -D etc/
+..
+ll
+ln -s /mnt/ds923plus/Backup_SSD backup_SSD
+ll
+y
+waybar -l trace
+cd dotfiles/waybar/.config/waybar/
+ll
+cd org/
+ll
+diff -y style_org.css style.css 
+ll
+cd 
+y
+dot
+cd
+dot
+. .bashrc 
+dot
+öll
+ll
+cd 
+y
+dot
+stow -D omarchy
+stow omarchy
+dot
+stow -D waybar/
+ll ~/.config/
+ll ~/.config/waybar_bkp/
+cat ~/.config/waybar_bkp/style.css 
+ll
+dot
+stow waybar/
+y
+cat /home/push/dotfiles/omarchy/.config/omarchy/current/theme/waybar.css 
+omarchy-restart-waybar 
+y
+omarchy-refresh-waybar 
+omarchy-start-waybar 
+omarchy-restart-waybar 
+omarchy-restart-waybar -v
+omarchy-restart-waybar --help
+omarchy-restart-waybar -h
+waybar -l trace
+omarchy-restart-waybar 
+hyprctl reload
+waybar -l trace
+echo $XDG_CONFIG_HOME
+cat ~/.config/waybar/config.jsonc 
+waybar -l trace
+echo $XDG_CONFIG_HOME
+waybar -l trace
+waybar -l trace --help
+waybar -l trace -c ~/.config/waybar/config.jsonc 
+waybar -l trace
+q
+waybar -l trace
+;11;27~
+y
+y
+waybar -l trace
+uwsm app -- waybar &
+y
+..
+y
+pwd
+dot
+cd starship/
+cd .config/
+ll
+dot
+y
+cd dotfiles/omarchy/.config/omarchy/themes/push-tokio-night/
+ll
+ln -s ~/backgrounds/ backgrounds
+ll
+pwd
+..
+ll 
+ll waybar/
+ll waybar/.config/
+ll waybar/.config/waybar/
+ll walker/
+ll walker/.config/
+ll walker/.config/walker/
+ll ~/.config/
+cat ~/.config/walker/config.toml 
+omarchy-restart-walker 
+omarchy-refresh-walker 
+omarchy-restart-walker 
+cat ~/.config/walker/config.toml 
+ll ~/.config/walker/
+cp  ~/.config/walker/config.toml ~/dotfiles/walker/.config/walker/config.toml
+omarchy-restart-walker 
+ll ~/.config/walker/
+ll ~/dotfiles/walker/.config/walker/config.toml
+rm -rf ~/.config/walker/
+dozt
+dot
+y
+dot
+stow walker
+y
+btop 
+y
+dot
+lazgit
+lazygit
+reboot now
+ll .config/
+grep men backgrounds/
+grep men backgrounds/*
+ll backgrounds/ | grep men
+rm backgrounds/menhirstation
+mv backgrounds/2_menhirstation.jpg backgrounds/menhirstation.jpg
+ll backgrounds/ | grep men
+y
+ps aux | more
+cl
+ps aux | more
+ps aux | grep -v root | more
+mako --help
+mako 
+swayosd-client 
+man swayosd-client 
+swayosd-server 
+swayosd-server --help
+y
+systemctl status avahi
+systemctl status avahid
+systemctl list-unit
+systemctl list-units
+wl-copy --help
+uwsm 
+uwsm --help
+hyprctl systeminfo 
+uwsm-app --help
+y
+yay -Q | grep inso
+sudo pacman -Rns insomnia 
+yay -Q | grep inso
+paccache 
+paccache -h
+paccache -d
+paccache -vd
+paccache -h
+paccache -rv
+paccache -vd
+ongosh  "mongodb://192.168.20.23:3002"
+mongosh  "mongodb://192.168.20.23:3002"
+mongosh  "mongodb://192.168.20.23:3003"
+mongosh  mongodb://192.168.20.23:27018/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.10
+mongosh  mongodb://192.168.20.23:3003/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.10
+telnet 192.168.20.23 3003
+telnet 192.168.20.23:3003
+telnet 192.168.20.23 3003
+telnet 192.168.20.23 
+ds923plus
+y
+ds923plus
+ps aux  grep brave
+ps aux |  grep brave
+kill brave
+killall brave
+mongosh  mongodb://192.168.20.23:27018/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.10
+mongosh  "mongodb://192.168.20.23:27018/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.10"
+mongosh  "mongodb://192.168.20.23:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.10"
+y
+cd Learning/
+git clone https://github.com/pushiboo/react.git
+wev
+showkey
+showkey --scancondes
+showkey --scancodes
+y
+printenv
+printenv | grep -i omarchy
+ll
+sudo pacman lazygit
+sudo pacman -S lazygit
+sudo pacman -S lazydocker
+y
+lazygit
+cd 
+cd dotfiles/
+ll
+y
+git status
+omarchy-update -f
+omarchy-update ?
+omarchy-update --help
+lazydocker 
+sy
+cd .local/state/omarchy/
+git status
+ll
+ls -al
+..
+ll
+cd share/omarchy
+git status
+ll
+cd default/hypr/
+ll
+rm 'autostart.conf~Updated upstream' 
+ll
+git status
+git rm autostart.conf autostart.conf~Updated\ upstream 
+git status
+git rm autostart.bkp 
+ll
+git status
+git stauts
+git status
+omarchy-update -f
+btop
+df -ah
+sudo df -ah
+sudo journalctl --vacuum-time=7d
+sudo df -ah
+ll /var/lib/systemd/coredump/
+sudo pacman -Sc
+df -ah
+sudo pacman -Rns $(pacman -Qtdq)
+sudo pacman -Qtdq
+sudo pacman -Rns 
+ncdu
+sudo pacman -S ncdu
+ncdu
+du -sh .cache/
+ll
+y
+sy
+y
+yay install yazi
+yay se yazi
+yazi -v
+yazi --version
+sudo pacman -S yazi ffmpeg 7zip jq poppler fd ripgrep fzf zoxide resvg imagemagick
+sudo pacman -Sy
+sudo pacman -Syu
+y
+..
+ll
+cat yazi.toml 
+nvim yazi.toml 
+y
+nvim yazi.toml 
+y
+nvim yazi.toml 
+ll
+mv yazi.toml yazi.toml.old
+vim yazi.toml
+y
+sy
+ll ds923plus/
+whoami
+sudo chown -R push ds923plus/Learning
+ll ds923plus/
+lazygit
+cd ds923plus/
+ll
+cd Learning/
+lazygit
+git@github.com:pushiboo/NetNinja.git
+https://github.com/pushiboo/NetNinja.git
+git clone https://github.com/pushiboo/NetNinja.git
+ssh-add -l
+git clone https://github.com/pushiboo/NetNinja.git
+ssh -T git@github.com
+git clone https://github.com/pushiboo/NetNinja.git
+cd ~
+git clone https://github.com/pushiboo/NetNinja.git
+git config 
+cd ds923plus/Learning/
+git condif --list
+git config --list
+git config --global --list
+git clone https://github.com/pushiboo/NetNinja.git
+ll
+cd NetNinja/
+ll
+lazygit 
+ll
+..
+ll
+..
+ll
+cd Learning/
+ll
+cd NetNinja/
+ll
+y
+yay -S bitwarden
+uwsm app -- brave 
+yazi 
+yazi
+yazi 
+y 
+y dotfiles/
+y
+yazi 
+systemctl status bluetooth.service 
+bluetui 
+systemctl status bluetooth.
+systemctl status bluetooth.service 
+systemctl status bluetooth.target 
+bluecl
+cl
+y
+sy
+y
+git status
+lazygit
+cl
+ds923plus 
+y
+cat /etc/localtime 
+printenv 
+printenv | grep -i time
+timedatectl status
+timedatectl status --property timezone
+timedatectl list-timezones 
+sy
+timedatectl status
+timedatectl status --help
+timedatectl show
+timedatectl show Timezone
+timedatectl show --property Timezone
+timedatectl show --property Timezone > /etc/timezone
+sudo timedatectl show --property Timezone > /etc/timezone
+sudo timedatectl show --property Timezone > ~/docker/vaultwarden/etc/timezone
+mkdir ~/docker/vaultwarden/etc
+sudo timedatectl show --property Timezone > ~/docker/vaultwarden/etc/timezone
+cd ~/docker/vaultwarden/etc/
+ll
+chmod 600 timezone 
+ll
+ll /etc/localtime 
+ln -S /etc/localtime localtime
+ln -S /etc/localtime ./localtime
+ln --help
+ll
+ln -S /etc/localtime localtime
+sudo ln -S /etc/localtime localtime
+faillock --help
+faillock --user push 
+faillock --user push --reset
+faillock --user push 
+sudo ln -S /etc/localtime localtime
+faillock --user push 
+faillock --user push --reset
+sudo -s
+faillock --user push --reset
+sudo ln -S /etc/localtime localtime
+sudo ln -S /etc/localtime ./localtime
+cat /etc/localtime 
+ll /etc/localtime 
+sudo ln -S /usr/share/zoneinfo/Europe/Berlin ./localtime
+sudo ln -S /usr/share/zoneinfo/Europe/Berlin ~/docker/vaultwarden/etc/localtime
+sudo ln -S ~/docker/vaultwarden/etc/localtime /usr/share/zoneinfo/Europe/Berlin 
+ll /etc/localtime 
+sudo ls --help | more
+sudo ln --help | more
+sudo ln -s /usr/share/zoneinfo/Europe/Berlin ~/docker/vaultwarden/etc/localtime
+ll
+chmod 600 localtime 
+ll
+ls -al
+ls -alg
+ls -algd
+ls -algn
+ll
+unlink localtime 
+ll
+..
+ll
+ll -n
+mkdir test
+ll -n
+ls -algn
+chmown -R 1033:100 ../vaultwarden/
+chown -R 1033:100 ../vaultwarden/
+öö
+ls -algn
+printenv
+printenv | grep -v GUM
+ds
+ds923plus
+y
+btop
+y
+exit
+certtool 
+ll
+cd ds923plus/certs/
+ll
+chmod +x create_cert_with_certtool.sh 
+ll
+sh create_cert_with_certtool.sh andreasplichta
+certtool --help
+ll
+rm ca-*
+sh create_cert_with_certtool.sh andreasplichta
+y
+cd ~/ds923plus/certs/
+y
+sh create_cert_with_certtool.sh andreasplichta
+certtool --help
+sh create_cert_with_certtool.sh andreasplichta
+y
+sh create_cert_with_certtool.sh andreasplichta
+ll
+sh create_cert_with_certtool.sh andreasplichta
+certtool --generate-request --load-privkey ca-key.pem --template cert.cfg --outfile test-request.pem
+sh create_cert_with_certtool.sh andreasplichta
+ll
+sh create_cert_with_certtool.sh andreasplichta
+y
+rm ca-*
+sh create_cert_with_certtool.sh andreasplichta
+certtool --generate-request --load-privkey ca-key.pem --template cert.cfg --outfile test-request.pem
+ll
+sh create_cert_with_certtool.sh andreasplichta
+sh create_cert_with_certtool.sh andreasplichta cert.cfg 
+ll
+rm test-request.pem 
+rm ca-*
+rm andreasplichta-key.pem 
+ll
+sh create_cert_with_certtool.sh andreasplichta cert.cfg 
+ll
+sh create_cert_with_certtool.sh andreasplichta cert.cfg 
+cl
+sh create_cert_with_certtool.sh andreasplichta cert.cfg 
+ll
+sh create_cert_with_certtool.sh andreasplichta cert.cfg 
+ll
+cat andreasplichta-cert.pem 
+cat andreasplichta-key.pem 
+cat andreasplichta-request.pem 
+y
+sh create_cert_with_certtool.sh andreasplichta cert.cfg 
+y
+ll
+y
+y
+ds923plus 
+ssh-copy-id .ssh/archmini_ed25519 push@192.168.20.232
+ssh-copy-id -i .ssh/archmini_ed25519 push@192.168.20.232
+ssh -i .ssh/archmini_ed25519
+ssh -i .ssh/archmini_ed25519 192.168.20.232
+y
+<
+y
+pwd
+..
+git clone https://github.com/Buxdehuda/strato-certbot.git
+y
+git clone https://github.com/Buxdehuda/strato-certbot.git
+y
+y
+btop 
+exit
+y
+btop 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ps aux | grep trading
+kill 3399
+ps aux | grep trading
+kill 3399
+ps aux | grep trading
+host
+host -a
+host -A
+hostname
+ping archmini
+ping ds923plus
+y
+sudo mount -a
+y /etc/
+sy /etc/resolv.conf 
+sy /etc/hosts 
+omarchy-version
+omarchy-update
+omarchy upgrade-to-quattro
+reboot now
+snapper
+snapper --help
+sudo pacman --help
+sudo pacman -Q snapper
+sudo pacman -Q snapper-suupport
+sudo pacman -Q snapper-support
+df -h
+df -Th
+yay -S snapper-support
+sudo snapper -c root create-config /   
+clear
+snapper -pv
+sudo pacman -S snapper-support
+y
+sy
+y
+sy
+ip
+ip a
+hostname
+nmtui
+sudo networkctl renew 
+sudo networkctl renew enp3s0f0 
+sudo networkctl status 
+sudo networkctl down enp3s0f0 
+sudo networkctl status 
+sudo networkctl up enp3s0f0 
+sudo networkctl status 
+sy
+sy
+sudo mount -av
+ping ds923plus
+ping ds923plus.push
+ping ds923plus
+ping ds923plus.push
+sudo mount -av
+sudo systemctl daemon-reload 
+sudo mount -av
+dfnfs 
+omarchy upgrade-to-quattro
+sudo pacman -s chsnap
+sudo pacman -S chsnap
+sudo pacman -S snapper-support   
+snapper
+sudo pacman -S snapper
+omarchy upgrade-to-quattro
+df -ah
+fdisk -l
+sudo fdisk -l
+fsck
+omarchy upgrade-to-quattro
+y
+ps aux | grep hypri
+kill 1130
+ps aux | grep hypri
+hypridle &
+history 
+stow bash_archmini/
+sudo yazi 
+yazi
+cd dotfiles/
+stow bash_archmini/
+yazi
+ll .ssh/
+sh dotfiles/bash_archmini/bash/addSSHKey.sh 
+echo $SSH_AUTH_SOCK
+ssh-add -l
+sh dotfiles/bash_archmini/bash/addSSHKey.sh 
+ssh-add -l
+systemctl --user enable --now ssh-agent.service   
+ssh-add -l
+sh dotfiles/bash_archmini/bash/addSSHKey.sh 
+ll 
+ll .ssh/
+sudo chown -R push:push .ssh/
+ll .ssh/
+sh dotfiles/bash_archmini/bash/addSSHKey.sh 
+ll
+y
+sudo yazi
+ll
+ls -aö
+ls -al
+ls -al .config/
+chown -R  push:push .config/yazi/
+sudo chown -R  push:push .config/yazi/
+ls -al .config/
+yazi .config/yazi/
+sudo yazi
+yazi .config/yazi/
+nvim
+yazi .config/yazi/
+sudo yazi /root/
+git clone https://github.com/pushiboo/dotfiles.git
+mv dotfiles/ dodfiles
+git clone https://github.com/pushiboo/dotfiles.git
+ll
+mv dodfiles/ dotfiles/
+ll
+ssh-add -l
+psaux
+ps aux
+ps aux | grep -i thunder
+kill -9 58493
+ps aux | grep -i thunder
+omarchy-snapshot create 
+yazi .config/hypr
+y /usr/bin/
+which omarchy-system-lock 
+yazi /usr/share/omarchy/bin/omarchy-system-lock
+~
+y
+nvim -v
+nvim
+y
+nvim
+nvim#
+nvim
+y
+nvim
+y
+nvim
+mise trust
+pwd
+~
+cd ~
+y
+nvim
+y
+nvim
+y
+reboot
+y
+y /usr/share/omarchy/
+omarchy plymouth prevvvvvvvvvvvvvvvvview
+omarchy plymouth preview
+cd .config/omarchy/branding/
+omarchy plymouth preview logo.txt 
+omarchy plymouth preview '#7da6ff' logo.txt 
+omarchy plymouth preview '#7da6ff' '#fff' logo.txt 
+omarchy plymouth preview '#7da6ff' logo.png ./
+omarchy-plymouth-preview '#7da6ff' logo.png ./
+omarchy-plymouth-preview '#7da6ff' logo.png 
+omarchy-plymouth-preview '#7da6ff' '#fff' ./logo.png ./
+omarchy-plymouth-preview '#7da6ff' '#ff9e64' ./logo.png ./
+omarchy-plymouth-preview '#7da6ff' '#ff9e64' ./logo.png 
+omarchy-plymouth-preview '#7da6ff' '#ff9e64' ./logo.png ./
+y .config/hypr/
+cargo
+sudo pacman -S awwww
+yay -S awww
+awww-daemon 
+awww -v
+awww 
+awww -V
+aur 
+yay
+yay --help
+yay -Yc
+yay -Sc
+yay -c
+yay -Scc
+sudo pacman -Sc
+ll /var/cache/pacman/pkg/download-6kRv1e
+ll /var/cache/pacman/pkg/download-
+ll /var/cache/pacman/pkg/
+rm -rf  /var/cache/pacman/pkg/download-*
+sudo rm -rf  /var/cache/pacman/pkg/download-*
+sudo pacman -Scy
+sudo pacman -Sc
+sudo pacman -Scc
+sudo paccache -rk1
+sudo paccache -r
+y .config/omarchy/plugins/
+awww set .config/omarchy/themes/push-night/backgrounds/0-winding-road.jpg 
+awww
+awww img .config/omarchy/themes/push-night/backgrounds/0-winding-road.jpg 
+awww query
+awww help
+scdoc
+awww img -help
+awww query
+yay -help
+omarchy plugin list
+omarchy plugin -h
+omarchy plugin clone omarchy.background
+omarchy plugin lis
+omarchy plugin -h
+y
+cd dotfiles/
+stow systemd/
+ll ~/.config/systemd/
+ll ~/.config/systemd/user/
+y
+cd dotfiles/
+stow systemd/
+y
+omarchy background
+omarchy background --help
+systemctl --user daemon-reload 
+systemctl --user enable --now awww.service
+awww -h
+awww toggle -h
+awww query
+y
+ln --help
+#ln -s ../../backgrounds/push-night/
+ll
+ln -s ../../backgrounds/ backgrounds/
+ll
+ll ../../
+ll ../../backgrounds/
+ll ../../backgrounds/push-night/
+ll         backgrounds/
+unlink         backgrounds/backgrounds 
+ll         backgrounds/
+ll
+ln -s ../../backgrounds/ backgrounds
+ll
+ll backgrounds/backgrounds 
+unlink backgrounds/backgrounds 
+ll backgrounds/backgrounds 
+ll
+rm -rf backgrounds/
+ll
+ln -sn ../../backgrounds/push-night/ backgrounds
+ll
+ll backgrounds/
+ll
+pwd
+ll backgrounds/
+awww 
+awww img -h
+awww 
+awww query
+y
+journalctl 
+journalctl  
+journalctl  --help
+journalctl  -a
+journalctl  -i
+dmesg
+sudo dmesg
+journalctl  --help
+journalctl  --user
+y
+y /usr/share/omarchy/themes/
+sudo systemctl status awww
+sudo systemctl status --user awww.service
+sudo systemctl status --user 
+sudo systemctl status
+sudo systemctl --user 
+sudo systemctl --user awww.service
+sudo systemctl status --user 
+sudo systemctl --user 
+sudo systemctl 
+systemctl --user enable --now ssh-agent.service   
+systemctl --user status awww.service
+sudo systemctl --user status awww.service
+sudo systemctl --user enable --now ssh-agent.service   
+sudo systemctl enable --now ssh-agent.service   
+sudo systemctl --machine=push@.host --user enable --now ssh-agent.service   
+sudo systemctl --machine=push@.host status   
+sudo systemctl status --user awww.service
+sudo systemctl --machine=push@.host status --user awww.service
+demsg
+sudo demsg
+sudo dmsg
+sudo dmesg
+sudo systemctl --machine=push@.host status --user awww.service
+sudo systemctl --machine=push@.host start --user awww.service
+sudo systemctl --machine=push@.host status --user awww.service
+sudo reboot now
+y .config/systemd/user/awww.service 
+y /etc/systemd/
+y ~/.config/systemd/user/awww.service 
+:Q
+y ~/.config/systemd/user/awww.service 
+systemctl --user status awww
+y .config/systemd/user/
+y scripts/changeBackground.sh
+awww query
+awww img -o DP-1 ~/.config/omarchy/themes/push-night/backgrounds/1-quattro.jpg 
+awww img -o HDMI-A-2 ~/.config/omarchy/themes/push-night/backgrounds/2-Bonsai-Plant.png 
+awww img -o HDMI-A-2 ~/.config/omarchy/backgrounds/push-night/0-winding-road.jpg 
+df -ah 
+y andreas/arch/archmini/home/push/backgrounds/
+y andreas/
+y andreas
+btop
+systemctl --user list-timers
+y /usr/share/omarchy
+remit-tsil
+systemctl --user 
+y
+systemctl --user list-timers 
+y .config/omarchy/
+systemctl --user list-timers 
+cd 
+scripts/changeBackground.sh
+sudo reboot 
+y .config/hypr/
+y .config/systemd/user/
+y ~/scripts/
+y ~/scripts/changeBackground.sh
+printenv
+printenv | grep -i scree
+y ~/scripts/changeBackground.sh
+printenv | grep -i scree
+printenv SREENLEFT
+y ~/scripts/changeBackground.sh
+printenv SREENLEFT
+cd ~/scripts/
+sh changeBackground.sh 
+printenv | grep SCREE
+printenv | grep SCR
+y changeBackground.sh 
+printenv SCREENLEFT
+printenv SCREENRIGHT
+sh scripts/changeBackground.sh 
+printenv
+printenv | grep SCRE
+sh scripts/changeBackground.sh 
+echo $SCREENLEFT
+y
+. ~/.bashrc 
+y
+. ~/.bashrc 
+printenv SREENLEFT
+printenv SREENRIGHT
+aww query 
+awww query 
+awww query | cud -d "image"
+awww query | cud -d "image" -f 2
+awww query | cu -d "image" -f 2
+awww query | cut -d "image" -f 2
+awww query | cut -d ":" -f 2
+awww query 
+awww query -o DP-1
+awww query -h
+awww query -a
+awww query -j
+awww query -a 
+awww query | cut -d " " -f 2
+awww query | cut -d " " -f 3
+awww query | cut -d " " -f 4
+awww query | cut -d " " -f 5
+awww query | cut -d " " -f 6
+awww query | cut -d " " -f 8
+awww query | cut -d " " -f 9
+awww query | cut -d " " -f 9 | head -n 1
+awww query | cut -d " " -f 9 | tail -n -1
+. ~/.bashrc 
+printenv SREENLEFT
+printenv SREENRIGHT
+printenv SCREENRIGHT
+while true, do printenv SCREENLEFT ; printenv SCREENRIGHT; sleep 2; done 
+while true; do printenv SCREENLEFT ; printenv SCREENRIGHT; sleep 2; done 
+. ~/bash/envs 
+. ~/.bashrc 
+printenv SCREENRIGHT
+while true; do printenv SCREENLEFT ; printenv SCREENRIGHT; sleep 2; done 
+awww 
+awww query
+#omarchy pluging validate 
+omarchy plugins list
+omarchy plugin list
+omarchy plugin validate push.lock
+omarchy plugin
+omarchy plugin list
+omarchy plugin enable push.lock
+omarchy plugin validate push.lock
+omarchy plugin validate .config/omarchy/plugins/push.lock/
+omarchy plugin validate .config/omarchy/plugins/push.lock/LockView.qml 
+omarchy plugin validate .config/omarchy/plugins/push.lock
+omarchy plugin validate .config/omarchy/plugins/push.lock/
+omarchy plugin validate 
+omarchy plugin validate .config/omarchy/plugins/push.lock/
+omarchy plugin lust
+omarchy plugin list
+y
+cd~
+~
+cd ~
+omarchy plugin
+omarchy plugin list
+omarchy plugin enable push.lock
+omarchy plugin disable push.lock
+omarchy plugin enable push.lock
+omarchy plugin list
+omarchy-shell shell rescanPlugins
+omarchy plugin list
+PLUGIN_ID="push.lock"
+PLUGIN_DIR="$HOME/.config/omarchy/plugins/$PLUGIN_ID"
+omarchy plugin validate "$PLUGIN_DIR"
+qmllint -I "$OMARCHY_PATH/shell" "$PLUGIN_DIR/BarWidget.qml" "$PLUGIN_DIR/Panel.qml"
+omarchy plugin add https://github.com/seyhunak/omarchy-oma-theme.git --enable
+omarchy plugin list
+omarchy plugin -h
+omarchy plugin disable Oma
+omarchy plugin list
+omarchy plugin disable Oma
+omarchy plugin remove Oma
+omarchy plugin remove io.github.seyhunak.oma
+omarchy plugin disable io.github.seyhunak.oma
+omarchy plugin disable Oma
+omarchy plugin list
+omarchy clone omarchy.lock-screen
+omarchy clone omarchy.lock
+omarchy plugin clone omarchy.lock
+y ~/.config/omarchy/plugins/
+omarchy plugin list
+omarchy plugin disable omarchy.audio
+omarchy plugin enable omarchy.audio
+omarchy plugin 
+omarchy plugin clone omarchy.audio
+omarchy plugin list
+y .config/omarchy/plugins/
+ll ~/.config/omarchy/backgrounds/push-night/
+chmod 755 ll ~/.config/omarchy/backgrounds/push-night/
+chmod 755 ~/.config/omarchy/backgrounds/push-night/*
+ll ~/.config/omarchy/backgrounds/push-night/
+chmod 655 ~/.config/omarchy/backgrounds/push-night/*
+ll ~/.config/omarchy/backgrounds/push-night/
+sh scripts/changeBackground.sh 
+sh ~/scripts/changeBackground.sh 
+printenv SCREENRIGHT
+awww query
+#omarchy plugin disable push.lock
+#omarchy plugin lis
+#omarchy plugin list
+omarchy plugin list
+omarchy plugin disable push.lock
+omarchy plugin list
+omarchy plugin enable push.lock
+omarchy plugin list
+omarchy shell 
+omarchy shell lock
+omarchy shell LockView.qml 
+fzf main.cpp
+printenv SCREENRIGHT
+printenv SCREENLeft
+printenv SCREENLEFT
+y .config/omarchy/plugins/
+y .config/hypr/
+y /usr/share/omarchy/shell/plugins/
+diff /usr/share/omarchy/shell/plugins/lock/LockView.qml ~/.config/omarchy/plugins/push.lock/LockView.qml 
+diff -y /usr/share/omarchy/shell/plugins/lock/LockView.qml ~/.config/omarchy/plugins/push.lock/LockView.qml 
+cl
+dmesg
+sudo dmesg
+journalctl 
+journalctl -r
+journalctl -r -n 50
+watch "journalctl -r -n 50"
+cd ~
+y .config/omarchy/plugins/
+omarchy-launch-or-focus
+omarchy shell lock status
+omarchy shell lock list
+omarchy shell lock -h
+omarchy shell lock list
+omarchy shell lock status
+cat .config/omarchy/backgrounds/push-night/1-quattro.jpg 
+qucikshellllllll
+qucikshel
+quickshell
+omarchy shell currentOutput.name
+omarchy-menu
+whi homarchy-menu
+which omarchy-menu
+ll /usr/share/omarchy/bin/
+ll /usr/share/omarchy/bin/ | grep -i lock
+y /usr/share/omarchy/bin/
+omarchy shell restart lock
+omarchy shell omarchy-restart-shell 
+ell omarchy-restart-shell 
+omarchy-restart-shell 
+ll | grep -i lock
+y ../../hypr/
+omarchy-system-lock -v
+omarchy-system-lock 
+omarchy-restart-shell 
+omarchy-system-lock 
+omarchy-shell lock lock
+journalctl --user 
+journalctl --user -r
+y /usr/share/omarchy/default/plymouth/
+omarchy-shell lock lock
+omarchy-restart-shell ; sleep 2 ; omarchy-shell lock lock
+ll .config/omarchy/backgrounds/push-night/wall*
+ll .config/omarchy/backgrounds/push-night/
+ll .config/omarchy/backgrounds/push-night/1-quattro.jpg 
+chmod 755 .config/omarchy/backgrounds/push-night/1-quattro.jpg 
+ll .config/omarchy/backgrounds/push-night/1-quattro.jpg 
+ll .config/omarchy/backgrounds/push-night/
+chmod 755 .config/omarchy/backgrounds/push-night/*
+ll .config/omarchy/backgrounds/push-night/
+y .config/omarchy/backgrounds/push-night/
+omarchy plymouth preview
+omarchy plymouth preview "9ece6a" "449dab" ~/.local/state/omarchy/current/theme/unlock.png 
+omarchy plymouth preview "9ece6a" "449dab" ~/.local/state/omarchy/current/theme/unlock.png  ~/
+omarchy plymouth preview "9ece6a" "449dab" ~/.config/omarchy/themes/push-night/unlock.png ~/.config/omarchy/themes/push-night/
+omarchy plymouth preview "9ece6a" "449dab" ~/.config/omarchy/themes/push-night/logo.png ~/.config/omarchy/themes/push-night/
+omarchy plymouth preview "9ece6a" "449dab" ~/.config/omarchy/themes/push-night/preview-unlock.png ~/.config/omarchy/themes/push-night/
+ll /home/push/.config/omarchy/themes/push-night/
+omarchy-restart-shell 
+ls /home/push/.config/omarchy/themes/push-night/1-quattro.jpg"
+
+ls /home/push/.config/omarchy/themes/push-night/1-quattro.jpg"
+ls /home/push/.config/omarchy/themes/push-night/1-quattro.jpg
+ls /home/push/.config/omarchy/themes/push-night/backgrounds/1-quattro.jpg 
+ls /home/push/.config/omarchy/themes/push-night/1-quattro.jpg"
+ls /home/push/.config/omarchy/themes/push-night/backgrounds/1-quattro.jpg
+omarchy-restart-shell 
+omarchy-shell lock
+omarchy-shell lock lock
+omarchy-shell lock push.lock
+omarchy-shell lock push
+omarchy-shell 
+omarchy-shell shell listPlugins
+omarchy-shell 
+omarchy-shell -q
+omarchy-shell shell listPlugins -q
+omarchy-shell shell listPlugins 
+omarchy-shell shell listPlugins | grep -i lock
+omarchy plugin list
+omarchy-shell shell 
+omarchy-shell shell lock
+omarchy-shell shell lock lck
+omarchy-shell shell lock lock
+omarchy-shell shell lock lock -h
+omarchy-shell shell -h
+omarchy-shell -h
+omarchy-shell -q push.lock
+omarchy-restart-shell 
+echo $OMARCHY_PATH
+y $OMARCHY_PATH
+omarchy plugin list
+omarchy plugin validate ~/.config/omarchy/plugins/push.lock/
+omarchy plugin validate ~/.config/omarchy/plugins/push.lock/manifest.json 
+omarchy plugin validate ~/.config/omarchy/plugins/push.lock/
+omarchy plugin validate /usr/share/omarchy/shell/plugins/lock
+omarchy plugin validate /usr/share/omarchy/shell/plugins/lock/
+omarchy plugin validate ~/.config/omarchy/plugins/push.lock/
+omarchy-plugin-validate ~/.config/omarchy/plugins/push.lock/
+omarchy-plugin-validate ~/.config/omarchy/plugins/push.lock
+omarchy-plugin-validate ~/.config/omarchy/plugins/
+omarchy-plugin-validate ~/.config/omarchy/plugins/push.audio/
+y ~/.config/omarchy/
+y
+ls /home/push/.config/omarchy/backgrounds/push-night/1-quattro.jpg 
+omarchy-restart-shell 
+omarchy-system-lock 
+omarchy-restart-shell 
+omarchy-system-lock 
+omarchy-restart-shell 
+omarchy-system-lock 
+omarchy-restart-shell ; sleep 1; omarchy-system-lock
+omarchy-system-lock 
+omarchy-restart-shell ; sleep 1; omarchy-system-lock
+omarchy-restart-shell ; sleep 1.5; omarchy-system-lock
+omarchy-restart-shell 
+omarchy-system-lock 
+omarchy-restart-shell ; sleep 1.5; omarchy-system-lock
+omarchy-restart-shell 
+omarchy-system-lock 
+omarchy-restart-shell 
+omarchy-system-lock 
+omarchy-restart-shell ; sleep 1.5 ; omarchy-system-lock
+omarchy-system-lock 
+omarchy-restart-shell ; sleep 1.5 ; omarchy-system-lock
+omarchy-system-lock 
+omarchy plugin validate push.lock
+cd ~
+omarchy plugin validate push.lock
+omarchy plugin validate .config/omarchy/plugins/push.lock/
+omarchy plugin list
+omarchy plugin list | grep overlay
+omarchy-shell shell rescanPlugins
+omarchy plugin list | grep overlay
+y .config/omarchy/plugins/
+omarchy shell push.lock
+omarchy shell plugin push.lock
+omarchy shell -h
+omarchy shell toggle push.lock
+omarchy shell toggle omarchy.lock
+omarchy shell list
+omarchy shell lock
+omarchy plugin
+omarchy plugin remove push.lock
+omarchy plugin clone omarchy.lock
+omarchy-shell shell lock
+omarchy-shell lock lock
+omarchy-restart-shell 
+omarchy-shell lock lock
+omarchy-restart-shell 
+omarchy-shell lock lock
+printenv | grep SCREEN
+mkdir -p ~/.config/uwsm
+touch ~/.config/uwsm/env   
+y scripts/
+sh changeBackground.sh 
+y scripts/
+sh changeBackground.sh 
+y scripts/
+sh changeBackground.sh 
+y scripts/
+sh changeBackground.sh 
+y scripts/
+sh changeBackground.sh 
+y scripts/
+sh changeBackground.sh 
+omarchy-shell lock lock
+omarchy-shell shell restart
+omarchy-shell shell -
+omarchy-shell shell -h
+omarchy-shell -h
+omarchy-restart-shell 
+omarchy-shell lock lock
+omarchy-restart-shell 
+journalctl --user -u omarchy-shell -f
+y .config/hypr
+sudo systemctl daemon-reload 
+sudo systemctl --user list
+awww-daemon start
+awww-daemon 
+awww-daemon &
+omarchy-shell lock lock
+omarchy-restart-shell 
+omarchy-shell lock lock
+y
+y .config/omarchy/plugins/push.lock/
+omarchy-restart-shell 
+omarchy-shell lock lock
+y .config/omarchy/plugins/push.lock/
+omarchy-restart-shell 
+omarchy-shell lock lock
+omarchy-restart-shell 
+y .config/omarchy/plugins/push.lock/
+y .config/hypr/
+cd 
+quickshell.screen
+quickshell 
+omarchy-shell lock lock
+omarchy-system-lock 
+omarchy-shell shell rescanPlugin
+omarchy-shell shell rescanPlugins
+omarchy-system-lock 
+omarchy-restart-shell 
+omarchy-system-lock 
+omarchy plugin list
+omarchy-restart-shell 
+omarchy-system-lock 
+omarchy-restart-shell 
+omarchy-system-lock 
+omarchy plugin list
+omarchy plugin disable push.lock
+omarchy plugin enable push.lock
+omarchy-system-lock 
+omarchy-restart-shell ; sleep 2 ; omarchy-system-lock 
+omarchy plugin list
+pgrep -fa omarchy-shell
+pgrep -fa omarchy
+omarchy-restart-shell
+omarchy-system-lock 
+omarchy-shell lock lock
+omarchy-shell shell rescanPlugins
+omarchy plugin list
+omarchy plugin validate .config/omarchy/plugins/push.lock/
+quickshell -p $OMARCHY_PATH/shell
+history 
+y scripts/
+y .config/omarchy/plugins/
+pgrep -fa omarchy
+pgrep -fa omarchy-shell
+omarchy-shell lock lock
+omarchy-restart-shell
+omarchy-system-lock 
+omarchy plugin 
+omarchy plugin remove push.lock
+omarchy plugin clone omarchy.lock
+y .config/omarchy/plugins/
+y .config/omarchy/plugins/
+omarchy-restart-shell ; sleep 2 ; omarchy-system-lock 
+omarchy-restart-shell
+omarchy-shell lock lllock
+omarchy-shell lock lock
+omarchy-reinstall-configs 
+sh scripts/changeBackground.sh 
+omarchy  plugin list
+omarchy  plugin disable omarchy.lock
+omarchy  plugin eable push.lock
+omarchy  plugin enable push.lock
+omarchy  plugin list
+omarchy-restart-shell ; sleep 2 ; omarchy-system-lock 
+omarchy-shell shell rescanPlugins   
+omarchy-restart-shell ; sleep 2 ; omarchy-system-lock 
+omarchy  plugin list
+omarchy  plugin disable push.lock
+omarchy  plugin list
+omarchy  plugin enable push.lock
+omarchy-restart-shell ; sleep 2 ; omarchy-system-lock 
+sudo dmseg
+sudo dmesg
+journalctl --user -u omarchy-shell -f
+sudo journalctl --vacuum-time=7d
+sudo journalctl --user
+omarchy-restart-shell ; sleep 2 ; omarchy-system-lock 
+y .config/omarchy/plugins/
+omarchy-restart-shell ; sleep 2 ; omarchy-system-lock 
+tail /var/log/journal/f1567c2883594fb782627ae17c57ef70/user-1033.journal 
+:cl
+cl
+clear

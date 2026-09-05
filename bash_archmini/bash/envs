@@ -4,3 +4,10 @@ export BAT_THEME=ansi
 
 # set editor
 export EDITOR=nvim
+
+# set Background Vars
+# screenLeft=$(awww query | head -n 1 | cut -d ':' -f 2 | sed 's. ..g')
+screenLeft=$(awww query | cut -d " " -f 9 | head -n 1)
+screenRight=$(awww query | cut -d " " -f 9 | tail -n -1)
+export SCREENLEFT="$screenLeft"
+export SCREENRIGHT="$screenRight"
