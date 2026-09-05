@@ -52,4 +52,6 @@ alias syazi='sudo -E yazi'
 alias ssh_ds923plus="TERM=xterm-256color ssh -i ~/.ssh/archmini_ed25519 ledroot@ds923plus"
 alias ssh_pihole="TERM=xterm-256color ssh -i ~/.ssh/archmini_ed25519 push@pihole.push"
 alias ssh_npm="TERM=xterm-256color ssh -i ~/.ssh/archmini_ed25519 push@npm.push"
-
+# öazy stuff
+alias lg="lazygit"
+alias ld="lazydocker"

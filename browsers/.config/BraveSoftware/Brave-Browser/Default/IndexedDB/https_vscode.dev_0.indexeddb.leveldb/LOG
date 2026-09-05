@@ -1,0 +1,5 @@
+2026/08/21-23:34:28.721 1d85e Creating DB /home/push/.config/BraveSoftware/Brave-Browser/Default/IndexedDB/https_vscode.dev_0.indexeddb.leveldb since it was missing.
+2026/08/21-23:34:28.735 1d85e Reusing MANIFEST /home/push/.config/BraveSoftware/Brave-Browser/Default/IndexedDB/https_vscode.dev_0.indexeddb.leveldb/MANIFEST-000001
+2026/08/22-00:02:43.127 1d852 Level-0 table #5: started
+2026/08/22-00:02:43.155 1d852 Level-0 table #5: 809262 bytes OK
+2026/08/22-00:02:43.162 1d852 Delete type=0 #3

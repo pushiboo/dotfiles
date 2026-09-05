@@ -1,0 +1,111 @@
+{
+   "checksum": "633bdcff348568894e7fca4092607481",
+   "roots": {
+      "bookmark_bar": {
+         "children": [ {
+            "date_added": "13431821154596401",
+            "date_last_used": "0",
+            "guid": "37895049-6aa0-46cb-adc2-43849058987f",
+            "id": "5",
+            "meta_info": {
+               "power_bookmark_meta": ""
+            },
+            "name": "ds923+",
+            "type": "url",
+            "url": "https://ds923plus.push:5001/#/signin"
+         }, {
+            "children": [ {
+               "date_added": "13431884822746324",
+               "date_last_used": "0",
+               "guid": "8c81d3cc-f2e6-4e41-b36e-0a20d9993b59",
+               "id": "7",
+               "meta_info": {
+                  "power_bookmark_meta": ""
+               },
+               "name": "Boot Omarchy without a LUKS passphrase | schimana.net",
+               "type": "url",
+               "url": "https://schimana.net/en/blog/2026/omarchy-luks-auto-entsperren/"
+            }, {
+               "date_added": "13431958996706866",
+               "date_last_used": "0",
+               "guid": "bf1d143f-f45c-4ebf-b396-73c53ac5044c",
+               "id": "10",
+               "meta_info": {
+                  "power_bookmark_meta": ""
+               },
+               "name": "LGFae/awww: An Answer to your Wayland Wallpaper Woes - Codeberg.org",
+               "type": "url",
+               "url": "https://codeberg.org/LGFae/awww"
+            }, {
+               "date_added": "13432410031640324",
+               "date_last_used": "0",
+               "guid": "38d0607c-00ec-4960-b450-dd4e527d45c3",
+               "id": "12",
+               "meta_info": {
+                  "power_bookmark_meta": ""
+               },
+               "name": "Browse Plugins | Omarchy Plugins",
+               "type": "url",
+               "url": "https://omarchyplugins.com/?category=System&sort=stars"
+            }, {
+               "date_added": "13432467188749227",
+               "date_last_used": "0",
+               "guid": "08d8da83-2767-468d-974d-ca3e2e6874ca",
+               "id": "14",
+               "meta_info": {
+                  "power_bookmark_meta": ""
+               },
+               "name": "Browse Plugins | Omarchy Plugins",
+               "type": "url",
+               "url": "https://omarchyplugins.com/?source=builtin&page=2"
+            }, {
+               "date_added": "13432467193551914",
+               "date_last_used": "0",
+               "guid": "7f795fa9-8708-46d7-85db-56b816d483d8",
+               "id": "15",
+               "meta_info": {
+                  "power_bookmark_meta": ""
+               },
+               "name": "Shell Plugins — The Omarchy Manual",
+               "type": "url",
+               "url": "https://omarchy.org/manual/shell-plugins/"
+            } ],
+            "date_added": "13431884841612772",
+            "date_last_used": "0",
+            "date_modified": "13432467193551914",
+            "guid": "5a0088be-c0e7-40e2-ad16-e07e4450ea17",
+            "id": "8",
+            "name": "omarchy",
+            "type": "folder"
+         } ],
+         "date_added": "13431819319903671",
+         "date_last_used": "0",
+         "date_modified": "13431884822746324",
+         "guid": "0bc5d13f-2cba-5d74-951f-3f233fe6c908",
+         "id": "1",
+         "name": "Bookmarks bar",
+         "type": "folder"
+      },
+      "other": {
+         "children": [  ],
+         "date_added": "13431819319903671",
+         "date_last_used": "0",
+         "date_modified": "0",
+         "guid": "82b081ec-3dd3-529c-8475-ab6c344590dd",
+         "id": "2",
+         "name": "Other bookmarks",
+         "type": "folder"
+      },
+      "synced": {
+         "children": [  ],
+         "date_added": "13431819319903671",
+         "date_last_used": "0",
+         "date_modified": "0",
+         "guid": "4cf2e351-0e85-532b-bb37-df045d8f8d0f",
+         "id": "3",
+         "name": "Mobile bookmarks",
+         "type": "folder"
+      }
+   },
+   "version": 1
+}
