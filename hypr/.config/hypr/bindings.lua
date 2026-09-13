@@ -28,6 +28,7 @@ o.bind("SUPER + SHIFT + K", "Bitwarden", "bitwarden")
 -- hl.unbind("SUPER + SHIFT + B")
 hl.unbind("SUPER + SHIFT + E")
 o.bind("SUPER + SHIFT + E", "Thunderbird", "thunderbird")
+o.bind("SUPER + SHIFT + L", "Lock screen explorer", "omarchy-shell lock explore")
 
 -- Logitech MX Keys examples:
 -- o.bind("SUPER + SHIFT + S", nil, "omarchy-capture-screenshot")

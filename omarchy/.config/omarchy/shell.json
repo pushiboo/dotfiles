@@ -62,5 +62,23 @@
       ]
     }
   },
-  "plugins": []
+  "plugins": [
+    {
+      "id": "push.lock"
+    },
+    {
+      "id": "io.github.sirjul1337.lock-explorer",
+      "design": "eyes",
+      "unlock": "fade",
+      "blankMs": 900000,
+      "avatar": "/home/push/Pictures/photos_shared/meMySelfAndI/IMG_20250926_160914.jpg",
+      "boot": "eyes"
+    }
+  ],
+  "disabledPlugins": [
+    "omarchy.lock"
+  ],
+  "cloneSourceRestores": [
+    "push.lock"
+  ]
 }
