@@ -42,7 +42,7 @@
           "id": "omarchy.tray"
         },
         {
-          "id": "crmne.hyprmoncfg"
+          "id": "omarchy.network"
         },
         {
           "id": "omarchy.agents"
@@ -51,13 +51,13 @@
           "id": "omarchy.bluetooth"
         },
         {
-          "id": "omarchy.network"
-        },
-        {
           "id": "omarchy.audio"
         },
         {
           "id": "omarchy.monitor"
+        },
+        {
+          "id": "crmne.hyprmoncfg"
         },
         {
           "id": "omarchy.power"
