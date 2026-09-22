@@ -1,7 +1,13 @@
 # ignore Brave Chache Folder
 # ignor BraveSoftware
-BraveSoftware/.config/BraveSoftware/
+# /home/push/.config/BraveSoftware/
+# /home/push/dotfiles/browsers/.config/BraveSoftware/
+# ./browsers/.config/BraveSoftware/
+# ./browsers/.config/BraveSoftware
+browsers/
 # ignore  Chromium 
 chromium/.config/chromium/
 # Ignore log files
 *.log
+bash_archmini/.bash_history
+.bash_history
