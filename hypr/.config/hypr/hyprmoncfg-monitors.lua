@@ -3,7 +3,7 @@
 hl.monitor({
   output = "desc:AOC 24G2W1G3- SXINCHA005940",
   mode = "1920x1080@60.00",
-  position = "4012x82",
+  position = "1920x0",
   scale = 1,
   sdr_min_luminance = 0.2,
   sdr_max_luminance = 80,
@@ -12,8 +12,18 @@ hl.monitor({
 hl.monitor({
   output = "desc:AOC 24G2W1G3- SXINCHA006621",
   mode = "1920x1080@60.00",
-  position = "2092x82",
+  position = "0x0",
   scale = 1,
   sdr_min_luminance = 0.2,
   sdr_max_luminance = 80,
 })
+
+hl.workspace_rule({ workspace = "1", monitor = "desc:AOC 24G2W1G3- SXINCHA006621", default = true, persistent = true })
+hl.workspace_rule({ workspace = "2", monitor = "desc:AOC 24G2W1G3- SXINCHA006621" })
+hl.workspace_rule({ workspace = "3", monitor = "desc:AOC 24G2W1G3- SXINCHA006621" })
+hl.workspace_rule({ workspace = "4", monitor = "desc:AOC 24G2W1G3- SXINCHA005940", default = true, persistent = true })
+hl.workspace_rule({ workspace = "5", monitor = "desc:AOC 24G2W1G3- SXINCHA005940" })
+hl.workspace_rule({ workspace = "6", monitor = "desc:AOC 24G2W1G3- SXINCHA005940" })
+hl.workspace_rule({ workspace = "7", monitor = "desc:AOC 24G2W1G3- SXINCHA006621" })
+hl.workspace_rule({ workspace = "8", monitor = "desc:AOC 24G2W1G3- SXINCHA006621" })
+hl.workspace_rule({ workspace = "9", monitor = "desc:AOC 24G2W1G3- SXINCHA006621" })
