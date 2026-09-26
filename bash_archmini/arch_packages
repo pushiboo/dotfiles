@@ -13,6 +13,7 @@ sudo pacman -S nfs-utils
 sudo pacman -S dnsutils
 sudo pacman -S rsync
 sudo pacman -S lsof
+sudo pacman -S awww
 
 
 # install any tools via yay
