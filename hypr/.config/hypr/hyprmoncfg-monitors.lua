@@ -2,7 +2,7 @@
 
 hl.monitor({
   output = "desc:AOC 24G2W1G3- SXINCHA005940",
-  mode = "1920x1080@60.00",
+  mode = "1920x1080@120.00",
   position = "1920x0",
   scale = 1,
   sdr_min_luminance = 0.2,
