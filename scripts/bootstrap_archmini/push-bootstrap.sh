@@ -9,19 +9,23 @@
 #    every package folder found inside the dotfiles repo with GNU stow
 # 5. Mounts the SMB/CIFS shares on ds923plus.push (andreas, docker,
 #    photos_shared, web)
+# 6. Writes those shares into a standalone fstab-snippet file and merges
+#    it into /etc/fstab so they auto-mount on reboot too
 #
 # Usage:
 #   ./push-bootstrap.sh [options]
 #
 # Options (all have env-var equivalents shown in brackets):
 #   -p, --packages FILE     Package list file            [PACKAGES_FILE]     (default: ./push_packages.list)
-#   -k, --key FILE          SSH private key to load       [SSH_KEY_PATH]      (default: ./id_ed25519)
+#   -k, --key FILE          SSH private key to load       [SSH_KEY_PATH]      (default: $HOME/.ssh/archmini_ed25519)
 #   -r, --repo URL          Dotfiles git remote (SSH URL) [DOTFILES_REPO]     (required only for first clone)
 #   -d, --dotfiles-dir DIR  Where the repo lives           [DOTFILES_DIR]      (default: /home/push/dotfiles)
 #   -t, --target DIR        stow target (usually $HOME)    [STOW_TARGET]       (default: $HOME)
 #   -b, --backup-dir DIR    Where conflicting files go      [BACKUP_DIR]        (default: ~/.dotfiles-backup-<timestamp>)
 #   --smb-credentials FILE  SMB credentials file            [SMB_CREDENTIALS_FILE] (default: ~/.smbcredentials)
 #   --skip-smb              Skip mounting the SMB shares
+#   --fstab-file FILE       Standalone file holding the fstab lines [SMB_FSTAB_FILE] (default: /etc/smb-shares.fstab)
+#   --skip-fstab            Skip writing /etc/fstab entries (mount-only, no auto-mount on reboot)
 #   -h, --help              Show this help and exit
 #
 # Example:
@@ -31,6 +35,7 @@
 #     --repo git@github.com:youruser/dotfiles.git
 
 set -euo pipefail
+trap 'ec=$?; printf "\033[1;31m[push-bootstrap]\033[0m Aborted (exit %s) at line %s while running: %s\n" "$ec" "$LINENO" "$BASH_COMMAND" >&2' ERR
 
 ### ---------- Defaults (overridable via flags or env vars) ----------
 PACKAGES_FILE="${PACKAGES_FILE:-./push_packages.list}"
@@ -39,22 +44,23 @@ DOTFILES_REPO="${DOTFILES_REPO:-}"
 DOTFILES_DIR="${DOTFILES_DIR:-/home/push/dotfiles}"
 STOW_TARGET="${STOW_TARGET:-$HOME}"
 BACKUP_DIR="${BACKUP_DIR:-$HOME/.dotfiles-backup-$(date +%Y%m%d-%H%M%S)}"
-DEDICATEDBRANCH='archmini'
 
 SMB_HOST="${SMB_HOST:-ds923plus.push}"
 SMB_SHARES=(andreas docker photos_shared web)
-SMB_MOUNT_BASE="${SMB_MOUNT_BASE:-/mnt/ds923plus}"
+SMB_MOUNT_BASE="${SMB_MOUNT_BASE:-/mnt/smb}"
 SMB_CREDENTIALS_FILE="${SMB_CREDENTIALS_FILE:-$HOME/.smbcredentials}"
 SMB_UID="${SMB_UID:-$(id -u)}"
 SMB_GID="${SMB_GID:-$(id -g)}"
 SKIP_SMB=0
+SMB_FSTAB_FILE="${SMB_FSTAB_FILE:-/etc/smb-shares.fstab}"
+SKIP_FSTAB=0
 
 ### ---------- Helpers ----------
 log()  { printf '\033[1;34m[push-bootstrap]\033[0m %s\n' "$*"; }
 warn() { printf '\033[1;33m[push-bootstrap]\033[0m %s\n' "$*" >&2; }
 die()  { printf '\033[1;31m[push-bootstrap]\033[0m %s\n' "$*" >&2; exit 1; }
 
-usage() { sed -n '2,31p' "$0" | sed 's/^# \{0,1\}//'; }
+usage() { sed -n '2,35p' "$0" | sed 's/^# \{0,1\}//'; }
 
 ### ---------- Argument parsing ----------
 while [[ $# -gt 0 ]]; do
@@ -67,6 +73,8 @@ while [[ $# -gt 0 ]]; do
     -b|--backup-dir)    BACKUP_DIR="$2"; shift 2 ;;
     --smb-credentials)  SMB_CREDENTIALS_FILE="$2"; shift 2 ;;
     --skip-smb)         SKIP_SMB=1; shift ;;
+    --fstab-file)       SMB_FSTAB_FILE="$2"; shift 2 ;;
+    --skip-fstab)       SKIP_FSTAB=1; shift ;;
     -h|--help)          usage; exit 0 ;;
     *) die "Unknown argument: $1 (see --help)" ;;
   esac
@@ -193,7 +201,10 @@ stow_all_packages() {
     backup_conflicts "$dir"
 
     log "Stowing package: $pkg_name"
-    stow -v -R -d "$DOTFILES_DIR" -t "$STOW_TARGET" "$pkg_name"
+    if ! stow -v -R -d "$DOTFILES_DIR" -t "$STOW_TARGET" "$pkg_name"; then
+      warn "stow failed for package '$pkg_name' - skipping it and continuing with the rest (mounts/fstab still run)."
+      continue
+    fi
   done
 
   if [[ "$found" -eq 0 ]]; then
@@ -205,16 +216,6 @@ stow_all_packages() {
 
 ### ---------- 5. Mount SMB/CIFS shares ----------
 mount_smb_shares() {
-  if [[ "$SKIP_SMB" -eq 1 ]]; then
-    log "Skipping SMB mounts (--skip-smb)"
-    return
-  fi
-
-  if [[ ! -f "$SMB_CREDENTIALS_FILE" ]]; then
-    warn "SMB credentials file not found: $SMB_CREDENTIALS_FILE - skipping SMB mounts."
-    return
-  fi
-
   local share mount_point
   for share in "${SMB_SHARES[@]}"; do
     mount_point="$SMB_MOUNT_BASE/$share"
@@ -226,9 +227,98 @@ mount_smb_shares() {
     fi
 
     log "Mounting //$SMB_HOST/$share -> $mount_point"
-    sudo mount -t cifs "//$SMB_HOST/$share" "$mount_point" \
-      -o "credentials=$SMB_CREDENTIALS_FILE,uid=$SMB_UID,gid=$SMB_GID,iocharset=utf8,vers=3.0"
+    if ! sudo mount -t cifs "//$SMB_HOST/$share" "$mount_point" \
+      -o "credentials=$SMB_CREDENTIALS_FILE,uid=$SMB_UID,gid=$SMB_GID,iocharset=utf8,vers=3.0"; then
+      warn "Failed to mount //$SMB_HOST/$share - skipping it and continuing (fstab entry is still written so it can retry on next mount -a)."
+    fi
   done
+}
+
+### ---------- 6. fstab entries for the SMB shares (auto-mount on reboot) ----------
+FSTAB_MARKER_BEGIN="# >>> push-bootstrap smb shares >>>"
+FSTAB_MARKER_END="# <<< push-bootstrap smb shares <<<"
+
+# Writes the standalone snippet file - one plain fstab line per share.
+# Kept separate from /etc/fstab itself so it's easy to read, diff, or
+# version-control on its own; install_fstab_entries() below merges its
+# content into /etc/fstab.
+generate_smb_fstab_file() {
+  local share tmp
+  tmp="$(mktemp)"
+
+  {
+    echo "# Generated by push-bootstrap.sh - do not edit /etc/fstab directly for these entries,"
+    echo "# edit this file and re-run the script instead."
+    for share in "${SMB_SHARES[@]}"; do
+      printf '//%s/%s %s cifs credentials=%s,uid=%s,gid=%s,iocharset=utf8,vers=3.0,x-systemd.automount,x-systemd.idle-timeout=60,_netdev,noauto 0 0\n' \
+        "$SMB_HOST" "$share" "$SMB_MOUNT_BASE/$share" "$SMB_CREDENTIALS_FILE" "$SMB_UID" "$SMB_GID"
+    done
+  } > "$tmp"
+
+  sudo mkdir -p "$(dirname "$SMB_FSTAB_FILE")"
+  sudo cp "$tmp" "$SMB_FSTAB_FILE"
+  sudo chmod 644 "$SMB_FSTAB_FILE"
+  rm -f "$tmp"
+  log "Wrote SMB fstab snippet: $SMB_FSTAB_FILE"
+}
+
+# Merges the snippet file into /etc/fstab inside a marked block, so
+# re-running this script updates the block in place instead of piling
+# up duplicate lines.
+install_fstab_entries() {
+  [[ -f "$SMB_FSTAB_FILE" ]] || die "fstab snippet not found: $SMB_FSTAB_FILE"
+
+  sudo cp /etc/fstab "/etc/fstab.bak-$(date +%Y%m%d-%H%M%S)"
+
+  local tmp
+  tmp="$(mktemp)"
+
+  if grep -qF "$FSTAB_MARKER_BEGIN" /etc/fstab; then
+    log "Existing SMB block found in /etc/fstab - replacing it"
+    awk -v beg="$FSTAB_MARKER_BEGIN" -v end="$FSTAB_MARKER_END" '
+      $0 == beg { skip=1 }
+      !skip { print }
+      $0 == end { skip=0 }
+    ' /etc/fstab > "$tmp"
+  else
+    log "Adding new SMB block to /etc/fstab"
+    cp /etc/fstab "$tmp"
+  fi
+
+  {
+    cat "$tmp"
+    echo "$FSTAB_MARKER_BEGIN"
+    sudo cat "$SMB_FSTAB_FILE"
+    echo "$FSTAB_MARKER_END"
+  } | sudo tee /etc/fstab.new >/dev/null
+
+  sudo mv /etc/fstab.new /etc/fstab
+  rm -f "$tmp"
+
+  sudo systemctl daemon-reload
+  log "/etc/fstab updated (backup saved alongside it). Run 'sudo mount -a' or reboot to apply."
+}
+
+mount_and_persist_smb_shares() {
+  if [[ "$SKIP_SMB" -eq 1 ]]; then
+    log "Skipping SMB mounts (--skip-smb)"
+    return
+  fi
+
+  if [[ ! -f "$SMB_CREDENTIALS_FILE" ]]; then
+    warn "SMB credentials file not found: $SMB_CREDENTIALS_FILE - skipping SMB mounts and fstab entries."
+    return
+  fi
+
+  mount_smb_shares
+
+  if [[ "$SKIP_FSTAB" -eq 1 ]]; then
+    log "Skipping /etc/fstab entries (--skip-fstab)"
+    return
+  fi
+
+  generate_smb_fstab_file
+  install_fstab_entries
 }
 
 ### ---------- Main ----------
@@ -238,12 +328,14 @@ main() {
   load_ssh_key
   # load_dotfiles
   stow_all_packages
-  mount_smb_shares
+  mount_and_persist_smb_shares
   log "Done."
 }
 
 main "$@"
+
 # task to files
+#
 # 1 mount your shares
 # 2 configure awww
 # 3 configure systemd background.sh 
