@@ -35,7 +35,7 @@ DOTFILES_REPO="${DOTFILES_REPO:-git@github.com:pushiboo/dotfiles.git}"
 DEDICATEDBRANCH='archmini'
 DOTFILES_DIR="${DOTFILES_DIR:-$HOME/dotfiles/}"
 STOW_TARGET="${STOW_TARGET:-$HOME}"
-BACKUP_DIR="${BACKUP_DIR:-$HOME/.dotfiles-backup-$(date +%Y%m%d-%H%M%S)}"
+BACKUP_DIR="${BACKUP_DIR:-$HOME/.dotfiles-bkp-$(date +%Y%m%d)}"
 
 ### ---------- Helpers ----------
 log()  { printf '\033[1;34m[push-bootstrap]\033[0m %s\n' "$*"; }
@@ -135,22 +135,38 @@ load_dotfiles() {
 }
 
 ### ---------- 4. Backup conflicts, then stow every package folder ----------
+# Ask stow itself (via --simulate) which target paths it would refuse to
+# touch. This catches BOTH plain conflicting files AND whole directories
+# that already exist as real (non-symlink) dirs - stow reports the
+# highest-level path it can't safely fold into, which is exactly what
+# needs to be moved out of the way before the real stow run.
+detect_conflicts() {
+  local pkg_name="$1"
+  stow -n -v 2 -d "$DOTFILES_DIR" -t "$STOW_TARGET" "$pkg_name" 2>&1 \
+    | sed -n -E \
+        -e 's/^[[:space:]]*\*[[:space:]]*cannot stow .* over existing target (.*) since neither a link nor a directory.*/\1/p' \
+        -e 's/^[[:space:]]*\*[[:space:]]*existing target[^:]*:[[:space:]]*(.*)$/\1/p' \
+    | sed -E 's/ +=>.*$//'
+}
+ 
 backup_conflicts() {
-  local pkg_dir="$1" pkg_name file rel target
+  local pkg_dir="$1" pkg_name rel target
   pkg_name="$(basename "$pkg_dir")"
-
-  while IFS= read -r -d '' file; do
-    rel="${file#"$pkg_dir"/}"
+ 
+  while IFS= read -r rel; do
+    [[ -z "$rel" ]] && continue
     target="$STOW_TARGET/$rel"
-
-    # Only back up real files/dirs that are NOT already a symlink
+ 
+    # Only back up real paths that are NOT already a symlink
     # (i.e. not already stowed from a previous run).
     if [[ -e "$target" && ! -L "$target" ]]; then
       mkdir -p "$(dirname "$BACKUP_DIR/$pkg_name/$rel")"
       log "Backing up $target -> $BACKUP_DIR/$pkg_name/$rel"
       mv "$target" "$BACKUP_DIR/$pkg_name/$rel"
+    else
+      warn "stow reported a conflict at $target but it's missing or already a symlink - skipping backup, check manually if stow still fails."
     fi
-  done < <(find "$pkg_dir" -type f -print0)
+  done < <(detect_conflicts "$pkg_name")
 }
 
 stow_all_packages() {
@@ -166,8 +182,8 @@ stow_all_packages() {
 
     log "Stowing package: $pkg_name"
     # echo "stow -v -R  --adopt -d "$DOTFILES_DIR" -t "$STOW_TARGET" "$pkg_name""
-    stow -v -R  --adopt -d "$DOTFILES_DIR" -t "$STOW_TARGET" "$pkg_name"
-    # stow -v -R -d "$DOTFILES_DIR" -t "$STOW_TARGET" "$pkg_name"
+    # stow -v -R  --adopt -d "$DOTFILES_DIR" -t "$STOW_TARGET" "$pkg_name"
+    stow -v -R -d "$DOTFILES_DIR" -t "$STOW_TARGET" "$pkg_name"
   done
 
   if [[ "$found" -eq 0 ]]; then
