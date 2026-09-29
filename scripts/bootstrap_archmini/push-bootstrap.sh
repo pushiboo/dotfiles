@@ -7,6 +7,8 @@
 # 3. Clones (or updates) a dotfiles git repo into /home/push/dotfiles
 # 4. Backs up any real files that would be overwritten, then stows
 #    every package folder found inside the dotfiles repo with GNU stow
+# 5. Mounts the SMB/CIFS shares on ds923plus.push (andreas, docker,
+#    photos_shared, web)
 #
 # Usage:
 #   ./push-bootstrap.sh [options]
@@ -18,6 +20,8 @@
 #   -d, --dotfiles-dir DIR  Where the repo lives           [DOTFILES_DIR]      (default: /home/push/dotfiles)
 #   -t, --target DIR        stow target (usually $HOME)    [STOW_TARGET]       (default: $HOME)
 #   -b, --backup-dir DIR    Where conflicting files go      [BACKUP_DIR]        (default: ~/.dotfiles-backup-<timestamp>)
+#   --smb-credentials FILE  SMB credentials file            [SMB_CREDENTIALS_FILE] (default: ~/.smbcredentials)
+#   --skip-smb              Skip mounting the SMB shares
 #   -h, --help              Show this help and exit
 #
 # Example:
@@ -31,18 +35,26 @@ set -euo pipefail
 ### ---------- Defaults (overridable via flags or env vars) ----------
 PACKAGES_FILE="${PACKAGES_FILE:-./push_packages.list}"
 SSH_KEY_PATH="${SSH_KEY_PATH:-$HOME/.ssh/archmini_ed25519}"
-DOTFILES_REPO="${DOTFILES_REPO:-git@github.com:pushiboo/dotfiles.git}"
-DEDICATEDBRANCH='archmini'
-DOTFILES_DIR="${DOTFILES_DIR:-$HOME/dotfiles/}"
+DOTFILES_REPO="${DOTFILES_REPO:-}"
+DOTFILES_DIR="${DOTFILES_DIR:-/home/push/dotfiles}"
 STOW_TARGET="${STOW_TARGET:-$HOME}"
-BACKUP_DIR="${BACKUP_DIR:-$HOME/.dotfiles-bkp-$(date +%Y%m%d)}"
+BACKUP_DIR="${BACKUP_DIR:-$HOME/.dotfiles-backup-$(date +%Y%m%d-%H%M%S)}"
+DEDICATEDBRANCH='archmini'
+
+SMB_HOST="${SMB_HOST:-ds923plus.push}"
+SMB_SHARES=(andreas docker photos_shared web)
+SMB_MOUNT_BASE="${SMB_MOUNT_BASE:-/mnt/ds923plus}"
+SMB_CREDENTIALS_FILE="${SMB_CREDENTIALS_FILE:-$HOME/.smbcredentials}"
+SMB_UID="${SMB_UID:-$(id -u)}"
+SMB_GID="${SMB_GID:-$(id -g)}"
+SKIP_SMB=0
 
 ### ---------- Helpers ----------
 log()  { printf '\033[1;34m[push-bootstrap]\033[0m %s\n' "$*"; }
 warn() { printf '\033[1;33m[push-bootstrap]\033[0m %s\n' "$*" >&2; }
 die()  { printf '\033[1;31m[push-bootstrap]\033[0m %s\n' "$*" >&2; exit 1; }
 
-usage() { sed -n '2,29p' "$0" | sed 's/^# \{0,1\}//'; }
+usage() { sed -n '2,31p' "$0" | sed 's/^# \{0,1\}//'; }
 
 ### ---------- Argument parsing ----------
 while [[ $# -gt 0 ]]; do
@@ -53,6 +65,8 @@ while [[ $# -gt 0 ]]; do
     -d|--dotfiles-dir)  DOTFILES_DIR="$2"; shift 2 ;;
     -t|--target)        STOW_TARGET="$2"; shift 2 ;;
     -b|--backup-dir)    BACKUP_DIR="$2"; shift 2 ;;
+    --smb-credentials)  SMB_CREDENTIALS_FILE="$2"; shift 2 ;;
+    --skip-smb)         SKIP_SMB=1; shift ;;
     -h|--help)          usage; exit 0 ;;
     *) die "Unknown argument: $1 (see --help)" ;;
   esac
@@ -73,10 +87,11 @@ ensure_prereqs() {
     die "pacman not found - this script targets Arch/Omarchy systems."
   fi
   local to_install=()
-  for bin in git openssh stow; do
+  for bin in git openssh stow cifs-utils; do
     case "$bin" in
-      openssh) command -v ssh-agent >/dev/null 2>&1 || to_install+=(openssh) ;;
-      *)       command -v "$bin" >/dev/null 2>&1 || to_install+=("$bin") ;;
+      openssh)    command -v ssh-agent >/dev/null 2>&1 || to_install+=(openssh) ;;
+      cifs-utils) command -v mount.cifs >/dev/null 2>&1 || to_install+=(cifs-utils) ;;
+      *)          command -v "$bin" >/dev/null 2>&1 || to_install+=("$bin") ;;
     esac
   done
   if [[ ${#to_install[@]} -gt 0 ]]; then
@@ -123,14 +138,11 @@ load_dotfiles() {
   if [[ -d "$DOTFILES_DIR/.git" ]]; then
     log "Dotfiles repo already present at $DOTFILES_DIR - pulling latest"
     git -C "$DOTFILES_DIR" pull --ff-only
-    # git clone --single-branch -branch "$DEDICATEDBRANCH" "$DOTFILES_DIR" 
   else
     [[ -n "$DOTFILES_REPO" ]] || die "No repo at $DOTFILES_DIR and no --repo/DOTFILES_REPO given."
     log "Cloning $DOTFILES_REPO into $DOTFILES_DIR"
-    # mkdir -p "$(dirname "$DOTFILES_DIR")"
-    # git clone "$DOTFILES_REPO" "$DOTFILES_DIR"
-    git clone -b "$DEDICATEDBRANCH" --depth 1 --single-branch "$DOTFILES_REPO"
-    # git clone --single-branch -branch "$DEDICATEDBRANCH" --depth 1 "$DOTFILES_REPO"
+    mkdir -p "$(dirname "$DOTFILES_DIR")"
+    git clone "$DOTFILES_REPO" "$DOTFILES_DIR"
   fi
 }
 
@@ -148,15 +160,15 @@ detect_conflicts() {
         -e 's/^[[:space:]]*\*[[:space:]]*existing target[^:]*:[[:space:]]*(.*)$/\1/p' \
     | sed -E 's/ +=>.*$//'
 }
- 
+
 backup_conflicts() {
   local pkg_dir="$1" pkg_name rel target
   pkg_name="$(basename "$pkg_dir")"
- 
+
   while IFS= read -r rel; do
     [[ -z "$rel" ]] && continue
     target="$STOW_TARGET/$rel"
- 
+
     # Only back up real paths that are NOT already a symlink
     # (i.e. not already stowed from a previous run).
     if [[ -e "$target" && ! -L "$target" ]]; then
@@ -181,8 +193,6 @@ stow_all_packages() {
     backup_conflicts "$dir"
 
     log "Stowing package: $pkg_name"
-    # echo "stow -v -R  --adopt -d "$DOTFILES_DIR" -t "$STOW_TARGET" "$pkg_name""
-    # stow -v -R  --adopt -d "$DOTFILES_DIR" -t "$STOW_TARGET" "$pkg_name"
     stow -v -R -d "$DOTFILES_DIR" -t "$STOW_TARGET" "$pkg_name"
   done
 
@@ -193,23 +203,80 @@ stow_all_packages() {
   fi
 }
 
-### ---------- Mount Shares ----------
+### ---------- 5. Mount SMB/CIFS shares ----------
+mount_smb_shares() {
+  if [[ "$SKIP_SMB" -eq 1 ]]; then
+    log "Skipping SMB mounts (--skip-smb)"
+    return
+  fi
+
+  if [[ ! -f "$SMB_CREDENTIALS_FILE" ]]; then
+    warn "SMB credentials file not found: $SMB_CREDENTIALS_FILE - skipping SMB mounts."
+    return
+  fi
+
+  local share mount_point
+  for share in "${SMB_SHARES[@]}"; do
+    mount_point="$SMB_MOUNT_BASE/$share"
+    sudo mkdir -p "$mount_point"
+
+    if mountpoint -q "$mount_point"; then
+      log "SMB share $share already mounted at $mount_point - skipping"
+      continue
+    fi
+
+    log "Mounting //$SMB_HOST/$share -> $mount_point"
+    sudo mount -t cifs "//$SMB_HOST/$share" "$mount_point" \
+      -o "credentials=$SMB_CREDENTIALS_FILE,uid=$SMB_UID,gid=$SMB_GID,iocharset=utf8,vers=3.0"
+  done
+}
 
 ### ---------- Main ----------
 main() {
   ensure_prereqs
   install_packages
   load_ssh_key
-#  load_dotfiles
+  # load_dotfiles
   stow_all_packages
+  mount_smb_shares
   log "Done."
 }
 
 main "$@"
-
-
 # task to files
 # 1 mount your shares
 # 2 configure awww
 # 3 configure systemd background.sh 
+# 4 eval ssh-agent 
 #
+# 1. Create the service file:
+
+# mkdir -p ~/.config/systemd/user
+# cat > ~/.config/systemd/user/ssh-agent.service << 'EOF'
+# [Unit]
+# Description=SSH key agent
+#
+# [Service]
+# Type=simple
+# Environment=SSH_AUTH_SOCK=%t/ssh-agent.socket
+# ExecStart=/usr/bin/ssh-agent -D -a $SSH_AUTH_SOCK
+#
+# [Install]
+# WantedBy=default.target
+# EOF
+#
+# 2. Enable and start it:
+#
+# systemctl --user daemon-reload
+# systemctl --user enable --now ssh-agent
+#
+# 3. Add to ~/.bashrc:
+#
+# export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+#
+# 4. (Optional) Add to ~/.ssh/config so keys are auto-added on first use:
+#
+# Host *
+#     AddKeysToAgent yes
+#
+# Now every shell session shares one agent on a stable socket.  You only need to run ssh-add ~/.ssh/id_ed25519 once per login (or it auto-adds via AddKeysToAgent).<D-z>
