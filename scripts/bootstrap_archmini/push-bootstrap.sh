@@ -54,6 +54,8 @@ SMB_MOUNT_BASE="${SMB_MOUNT_BASE:-/mnt/smb}"
 SMB_CREDENTIALS_FILE="${SMB_CREDENTIALS_FILE:-$HOME/.smbcredentials}"
 SMB_UID="${SMB_UID:-$(id -u)}"
 SMB_GID="${SMB_GID:-$(id -g)}"
+SKIP_DOTFILES=0
+SKIP_SERVICES=0
 SKIP_SMB=0
 SMB_FSTAB_FILE="${SMB_FSTAB_FILE:-/etc/smb-shares.fstab}"
 SKIP_FSTAB=0
@@ -74,10 +76,12 @@ while [[ $# -gt 0 ]]; do
     -d|--dotfiles-dir)  DOTFILES_DIR="$2"; shift 2 ;;
     -t|--target)        STOW_TARGET="$2"; shift 2 ;;
     -b|--backup-dir)    BACKUP_DIR="$2"; shift 2 ;;
+    --skip-dotfiles)    SKIP_DOTFILES=1; shift ;;
     --smb-credentials)  SMB_CREDENTIALS_FILE="$2"; shift 2 ;;
     --skip-smb)         SKIP_SMB=1; shift ;;
     --fstab-file)       SMB_FSTAB_FILE="$2"; shift 2 ;;
     --skip-fstab)       SKIP_FSTAB=1; shift ;;
+    --skip-services)    SKIP_SERVICES=1; shift ;;
     -h|--help)          usage; exit 0 ;;
     *) die "Unknown argument: $1 (see --help)" ;;
   esac
@@ -130,6 +134,7 @@ install_packages() {
 
   log "Installing ${#pkgs[@]} package(s) from $PACKAGES_FILE"
   sudo pacman -S --needed --noconfirm "${pkgs[@]}"
+  # echo "sudo pacman -Qs ${pkgs[@]} && echo sudo pacman -Qe "${pkgs[@]}" || sudo pacman -S --needed --noconfirm "${pkgs[@]}""
 }
 
 ### ---------- 2. ssh-agent + private key ----------
@@ -146,6 +151,12 @@ load_ssh_key() {
 
 ### ---------- 3. Load / update dotfiles repo ----------
 load_dotfiles() {
+
+  if [[ "$SKIP_DOTFILES" -eq 1 ]]; then
+    log "Skipping Dotfiles (--skip-ditfiles)"
+    return
+  fi
+
   if [[ -d "$DOTFILES_DIR/.git" ]]; then
     log "Dotfiles repo already present at $DOTFILES_DIR - pulling latest"
     git -C "$DOTFILES_DIR" pull --ff-only
@@ -194,6 +205,11 @@ backup_conflicts() {
 
 stow_all_packages() {
   local dir pkg_name found=0
+
+  if [[ "$SKIP_DOTFILES" -eq 1 ]]; then
+    log "Skipping stowing dotfiles (--skip-ditfiles)"
+    return
+  fi
 
   for dir in "$DOTFILES_DIR"/*/; do
     [[ -d "$dir" ]] || continue
@@ -341,7 +357,18 @@ enable_systemd_user_services() {
     warn "systemctl --user is not reachable in this session (no user bus?) - skipping service enablement. Log into a normal graphical/user session and re-run, or run 'systemctl --user enable --now <unit>' manually."
     return
   fi
- 
+  if [[ ! -d "$HOME/.config/awww/" ]]; then
+    echo "createing awww cache dir"
+    mkdir $HOME/.config/awww/
+  fi
+  if ! systemctl --user is-enabled --quiet awww-daemon.service; then
+    systemctl --user enable awww-daemon.service
+  fi
+
+  if ! systemctl --user is-active --quiet awww-daemon.service; then
+    systemctl --user start awww-daemon.service
+  fi
+
   systemctl --user daemon-reload
  
   local unit_file unit_name
@@ -368,6 +395,7 @@ main() {
   load_dotfiles
   stow_all_packages
   mount_and_persist_smb_shares
+  enable_systemd_user_services
   log "Done."
 }
 
