@@ -18,3 +18,12 @@ if command -v fzf &> /dev/null; then
     source /usr/share/fzf/key-bindings.bash
   fi
 fi
+
+export SSH_AUTH_SOCK="$HOME/.ssh/ssh-agent.sock"
+
+# Only start a new agent if the socket is missing OR the agent isn't responding
+if [ ! -S "$SSH_AUTH_SOCK" ] || ! ssh-add -l &>/dev/null; then
+    rm -f "$SSH_AUTH_SOCK"
+    eval "$(ssh-agent -a "$SSH_AUTH_SOCK" -s)"
+    unset SSH_AGENT_PID
+fi

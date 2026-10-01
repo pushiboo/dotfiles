@@ -1,15 +1,30 @@
 {
+  "version": 1,
+  "idle": {
+    "screensaver": 1500,
+    "lock": 3000
+  },
   "bar": {
+    "position": "top",
+    "transparent": false,
     "centerAnchor": "omarchy.clock",
     "layout": {
+      "left": [
+        {
+          "id": "omarchy.menu"
+        },
+        {
+          "id": "omarchy.workspaces"
+        }
+      ],
       "center": [
         {
           "id": "omarchy.indicators"
         },
         {
+          "id": "omarchy.clock",
           "format": "dddd HH:mm",
           "formatAlt": "d MMMM 'W'ww yyyy",
-          "id": "omarchy.clock",
           "verticalFormat": "HH\n—\nmm"
         },
         {
@@ -20,14 +35,6 @@
         },
         {
           "id": "omarchy.system-update"
-        }
-      ],
-      "left": [
-        {
-          "id": "omarchy.menu"
-        },
-        {
-          "id": "omarchy.workspaces"
         }
       ],
       "right": [
@@ -53,14 +60,26 @@
           "id": "omarchy.power"
         }
       ]
-    },
-    "position": "top",
-    "transparent": false
+    }
   },
-  "idle": {
-    "lock": 300,
-    "screensaver": 150
-  },
-  "plugins": [],
-  "version": 1
+  "plugins": [
+    {
+      "id": "io.github.sirjul1337.lock-explorer",
+      "boot": "snapshot:poster",
+      "design": "poster",
+      "unlock": "fade",
+      "blankMs": 900000,
+      "unlockMs": 800,
+      "favorites": [
+        "poster",
+        "motion"
+      ]
+    }
+  ],
+  "disabledPlugins": [
+    "omarchy.lock"
+  ],
+  "cloneSourceRestores": [
+    "io.github.sirjul1337.lock-explorer"
+  ]
 }
