@@ -27,12 +27,15 @@
 #   --fstab-file FILE       Standalone file holding the fstab lines [SMB_FSTAB_FILE] (default: /etc/smb-shares.fstab)
 #   --skip-fstab            Skip writing /etc/fstab entries (mount-only, no auto-mount on reboot)
 #   -h, --help              Show this help and exit
+#   --skip-services          Skip enabling/starting the systemd --user units
+#   -h, --help              Show this help and exit
 #
 # Example:
 #   ./push-bootstrap.sh \
 #     --packages /home/push/push_packages.list \
 #     --key /home/push/.ssh/id_ed25519_push \
 #     --repo git@github.com:youruser/dotfiles.git
+#
 
 set -euo pipefail
 trap 'ec=$?; printf "\033[1;31m[push-bootstrap]\033[0m Aborted (exit %s) at line %s while running: %s\n" "$ec" "$LINENO" "$BASH_COMMAND" >&2' ERR
@@ -321,12 +324,48 @@ mount_and_persist_smb_shares() {
   install_fstab_entries
 }
 
+### ---------- 7. Enable + start systemd --user units from the dotfiles ----------
+enable_systemd_user_services() {
+  if [[ "$SKIP_SERVICES" -eq 1 ]]; then
+    log "Skipping systemd --user units (--skip-services)"
+    return
+  fi
+ 
+  local unit_src_dir="$DOTFILES_DIR/systemd/.config/systemd/user"
+  if [[ ! -d "$unit_src_dir" ]]; then
+    warn "No systemd user units found under $unit_src_dir - skipping."
+    return
+  fi
+ 
+  if ! systemctl --user show-environment >/dev/null 2>&1; then
+    warn "systemctl --user is not reachable in this session (no user bus?) - skipping service enablement. Log into a normal graphical/user session and re-run, or run 'systemctl --user enable --now <unit>' manually."
+    return
+  fi
+ 
+  systemctl --user daemon-reload
+ 
+  local unit_file unit_name
+  while IFS= read -r -d '' unit_file; do
+    unit_name="$(basename "$unit_file")"
+    log "Enabling + starting: $unit_name"
+    if ! systemctl --user enable --now "$unit_name"; then
+      warn "Failed to enable/start $unit_name - continuing with the rest."
+    fi
+  done < <(find "$unit_src_dir" -maxdepth 1 -type f \( -name '*.service' -o -name '*.timer' \) -print0 | sort -z)
+ 
+  if systemctl --user is-active --quiet awww.service; then
+    log "awww daemon is active."
+  else
+    warn "awww.service does not look active - check 'systemctl --user status awww.service'."
+  fi
+}
+ 
 ### ---------- Main ----------
 main() {
   ensure_prereqs
   install_packages
   load_ssh_key
-  # load_dotfiles
+  load_dotfiles
   stow_all_packages
   mount_and_persist_smb_shares
   log "Done."
@@ -336,10 +375,10 @@ main "$@"
 
 # task to files
 #
-# 1 mount your shares
+# 1 mount your shares - done
 # 2 configure awww
-# 3 configure systemd background.sh 
-# 4 eval ssh-agent 
+# 3 configure systemd background.sh
+# # 4 eval ssh-agent 
 #
 # 1. Create the service file:
 
