@@ -5,4 +5,5 @@ source ~/dotfiles/bash_archmini/bash/prompt
 source ~/dotfiles/bash_archmini/bash/init
 source ~/dotfiles/bash_archmini/bash/envs
 [[ $- == *i* ]] && bind -f ~/dotfiles/bash_archmini/bash/inputrc
-[ -f ~/.ssh/agent-init.sh ] && . ~/.ssh/agent-init.sh
+
+#[ -f ~/.ssh/agent-init.sh ] && . ~/.ssh/agent-init.sh
