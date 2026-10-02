@@ -362,11 +362,26 @@ enable_systemd_user_services() {
     mkdir $HOME/.config/awww/
   fi
   if ! systemctl --user is-enabled --quiet awww-daemon.service; then
-    systemctl --user enable awww-daemon.service
+    systemctl --user enable --now awww-daemon.service
+    log "Enabled awww-daemon.service"
+  fi
+  if ! systemctl --user is-enabled --quiet changeBackground.service; then
+    systemctl --user enable --now changeBackground.service
+    log "Enabled changeBackground.service"
+  fi
+  if ! systemctl --user is-enabled --quiet changeBackground.timer; then
+    systemctl --user enable --now changeBackground.timer
+    log "Enabled changeBackground.timer"
   fi
 
   if ! systemctl --user is-active --quiet awww-daemon.service; then
     systemctl --user start awww-daemon.service
+  fi
+  if ! systemctl --user is-active --quiet changeBackground.service; then
+    systemctl --user start changeBackground.service
+  fi
+  if ! systemctl --user is-active --quiet changeBackground.timer; then
+    systemctl --user start changeBackground.timer
   fi
 
   systemctl --user daemon-reload
@@ -374,19 +389,27 @@ enable_systemd_user_services() {
   local unit_file unit_name
   while IFS= read -r -d '' unit_file; do
     unit_name="$(basename "$unit_file")"
-    log "Enabling + starting: $unit_name"
+    log "Enabeld & started: $unit_name"
     if ! systemctl --user enable --now "$unit_name"; then
       warn "Failed to enable/start $unit_name - continuing with the rest."
     fi
   done < <(find "$unit_src_dir" -maxdepth 1 -type f \( -name '*.service' -o -name '*.timer' \) -print0 | sort -z)
  
-  if systemctl --user is-active --quiet awww.service; then
-    log "awww daemon is active."
-  else
-    warn "awww.service does not look active - check 'systemctl --user status awww.service'."
+  if ! systemctl --user is-active --quiet awww-daemon.service; then
+    warn "awww-daemon.service does not look active - check 'systemctl --user status awww-daemon.service'."
+  fi
+  if ! systemctl --user is-enabled --quiet changeBackground.service; then
+    warn "changeBackground.service does not look enabled - check 'systemctl --user status changeBackground.service'."
   fi
 }
- 
+
+# setting some Defaults
+
+if [[ -d "$HOME/.config/BraveSoftware/" ]] && [[ $(omarchy default browser) == "chromium" ]]; then
+  echo "Setting Brave as default browser"
+  omarchy default browser brave
+fi
+
 ### ---------- Main ----------
 main() {
   ensure_prereqs
