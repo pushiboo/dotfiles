@@ -7,5 +7,8 @@ Requires=changeBackground.service
 OnActiveSec=30m
 OnUnitActiveSec=30m
 
+; OnActiveSec=3m
+; OnUnitActiveSec=3m
+
 [Install]
 WantedBy=timers.target
