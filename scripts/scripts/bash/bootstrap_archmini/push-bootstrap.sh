@@ -47,6 +47,7 @@ DOTFILES_REPO="${DOTFILES_REPO:-}"
 DOTFILES_DIR="${DOTFILES_DIR:-/home/push/dotfiles}"
 STOW_TARGET="${STOW_TARGET:-$HOME}"
 BACKUP_DIR="${BACKUP_DIR:-$HOME/.dotfiles-backup-$(date +%Y%m%d-%H%M%S)}"
+PLUGIN_LIST=('https://github.com/stappmus/Omarchy-Spotify.git' 'https://github.com/SirJul1337/omarchy-lock-explorer.git' 'https://github.com/Pegorim/omaplug.git' 'https://github.com/SmoothPixels/cursor-accent.git')
 
 SMB_HOST="${SMB_HOST:-ds923plus.push}"
 SMB_SHARES=(andreas docker photos_shared web)
@@ -59,6 +60,7 @@ SKIP_SERVICES=0
 SKIP_SMB=0
 SMB_FSTAB_FILE="${SMB_FSTAB_FILE:-/etc/smb-shares.fstab}"
 SKIP_FSTAB=0
+SKIP_STOW=0
 
 ### ---------- Helpers ----------
 log()  { printf '\033[1;34m[push-bootstrap]\033[0m %s\n' "$*"; }
@@ -82,6 +84,7 @@ while [[ $# -gt 0 ]]; do
     --fstab-file)       SMB_FSTAB_FILE="$2"; shift 2 ;;
     --skip-fstab)       SKIP_FSTAB=1; shift ;;
     --skip-services)    SKIP_SERVICES=1; shift ;;
+    --skip-stow)        SKIP_STOW=1; shift ;;
     -h|--help)          usage; exit 0 ;;
     *) die "Unknown argument: $1 (see --help)" ;;
   esac
@@ -153,7 +156,7 @@ load_ssh_key() {
 load_dotfiles() {
 
   if [[ "$SKIP_DOTFILES" -eq 1 ]]; then
-    log "Skipping Dotfiles (--skip-ditfiles)"
+    log "Skipping Dotfiles (--skip-dotfiles)"
     return
   fi
 
@@ -206,8 +209,8 @@ backup_conflicts() {
 stow_all_packages() {
   local dir pkg_name found=0
 
-  if [[ "$SKIP_DOTFILES" -eq 1 ]]; then
-    log "Skipping stowing dotfiles (--skip-ditfiles)"
+  if [[ "$SKIP_STOW" -eq 1 ]]; then
+    log "Skip stowing dotfiles (--skip-stow)"
     return
   fi
 
@@ -220,6 +223,8 @@ stow_all_packages() {
     backup_conflicts "$dir"
 
     log "Stowing package: $pkg_name"
+    stow -v -R --adopt -d "$DOTFILES_DIR" -t "$STOW_TARGET" "$pkg_name"
+    # stow -v -R  --adopt -d "$DOTFILES_DIR" -t "$STOW_TARGET" "$pkg_name"
     if ! stow -v -R -d "$DOTFILES_DIR" -t "$STOW_TARGET" "$pkg_name"; then
       warn "stow failed for package '$pkg_name' - skipping it and continuing with the rest (mounts/fstab still run)."
       continue
@@ -231,8 +236,17 @@ stow_all_packages() {
   else
     log "Backups of any overwritten files saved under: $BACKUP_DIR"
   fi
-}
 
+# adding my provate modifications to hyprland
+[[ ! $(grep push_hyprland ${HOME}/.config/hypr/hyprland.lua) ]] && echo "
+-- added push private config
+require(\"hypr.push_hyprland\")" >> ~/.config/hypr/hyprland.lua
+
+# loading my own bash_profile file
+[[ ! $(grep pushrc ${HOME}/.bash_profile) ]] && echo "[ -e ~/.pushrc ] && . ~/.pushrc || echo \"warning: ~/.pushrc not found\"" >> ~/.bash_profile
+[[ ! $(grep pushrc ${HOME}/.bashrc) ]] && echo "[ -e ~/.bashrc ] && . ~/dotfiles/bash_archmini/.pushrc || echo \"warning: ~/dotfiles/bash_archmini/.pushrc not found\"" >> ~/.bashrc
+
+}
 ### ---------- 5. Mount SMB/CIFS shares ----------
 mount_smb_shares() {
   local share mount_point
@@ -403,12 +417,29 @@ enable_systemd_user_services() {
   fi
 }
 
+### ---------- 8. Enable some defaults and install plugins ----------
 # setting some Defaults
 
 if [[ -d "$HOME/.config/BraveSoftware/" ]] && [[ $(omarchy default browser) == "chromium" ]]; then
   echo "Setting Brave as default browser"
   omarchy default browser brave
 fi
+
+install_plugins() {
+  local plug
+  for plug "${PLUGIN_LIST[@]}"; do
+    if ! omarchy plugin list | grep ${plug} > /dev/null ; then
+      omarchy plugin add $plug --enable
+      log "Installing $plug "
+    else
+      log "Plugin $plug is already installed. - skipping"
+      continue
+    fi
+  done
+}
+if () 
+# omarchy plugin add https://github.com/SirJul1337/omarchy-lock-explorer.git --enable
+# omarchy plugin add https://github.com/Pegorim/omaplug.git --enable
 
 ### ---------- Main ----------
 main() {
