@@ -1,8 +1,8 @@
 {
   "version": 1,
   "idle": {
-    "screensaver": 1500,
-    "lock": 3000
+    "screensaver": 150,
+    "lock": 300
   },
   "bar": {
     "position": "top",
@@ -15,6 +15,26 @@
         },
         {
           "id": "omarchy.workspaces"
+        },
+        {
+          "id": "quickshell.spotify",
+          "deviceName": "Omarchy Spotify",
+          "idleShutdownMinutes": 15,
+          "showMiniPlayer": "On",
+          "showVinylRecord": "Off",
+          "shortcutPlayer": "Omarchy Music app",
+          "shortcutHints": "Off",
+          "showLyrics": "On",
+          "showArtwork": "On",
+          "showTrackTitle": "On",
+          "showArtistName": "Off",
+          "showPausedTrack": "On",
+          "scrollBarText": "Off",
+          "scrollSpeed": "1",
+          "maxBarTextWidth": "240",
+          "fixedBarWidth": "Off",
+          "audioQuality": "320 kbps",
+          "clientId": ""
         }
       ],
       "center": [
@@ -35,14 +55,14 @@
         },
         {
           "id": "omarchy.system-update"
+        },
+        {
+          "id": "omaplug"
         }
       ],
       "right": [
         {
           "id": "omarchy.tray"
-        },
-        {
-          "id": "io.github.guiestrela.wallpaperomarchymanager"
         },
         {
           "id": "omarchy.agents"
@@ -67,8 +87,10 @@
   },
   "plugins": [
     {
+      "id": "io.github.smoothpixels.cursor-accent"
+    },
+    {
       "id": "io.github.sirjul1337.lock-explorer",
-      "boot": "snapshot:poster",
       "design": "poster",
       "unlock": "fade",
       "blankMs": 900000,
@@ -77,10 +99,12 @@
         "poster",
         "motion"
       ],
-      "avatar": "/mnt/ds923plus/photos_shared/meMySelfAndI/IMG_20250926_160914.jpg"
+      "avatar": "/home/push/Pictures/ds923plus/meMySelfAndI/IMG_20250926_160914.jpg",
+      "bootResync": false
     }
   ],
   "disabledPlugins": [
+    "omarchy.background",
     "omarchy.lock"
   ],
   "cloneSourceRestores": [
