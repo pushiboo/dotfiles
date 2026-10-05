@@ -1,12 +1,14 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 # push-night color shema
+# #9e0059
 # #f72585
 # #7209b7
 # #3a0ca3
 # #4361ee
 # #4cc9f0
-# #57cc99
+# #06969A
+# #ff5400
 #
 #
 # old palette 
@@ -20,24 +22,32 @@
 
 
 format = """
-[](#f72585)\
+[](#9e0059)\
 $os\
 $username\
-[](bg:#7209b7 fg:#f72585)\
+[](bg:#7209b7 fg:#9e0059)\
 $directory\
 [](fg:#7209b7 bg:#3a0ca3)\
 $git_branch\
 $git_status\
 [](fg:#3a0ca3 bg:#4361ee)\
+$c\
+$elixir\
+$elm\
 $golang\
+$gradle\
+$haskell\
 $java\
+$julia\
 $nodejs\
-$dotfiles\
+$nim\
+$rust\
+$scala\
 [](fg:#4361ee bg:#4cc9f0)\
 $docker_context\
-[](fg:#4cc9f0 bg:#57cc99)\
+[](fg:#4cc9f0  bg:#06969A)\
 $time\
-[ ](fg:#57cc99)\
+[ ](fg:#06969A)\
 """
 
 # Disable the blank line at the start of the prompt
@@ -47,15 +57,15 @@ $time\
 # and use the os module below
 [username]
 show_always = true
-style_user = "bg:#f72585"
-style_root = "bg:#f72585"
+style_user = "fg:black bg:#9e0059"
+style_root = "bg:#9e0059"
 format = '[$user ]($style)'
 disabled = false
 
 # An alternative to the username module which displays a symbol that
 # represents the current operating system
 [os]
-style = "bg:#f72585"
+style = "bg:#9e0059"
 disabled = true # Disabled by default
 
 [directory]
@@ -76,28 +86,9 @@ truncation_symbol = "…/"
 # will not be replaced, because "Documents" was already substituted before.
 # So either put "Important Documents" before "Documents" or use the substituted version:
 # "Important 󰈙 " = " 󰈙 "
-# ─── Git Branch ─────────────────────────────────────────────────
-[git_branch]
-symbol = " "
-style = "bg:#3a0ca3"
-#style = "bold purple"
-format = "[$symbol$branch]($style) "
-
-# ─── Git Status ─────────────────────────────────────────────────
-[git_status]
-# style = "bold red"
-style = "bg:#3a0ca3"
-format = "([$all_status$ahead_behind]($style)) "
-conflicted = "⚠ $count "
-ahead = "⇡$count "
-behind = "⇣$count "
-diverged = "⇕⇡$ahead_count ⇣$behind_count "
-untracked = "?$count "
-stashed = "󰏖 $count "
-modified = "~$count "
-staged = "+$count "
-renamed = "󰑕 $count "
-deleted = "✖ $count "
+[character]
+success_symbol = "[λ](bold green)"
+error_symbol = "[λ](bold red)"
 
 [c]
 symbol = " "
@@ -124,14 +115,14 @@ symbol = " "
 style = "bg:#4361ee"
 format = '[ $symbol ($version) ]($style)'
 
-# [git_branch]
-# symbol = ""
-# style = "bg:#3a0ca3"
-# format = '[ $symbol $branch ]($style)'
-#
-# [git_status]
-# style = "bg:#3a0ca3"
-# format = '[$all_status$ahead_behind ]($style)'
+[git_branch]
+symbol = ""
+style = "bg:#3a0ca3"
+format = '[ $symbol $branch ]($style)'
+
+[git_status]
+style = "bg:#3a0ca3"
+format = '[$all_status$ahead_behind ]($style)'
 
 [golang]
 symbol = " "
@@ -180,6 +171,6 @@ format = '[ $symbol ($version) ]($style)'
 [time]
 disabled = false
 time_format = "%R" # Hour:Minute Format
-style = "bg:#57cc99"
-format = '[ λ$time ]($style)'
+style = "fg:black bg:#06969A"
+format = '[ λ $time ]($style)'
 #format = '[ ♥ $time ]($style)'

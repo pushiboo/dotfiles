@@ -23,8 +23,7 @@
       "type": "integer",
       "format": "uint64",
       "minimum": 0,
-      "default": 300,
-      "scan_ignore_paths": ["/mnt/smb/", "node_modules"]
+      "default": 30
     },
     "command_timeout": {
       "type": "integer",
@@ -422,7 +421,7 @@
           "docker-compose.yaml",
           "Dockerfile"
         ],
-        "detect_folders": ["docker", "/home/push/docker"]
+        "detect_folders": []
       }
     },
     "dotnet": {
@@ -615,7 +614,7 @@
     "git_branch": {
       "$ref": "#/$defs/GitBranchConfig",
       "default": {
-        "format": "[$symbol]($style)",
+        "format": "on [$symbol$branch(:$remote_branch)]($style) ",
         "symbol": " ",
         "style": "bold purple",
         "truncation_length": 9223372036854775807,
@@ -3334,7 +3333,7 @@
       "properties": {
         "format": {
           "type": "string",
-          "default": "[$symbol$branch(:$remote_branch)]($style)"
+          "default": "on [$symbol$branch(:$remote_branch)]($style) "
         },
         "symbol": {
           "type": "string",
@@ -3502,7 +3501,7 @@
       "properties": {
         "format": {
           "type": "string",
-          "default": "([\\[$all_status$ahead_behind\\]]($style))"
+          "default": "([\\[$all_status$ahead_behind\\]]($style) )"
         },
         "style": {
           "type": "string",
