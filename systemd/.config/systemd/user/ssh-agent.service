@@ -1,0 +1,12 @@
+# ~/.config/systemd/user/ssh-agent.service
+[Unit]
+Description="SSH Agent, started by push""
+
+[Service]
+Type=simple
+Environment=SSH_AUTH_SOCK=%t/ssh-agent.socket
+ExecStart=/usr/bin/ssh-agent -D -a %t/ssh-agent.socket
+ExecStartPre=/bin/sh -c 'rm -f %t/ssh-agent.socket'
+
+[Install]
+WantedBy=default.target   

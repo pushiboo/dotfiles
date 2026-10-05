@@ -6,7 +6,7 @@ After=graphical-session.target
 
 [Service]
 Type=oneshot
-ExecStart=/bin/sh %h/dotfiles/scripts/bash/changeBackground/changeBackground.sh
+ExecStart=/bin/sh %h/scripts/bash/changeBackground/changeBackground.sh
 
 [Install]
 WantedBy=graphical-session.target
