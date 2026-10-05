@@ -4,10 +4,12 @@ export BAT_THEME=ansi
 export STARSHIP_CONFIG=~/.config/starship/starship.toml
 # set editor
 export EDITOR=nvim
+# ssh-agent
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 # set Background Vars
 # screenLeft=$(awww query | head -n 1 | cut -d ':' -f 2 | sed 's. ..g')
-# screenLeft=$(awww query | cut -d " " -f 9 | head -n 1)
-# screenRight=$(awww query | cut -d " " -f 9 | tail -n -1)
-# export SCREENLEFT="$screenLeft"
-# export SCREENRIGHT="$screenRight"
+screenLeft=$(awww query | cut -d " " -f 9 | head -n 1)
+screenRight=$(awww query | cut -d " " -f 9 | tail -n -1)
+export SCREENLEFT="$screenLeft"
+export SCREENRIGHT="$screenRight"

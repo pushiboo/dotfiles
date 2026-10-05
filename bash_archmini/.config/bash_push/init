@@ -1,0 +1,29 @@
+if command -v mise &> /dev/null; then
+  eval "$(mise activate bash)"
+fi
+
+if command -v starship &> /dev/null; then
+  eval "$(starship init bash)"
+fi
+
+if command -v zoxide &> /dev/null; then
+  eval "$(zoxide init bash)"
+fi
+
+if command -v fzf &> /dev/null; then
+  if [[ -f /usr/share/fzf/completion.bash ]]; then
+    source /usr/share/fzf/completion.bash
+  fi
+  if [[ -f /usr/share/fzf/key-bindings.bash ]]; then
+    source /usr/share/fzf/key-bindings.bash
+  fi
+fi
+
+#[[ ! $(df -T -t cifs 2>/dev/null | grep andreas) ]] && bash ~/dotfiles/scripts/scripts/bash/ds923plus/link_SMB_Shares.sh andreas
+#[[ ! $(df -T -t cifs 2>/dev/null | grep docker) ]] && bash ~/dotfiles/scripts/scripts/bash/ds923plus/link_SMB_Shares.sh docker
+#[[ ! $(df -T -t cifs 2>/dev/null | grep photos_shared) ]] && bash ~/dotfiles/scripts/scripts/bash/ds923plus/link_SMB_Shares.sh photos_shared
+#[[ ! $(df -T -t cifs 2>/dev/null | grep web) ]] && bash ~/dotfiles/scripts/scripts/bash/ds923plus/link_SMB_Shares.sh web
+#[[ ! -e ~/andreas ]] && [[ $(df -aht cifs | grep andreas) ]] && ln -s /mnt/smb/andreas/andreas ~/andreas #|| echo "warning: could not mount andreas"
+#[[ ! -e ~/docker ]] && ln -s /mnt/smb/docker/ ~/docker                                                   #|| echo "warning: could not mount docker"
+#[[ ! -e ~/Pictures/ds923plus ]] && ln -s /mnt/smb/photos_shared/ ~/Pictures/ds923plus                    #|| echo "warning: could not mount photos_shared"
+#[[ ! -e ~/web ]] && ln -s /mnt/smb/web/ ~/web                                                            #|| echo "warning: could not mount web"

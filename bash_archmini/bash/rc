@@ -1,9 +1,0 @@
-source ~/dotfiles/bash_archmini/bash/shell
-source ~/dotfiles/bash_archmini/bash/aliases
-source ~/dotfiles/bash_archmini/bash/functions
-source ~/dotfiles/bash_archmini/bash/prompt
-source ~/dotfiles/bash_archmini/bash/init
-source ~/dotfiles/bash_archmini/bash/envs
-[[ $- == *i* ]] && bind -f ~/dotfiles/bash_archmini/bash/inputrc
-
-#[ -f ~/.ssh/agent-init.sh ] && . ~/.ssh/agent-init.sh

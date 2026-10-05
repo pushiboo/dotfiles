@@ -8,18 +8,6 @@ alias ff="fzf --preview 'bat --style=numbers --color=always {}'"
 alias cd="zd"
 alias dot="cd ~/dotfiles"
 alias nsl='nslookup'
-# zd() {
-#   if [ $# -eq 0 ]; then
-#     builtin cd ~ && return
-#   elif [ -d "$1" ]; then
-#     builtin cd "$1"
-#   else
-#     z "$@" && printf "\U000F17A9 " && pwd || echo "Error: Directory not found"
-#   fi
-# }
-# open() {
-#   xdg-open "$@" >/dev/null 2>&1 &
-# }
 
 # Directories
 alias ..='cd ..'
@@ -29,7 +17,6 @@ alias ....='cd ../../..'
 # Tools
 alias d='docker'
 alias r='rails'
-# n() { if [ "$#" -eq 0 ]; then nvim .; else nvim "$@"; fi; }
 
 # Git
 alias g='git'
@@ -44,11 +31,13 @@ alias vim=nvim
 alias vi=nvim
 alias svim='sudo -E nvim'
 alias sedit='sudo -E EDITOR=vim'
-alias dfnfs="df -Th | grep nfs"
+alias dfnfs="df -T -t nfs"
+alias dfcifs="df -T -t cifs"
 alias dfstat="nfsstat -m"
 alias arch="cd /mnt/ds923plus/andreas/arch"
 alias andreas="cd /mnt/ds923plus/andreas"
 alias syazi='sudo -E yazi'
+
 # ssh connections
 alias ssh_ds923plus="TERM=xterm-256color ssh -i ~/.ssh/archmini_ed25519 ledroot@ds923plus"
 alias ssh_pihole="TERM=xterm-256color ssh -i ~/.ssh/archmini_ed25519 dietpi@dietpihole.push"
@@ -57,6 +46,7 @@ alias ssh_piholeSec="TERM=xterm-256color ssh -i ~/.ssh/archmini_ed25519 dietpi@d
 alias ssh_piholeSecRoot="TERM=xterm-256color ssh -i ~/.ssh/archmini_ed25519 root@dietpiholesec.push"
 alias ssh_adguard="TERM=xterm-256color ssh -i ~/.ssh/archmini_ed25519 dietpi@adguard.push"
 alias ssh_adguardRoot="TERM=xterm-256color ssh -i ~/.ssh/archmini_ed25519 root@adguard.push"
-# öazy stuff
+
+# lazy stuff
 alias lg="lazygit"
 alias ld="lazydocker"

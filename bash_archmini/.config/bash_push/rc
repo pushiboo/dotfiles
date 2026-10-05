@@ -1,0 +1,8 @@
+source ~/dotfiles/bash_archmini/.config/bash_push/shell
+source ~/dotfiles/bash_archmini/.config/bash_push/aliases
+source ~/dotfiles/bash_archmini/.config/bash_push/functions
+source ~/dotfiles/bash_archmini/.config/bash_push/prompt
+source ~/dotfiles/bash_archmini/.config/bash_push/init
+source ~/dotfiles/bash_archmini/.config/bash_push/envs
+[[ $- == *i* ]] && bind -f ${HOME}/.config/bash_push/inputrc
+#[ -f ${HOME}/scripts/bash/ssh/addSSHKey.sh ] && . ${HOME}/scripts/ssh/addSSHKey.sh

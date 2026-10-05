@@ -1,0 +1,6 @@
+# source "${HOME}/default/bash/rc"
+source "${HOME}/.config/bash_push/rc"
+# ssh.sh — add SSH key on login if agent is available
+if [[ -n "$SSH_AUTH_SOCK" ]] && command -v ssh-add &>/dev/null; then
+  bash ~/dotfiles/scripts/scripts/bash/ssh/addSSHKey.sh
+fi
