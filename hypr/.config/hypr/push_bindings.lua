@@ -16,4 +16,4 @@ o.bind("SUPER + SHIFT + K", "Bitwarden", "bitwarden-desktop")
 
 -- Omarchy-Spotify
 hl.unbind("SUPER + SHIFT + M") -- previously: Music
-o.bind("SUPER + SHIFT + M", "Omarchy Spotify", "omarchy shell -q quickshell.spotify.player togglePlayer")
+o.bind("SUPER + SHIFT + M", "Omarchy Spotify", "omarchy shell -q quickshell.spotify.player toggleFullPlayer")
