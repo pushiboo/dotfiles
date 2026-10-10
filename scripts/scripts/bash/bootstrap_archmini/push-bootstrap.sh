@@ -2,43 +2,63 @@
 #
 # push-bootstrap.sh
 #
-# 1. Installs packages listed in an external push_packages.list file
-# 2. Starts ssh-agent and loads an external private key
-# 3. Clones (or updates) a dotfiles git repo into /home/push/dotfiles
-# 4. Backs up any real files that would be overwritten, then stows
-#    every package folder found inside the dotfiles repo with GNU stow
-# 5. Mounts the SMB/CIFS shares on ds923plus.push (andreas, docker,
-#    photos_shared, web)
-# 6. Writes those shares into a standalone fstab-snippet file and merges
-#    it into /etc/fstab so they auto-mount on reboot too
+# Bootstrap script for a fresh Omarchy (Arch) install. Safe to re-run.
+#
+#  1. Installs packages listed in an external push_packages.list file
+#  2. Starts ssh-agent and loads an external private key
+#  3. Clones (or updates) a dotfiles git repo into /home/push/dotfiles
+#  4. Backs up any real files that would be overwritten, then stows
+#     every package folder found inside the dotfiles repo with GNU stow
+#     (the "etc" package is NOT stowed, it is installed to /etc, see 6)
+#  5. Adds the private hooks to hyprland.lua, ~/.bash_profile and ~/.bashrc
+#  6. Installs the Mac Mini CS4208 headphone-jack fix (macmini-audio.conf)
+#     into /etc/modprobe.d - only on machines that have that codec
+#  7. Sets defaults (Brave as default browser) and installs Omarchy plugins
+#  8. Mounts the SMB/CIFS shares on ds923plus.push (andreas, docker,
+#     photos_shared, web)
+#  9. Writes those shares into a standalone fstab-snippet file and merges
+#     it into /etc/fstab so they auto-mount on reboot too
+# 10. Enables and starts the systemd --user units from the dotfiles
 #
 # Usage:
 #   ./push-bootstrap.sh [options]
 #
 # Options (all have env-var equivalents shown in brackets):
-#   -p, --packages FILE     Package list file            [PACKAGES_FILE]     (default: ./push_packages.list)
-#   -k, --key FILE          SSH private key to load       [SSH_KEY_PATH]      (default: $HOME/.ssh/archmini_ed25519)
-#   -r, --repo URL          Dotfiles git remote (SSH URL) [DOTFILES_REPO]     (required only for first clone)
-#   -d, --dotfiles-dir DIR  Where the repo lives           [DOTFILES_DIR]      (default: /home/push/dotfiles)
-#   -t, --target DIR        stow target (usually $HOME)    [STOW_TARGET]       (default: $HOME)
-#   -b, --backup-dir DIR    Where conflicting files go      [BACKUP_DIR]        (default: ~/.dotfiles-backup-<timestamp>)
-#   --smb-credentials FILE  SMB credentials file            [SMB_CREDENTIALS_FILE] (default: ~/.smbcredentials)
-#   --skip-smb              Skip mounting the SMB shares
-#   --fstab-file FILE       Standalone file holding the fstab lines [SMB_FSTAB_FILE] (default: /etc/smb-shares.fstab)
-#   --skip-fstab            Skip writing /etc/fstab entries (mount-only, no auto-mount on reboot)
-#   -h, --help              Show this help and exit
-#   --skip-services          Skip enabling/starting the systemd --user units
-#   -h, --help              Show this help and exit
+#   -p, --packages FILE      Package list file              [PACKAGES_FILE]        (default: ./push_packages.list)
+#   -k, --key FILE           SSH private key to load        [SSH_KEY_PATH]         (default: $HOME/.ssh/archmini_ed25519)
+#   -r, --repo URL           Dotfiles git remote (SSH URL)  [DOTFILES_REPO]        (required only for first clone)
+#   -d, --dotfiles-dir DIR   Where the repo lives           [DOTFILES_DIR]         (default: /home/push/dotfiles)
+#   -t, --target DIR         stow target (usually $HOME)    [STOW_TARGET]          (default: $HOME)
+#   -b, --backup-dir DIR     Where conflicting files go     [BACKUP_DIR]           (default: ~/.dotfiles-backup-<timestamp>)
+#       --smb-credentials FILE  SMB credentials file        [SMB_CREDENTIALS_FILE] (default: ~/.smbcredentials)
+#       --fstab-file FILE    Standalone file with fstab lines [SMB_FSTAB_FILE]     (default: /etc/smb-shares.fstab)
+#       --skip-dotfiles      Do not clone/pull the dotfiles repo
+#       --skip-stow          Do not stow the dotfiles packages
+#       --skip-audio-fix     Do not install macmini-audio.conf
+#       --skip-smb           Skip mounting the SMB shares
+#       --skip-fstab         Skip writing /etc/fstab entries (mount-only, no auto-mount on reboot)
+#       --skip-services      Skip enabling/starting the systemd --user units
+#   -h, --help               Show this help and exit
+#
+# Env-only settings: SYSTEM_PKG (dotfiles folder that goes to /etc, default: etc),
+#                    AUDIO_CONF_SRC (override path of macmini-audio.conf)
 #
 # Example:
 #   ./push-bootstrap.sh \
 #     --packages /home/push/push_packages.list \
 #     --key /home/push/.ssh/id_ed25519_push \
 #     --repo git@github.com:youruser/dotfiles.git
-#
 
-set -euo pipefail
-trap 'ec=$?; printf "\033[1;31m[push-bootstrap]\033[0m Aborted (exit %s) at line %s while running: %s\n" "$ec" "$LINENO" "$BASH_COMMAND" >&2' ERR
+# -E makes the ERR trap fire for failures inside functions as well,
+# -e exits on errors, -u on unset variables, pipefail on failed pipes.
+set -Eeuo pipefail
+
+# Prints where and why the script aborted (called by the ERR trap below).
+on_error() {
+  local ec=$1 line=$2 cmd=$3
+  printf '\033[1;31m[push-bootstrap]\033[0m Aborted (exit %s) at line %s while running: %s\n' "$ec" "$line" "$cmd" >&2
+}
+trap 'on_error "$?" "$LINENO" "$BASH_COMMAND"' ERR
 
 ### ---------- Defaults (overridable via flags or env vars) ----------
 PACKAGES_FILE="${PACKAGES_FILE:-./push_packages.list}"
@@ -47,7 +67,14 @@ DOTFILES_REPO="${DOTFILES_REPO:-}"
 DOTFILES_DIR="${DOTFILES_DIR:-/home/push/dotfiles}"
 STOW_TARGET="${STOW_TARGET:-$HOME}"
 BACKUP_DIR="${BACKUP_DIR:-$HOME/.dotfiles-backup-$(date +%Y%m%d-%H%M%S)}"
-PLUGIN_LIST=('https://github.com/stappmus/Omarchy-Spotify.git' 'https://github.com/SirJul1337/omarchy-lock-explorer.git' 'https://github.com/Pegorim/omaplug.git' 'https://github.com/SmoothPixels/cursor-accent.git')
+
+# Omarchy plugins (Git URLs) that install_plugins() adds and enables.
+PLUGIN_LIST=(
+  'https://github.com/stappmus/Omarchy-Spotify.git'
+  'https://github.com/SirJul1337/omarchy-lock-explorer.git'
+  'https://github.com/Pegorim/omaplug.git'
+  'https://github.com/SmoothPixels/cursor-accent.git'
+)
 
 SMB_HOST="${SMB_HOST:-ds923plus.push}"
 SMB_SHARES=(andreas docker photos_shared web)
@@ -55,19 +82,44 @@ SMB_MOUNT_BASE="${SMB_MOUNT_BASE:-/mnt/smb}"
 SMB_CREDENTIALS_FILE="${SMB_CREDENTIALS_FILE:-$HOME/.smbcredentials}"
 SMB_UID="${SMB_UID:-$(id -u)}"
 SMB_GID="${SMB_GID:-$(id -g)}"
-SKIP_DOTFILES=0
-SKIP_SERVICES=0
-SKIP_SMB=0
 SMB_FSTAB_FILE="${SMB_FSTAB_FILE:-/etc/smb-shares.fstab}"
-SKIP_FSTAB=0
+
+# Switches set by the --skip-* flags.
+SKIP_DOTFILES=0
 SKIP_STOW=0
+SKIP_AUDIO_FIX=0
+SKIP_SMB=0
+SKIP_FSTAB=0
+SKIP_SERVICES=0
+
+SYSTEM_PKG="${SYSTEM_PKG:-etc}"        # dotfiles folder that goes to /etc, not into $HOME
+AUDIO_CONF_SRC="${AUDIO_CONF_SRC:-}"   # optional override, default is set in install_audio_fix
 
 ### ---------- Helpers ----------
+# Coloured output: log = info (blue), warn = warning (yellow, stderr),
+# die = error (red, stderr) and exit.
 log()  { printf '\033[1;34m[push-bootstrap]\033[0m %s\n' "$*"; }
 warn() { printf '\033[1;33m[push-bootstrap]\033[0m %s\n' "$*" >&2; }
 die()  { printf '\033[1;31m[push-bootstrap]\033[0m %s\n' "$*" >&2; exit 1; }
 
-usage() { sed -n '2,35p' "$0" | sed 's/^# \{0,1\}//'; }
+# Prints the header comment of this file (everything up to the first blank line).
+usage() { sed -n '2,/^$/p' "$0" | sed 's/^# \{0,1\}//'; }
+
+# append_once FILE PATTERN TEXT
+# Appends TEXT to FILE unless the fixed string PATTERN is already in it, so
+# re-runs never add duplicates. Skips (with a warning) if FILE does not exist.
+append_once() {
+  local file="$1" pattern="$2" text="$3"
+  if [[ ! -f "$file" ]]; then
+    warn "$file not found - skipping '$pattern' hook."
+    return 0
+  fi
+  if grep -qF -- "$pattern" "$file"; then
+    return 0
+  fi
+  printf '%s\n' "$text" >> "$file"
+  log "Added '$pattern' hook to $file"
+}
 
 ### ---------- Argument parsing ----------
 while [[ $# -gt 0 ]]; do
@@ -78,33 +130,34 @@ while [[ $# -gt 0 ]]; do
     -d|--dotfiles-dir)  DOTFILES_DIR="$2"; shift 2 ;;
     -t|--target)        STOW_TARGET="$2"; shift 2 ;;
     -b|--backup-dir)    BACKUP_DIR="$2"; shift 2 ;;
-    --skip-dotfiles)    SKIP_DOTFILES=1; shift ;;
     --smb-credentials)  SMB_CREDENTIALS_FILE="$2"; shift 2 ;;
-    --skip-smb)         SKIP_SMB=1; shift ;;
     --fstab-file)       SMB_FSTAB_FILE="$2"; shift 2 ;;
+    --skip-dotfiles)    SKIP_DOTFILES=1; shift ;;
+    --skip-stow)        SKIP_STOW=1; shift ;;
+    --skip-audio-fix)   SKIP_AUDIO_FIX=1; shift ;;
+    --skip-smb)         SKIP_SMB=1; shift ;;
     --skip-fstab)       SKIP_FSTAB=1; shift ;;
     --skip-services)    SKIP_SERVICES=1; shift ;;
-    --skip-stow)        SKIP_STOW=1; shift ;;
     -h|--help)          usage; exit 0 ;;
     *) die "Unknown argument: $1 (see --help)" ;;
   esac
 done
 
 ### ---------- 0. Prerequisites ----------
-# git, openssh and stow are needed by this script itself, so make sure
-# they exist before we even try to read the package list.
+# git, openssh, stow and cifs-utils are needed by this script itself, so
+# make sure they exist before we even try to read the package list.
+# Bails out if pacman is missing (not an Arch/Omarchy system).
 ensure_prereqs() {
-  local missing=()
-  for bin in git ssh-agent ssh-add stow pacman; do
+  local bin missing=() to_install=()
+
+  command -v pacman >/dev/null 2>&1 || die "pacman not found - this script targets Arch/Omarchy systems."
+
+  for bin in git ssh-agent ssh-add stow; do
     command -v "$bin" >/dev/null 2>&1 || missing+=("$bin")
   done
-  # pacman itself is the package manager check; if everything except
-  # pacman is missing, install via pacman. If pacman is missing this
-  # is not an Arch/Omarchy system and we bail out.
-  if [[ " ${missing[*]} " == *" pacman "* ]]; then
-    die "pacman not found - this script targets Arch/Omarchy systems."
-  fi
-  local to_install=()
+  [[ ${#missing[@]} -gt 0 ]] && log "Missing tools: ${missing[*]}"
+
+  # Map the commands we need to the package that provides them.
   for bin in git openssh stow cifs-utils; do
     case "$bin" in
       openssh)    command -v ssh-agent >/dev/null 2>&1 || to_install+=(openssh) ;;
@@ -112,6 +165,7 @@ ensure_prereqs() {
       *)          command -v "$bin" >/dev/null 2>&1 || to_install+=("$bin") ;;
     esac
   done
+
   if [[ ${#to_install[@]} -gt 0 ]]; then
     log "Installing prerequisites: ${to_install[*]}"
     sudo pacman -S --needed --noconfirm "${to_install[@]}"
@@ -119,11 +173,14 @@ ensure_prereqs() {
 }
 
 ### ---------- 1. Install packages from external list ----------
+# Reads PACKAGES_FILE (one package per line, '#' starts a comment, blank
+# lines are ignored) and installs everything with pacman.
 install_packages() {
   [[ -f "$PACKAGES_FILE" ]] || die "Package list not found: $PACKAGES_FILE"
 
-  local pkgs=()
-  while IFS= read -r line; do
+  local line pkgs=()
+  # "|| [[ -n $line ]]" keeps the last line even without a trailing newline.
+  while IFS= read -r line || [[ -n "$line" ]]; do
     line="${line%%#*}"                # strip comments
     line="$(echo "$line" | xargs)"    # trim whitespace
     [[ -z "$line" ]] && continue
@@ -137,10 +194,11 @@ install_packages() {
 
   log "Installing ${#pkgs[@]} package(s) from $PACKAGES_FILE"
   sudo pacman -S --needed --noconfirm "${pkgs[@]}"
-  # echo "sudo pacman -Qs ${pkgs[@]} && echo sudo pacman -Qe "${pkgs[@]}" || sudo pacman -S --needed --noconfirm "${pkgs[@]}""
 }
 
 ### ---------- 2. ssh-agent + private key ----------
+# Starts an ssh-agent for this script run and loads SSH_KEY_PATH into it
+# (needed so git can clone/pull the dotfiles repo over SSH).
 load_ssh_key() {
   [[ -f "$SSH_KEY_PATH" ]] || die "SSH key not found: $SSH_KEY_PATH"
   chmod 600 "$SSH_KEY_PATH" 2>/dev/null || true
@@ -153,10 +211,11 @@ load_ssh_key() {
 }
 
 ### ---------- 3. Load / update dotfiles repo ----------
+# Pulls the repo if it already exists in DOTFILES_DIR, otherwise clones
+# DOTFILES_REPO (which must then be given via --repo / DOTFILES_REPO).
 load_dotfiles() {
-
   if [[ "$SKIP_DOTFILES" -eq 1 ]]; then
-    log "Skipping Dotfiles (--skip-dotfiles)"
+    log "Skipping dotfiles (--skip-dotfiles)"
     return
   fi
 
@@ -177,6 +236,7 @@ load_dotfiles() {
 # that already exist as real (non-symlink) dirs - stow reports the
 # highest-level path it can't safely fold into, which is exactly what
 # needs to be moved out of the way before the real stow run.
+# Prints one conflicting path (relative to the stow target) per line.
 detect_conflicts() {
   local pkg_name="$1"
   stow -n -v 2 -d "$DOTFILES_DIR" -t "$STOW_TARGET" "$pkg_name" 2>&1 \
@@ -186,6 +246,8 @@ detect_conflicts() {
     | sed -E 's/ +=>.*$//'
 }
 
+# Moves every real (non-symlink) file that would block stowing the package
+# into BACKUP_DIR/<package>/..., keeping its relative path.
 backup_conflicts() {
   local pkg_dir="$1" pkg_name rel target
   pkg_name="$(basename "$pkg_dir")"
@@ -206,11 +268,15 @@ backup_conflicts() {
   done < <(detect_conflicts "$pkg_name")
 }
 
+# Stows every folder in DOTFILES_DIR as a GNU stow package into STOW_TARGET
+# (after backing up conflicts). The SYSTEM_PKG folder is skipped because it
+# belongs in /etc (see install_audio_fix). A failing package is skipped
+# with a warning so the remaining steps still run.
 stow_all_packages() {
   local dir pkg_name found=0
 
   if [[ "$SKIP_STOW" -eq 1 ]]; then
-    log "Skip stowing dotfiles (--skip-stow)"
+    log "Skipping stow (--skip-stow)"
     return
   fi
 
@@ -218,13 +284,12 @@ stow_all_packages() {
     [[ -d "$dir" ]] || continue
     pkg_name="$(basename "$dir")"
     [[ "$pkg_name" == ".git" ]] && continue
+    [[ "$pkg_name" == "$SYSTEM_PKG" ]] && continue   # installed to /etc by install_audio_fix
     found=1
 
     backup_conflicts "$dir"
 
     log "Stowing package: $pkg_name"
-    stow -v -R --adopt -d "$DOTFILES_DIR" -t "$STOW_TARGET" "$pkg_name"
-    # stow -v -R  --adopt -d "$DOTFILES_DIR" -t "$STOW_TARGET" "$pkg_name"
     if ! stow -v -R -d "$DOTFILES_DIR" -t "$STOW_TARGET" "$pkg_name"; then
       warn "stow failed for package '$pkg_name' - skipping it and continuing with the rest (mounts/fstab still run)."
       continue
@@ -234,20 +299,105 @@ stow_all_packages() {
   if [[ "$found" -eq 0 ]]; then
     warn "No package folders found in $DOTFILES_DIR - nothing to stow."
   else
-    log "Backups of any overwritten files saved under: $BACKUP_DIR"
+    log "Backups of any overwritten files are saved under: $BACKUP_DIR"
+  fi
+}
+
+### ---------- 5. Private hooks (hyprland, bash) ----------
+# Hooks my private config into the stowed files. Every hook is added only
+# once, so re-running the script never duplicates lines.
+add_shell_hooks() {
+  # Hyprland: load my private config (skipped if hyprland.lua does not exist)
+  append_once "$HOME/.config/hypr/hyprland.lua" "push_hyprland" \
+    $'\n-- added push private config\nrequire("hypr.push_hyprland")'
+
+  # Bash: load my own rc file from ~/.bash_profile and ~/.bashrc
+  touch "$HOME/.bash_profile" "$HOME/.bashrc"
+  append_once "$HOME/.bash_profile" "pushrc" \
+    '[ -e ~/.pushrc ] && . ~/.pushrc || echo "warning: ~/.pushrc not found"'
+  append_once "$HOME/.bashrc" "pushrc" \
+    '[ -e ~/dotfiles/bash_archmini/.pushrc ] && . ~/dotfiles/bash_archmini/.pushrc || echo "warning: ~/dotfiles/bash_archmini/.pushrc not found"'
+}
+
+### ---------- 6. Mac Mini CS4208 headphone-jack fix ----------
+# Without this model option the jack is not detected when the plug is fully
+# inserted and sound stays on the internal speakers. The file is copied from
+# the dotfiles to /etc/modprobe.d (stow cannot write to /etc here) and only
+# on machines that really have the CS4208 codec. A reboot is needed after.
+install_audio_fix() {
+  local src="${AUDIO_CONF_SRC:-$DOTFILES_DIR/$SYSTEM_PKG/modprobe.d/macmini-audio.conf}"
+  local dst="/etc/modprobe.d/macmini-audio.conf"
+
+  if [[ "$SKIP_AUDIO_FIX" -eq 1 ]]; then
+    log "Skipping audio fix (--skip-audio-fix)"
+    return
   fi
 
-# adding my provate modifications to hyprland
-[[ ! $(grep push_hyprland ${HOME}/.config/hypr/hyprland.lua) ]] && echo "
--- added push private config
-require(\"hypr.push_hyprland\")" >> ~/.config/hypr/hyprland.lua
+  if [[ ! -f "$src" ]]; then
+    warn "Audio fix not found in dotfiles: $src - skipping."
+    return
+  fi
 
-# loading my own bash_profile file
-[[ ! $(grep pushrc ${HOME}/.bash_profile) ]] && echo "[ -e ~/.pushrc ] && . ~/.pushrc || echo \"warning: ~/.pushrc not found\"" >> ~/.bash_profile
-[[ ! $(grep pushrc ${HOME}/.bashrc) ]] && echo "[ -e ~/.bashrc ] && . ~/dotfiles/bash_archmini/.pushrc || echo \"warning: ~/dotfiles/bash_archmini/.pushrc not found\"" >> ~/.bashrc
+  # The model= list is per sound card, so only apply it on hardware that
+  # really has the CS4208 codec.
+  if ! grep -qs "Codec: Cirrus Logic CS4208" /proc/asound/card*/codec#* 2>/dev/null; then
+    log "No CS4208 codec detected - not installing macmini-audio.conf"
+    return
+  fi
 
+  if [[ -f "$dst" ]] && sudo cmp -s "$src" "$dst"; then
+    log "Audio fix already installed: $dst"
+    return
+  fi
+
+  sudo install -Dm644 "$src" "$dst"
+  log "Installed $dst - reboot required for the headphone-jack fix to take effect."
 }
-### ---------- 5. Mount SMB/CIFS shares ----------
+
+### ---------- 7. Defaults and Omarchy plugins ----------
+# Makes Brave the default browser if it is installed (config dir exists)
+# and Omarchy still uses Chromium.
+set_defaults() {
+  if ! command -v omarchy >/dev/null 2>&1; then
+    warn "omarchy command not found - skipping defaults."
+    return
+  fi
+
+  if [[ -d "$HOME/.config/BraveSoftware/" ]] && [[ "$(omarchy default browser)" == "chromium" ]]; then
+    log "Setting Brave as default browser"
+    omarchy default browser brave
+  fi
+}
+
+# Installs and enables every plugin from PLUGIN_LIST that is not installed yet.
+# NOTE: this assumes 'omarchy plugin list' prints the plugin's Git URL; if it
+# only prints names, the grep never matches and plugins get re-added each run.
+install_plugins() {
+  local plug
+
+  if ! command -v omarchy >/dev/null 2>&1; then
+    warn "omarchy command not found - skipping plugins."
+    return
+  fi
+
+  for plug in "${PLUGIN_LIST[@]}"; do
+    # No -q on purpose: with pipefail, grep -q could close the pipe early
+    # and make the pipeline report a false failure.
+    if omarchy plugin list | grep -F -- "$plug" > /dev/null; then
+      log "Plugin $plug is already installed - skipping"
+      continue
+    fi
+
+    log "Installing $plug"
+    if ! omarchy plugin add "$plug" --enable; then
+      warn "Failed to install plugin $plug - continuing with the rest."
+    fi
+  done
+}
+
+### ---------- 8. Mount SMB/CIFS shares ----------
+# Mounts every share from SMB_SHARES below SMB_MOUNT_BASE right now.
+# Already mounted shares are skipped; a failing share only gives a warning.
 mount_smb_shares() {
   local share mount_point
   for share in "${SMB_SHARES[@]}"; do
@@ -267,7 +417,7 @@ mount_smb_shares() {
   done
 }
 
-### ---------- 6. fstab entries for the SMB shares (auto-mount on reboot) ----------
+### ---------- 9. fstab entries for the SMB shares (auto-mount on reboot) ----------
 FSTAB_MARKER_BEGIN="# >>> push-bootstrap smb shares >>>"
 FSTAB_MARKER_END="# <<< push-bootstrap smb shares <<<"
 
@@ -297,7 +447,7 @@ generate_smb_fstab_file() {
 
 # Merges the snippet file into /etc/fstab inside a marked block, so
 # re-running this script updates the block in place instead of piling
-# up duplicate lines.
+# up duplicate lines. A timestamped backup of /etc/fstab is made first.
 install_fstab_entries() {
   [[ -f "$SMB_FSTAB_FILE" ]] || die "fstab snippet not found: $SMB_FSTAB_FILE"
 
@@ -332,6 +482,8 @@ install_fstab_entries() {
   log "/etc/fstab updated (backup saved alongside it). Run 'sudo mount -a' or reboot to apply."
 }
 
+# Runs steps 8 and 9: mount the shares now, then (unless --skip-fstab)
+# persist them in /etc/fstab. Skipped entirely without a credentials file.
 mount_and_persist_smb_shares() {
   if [[ "$SKIP_SMB" -eq 1 ]]; then
     log "Skipping SMB mounts (--skip-smb)"
@@ -354,61 +506,61 @@ mount_and_persist_smb_shares() {
   install_fstab_entries
 }
 
-### ---------- 7. Enable + start systemd --user units from the dotfiles ----------
+### ---------- 10. Enable + start systemd --user units from the dotfiles ----------
+# Enables and starts the awww wallpaper daemon, the changeBackground service
+# and timer, then every other .service/.timer found in the stowed
+# systemd/.config/systemd/user folder. Needs a running user session (user
+# bus); otherwise it only prints a hint and skips.
 enable_systemd_user_services() {
   if [[ "$SKIP_SERVICES" -eq 1 ]]; then
     log "Skipping systemd --user units (--skip-services)"
     return
   fi
- 
+
   local unit_src_dir="$DOTFILES_DIR/systemd/.config/systemd/user"
   if [[ ! -d "$unit_src_dir" ]]; then
     warn "No systemd user units found under $unit_src_dir - skipping."
     return
   fi
- 
+
   if ! systemctl --user show-environment >/dev/null 2>&1; then
     warn "systemctl --user is not reachable in this session (no user bus?) - skipping service enablement. Log into a normal graphical/user session and re-run, or run 'systemctl --user enable --now <unit>' manually."
     return
   fi
-  if [[ ! -d "$HOME/.config/awww/" ]]; then
-    echo "createing awww cache dir"
-    mkdir $HOME/.config/awww/
-  fi
-  if ! systemctl --user is-enabled --quiet awww-daemon.service; then
-    systemctl --user enable --now awww-daemon.service
-    log "Enabled awww-daemon.service"
-  fi
-  if ! systemctl --user is-enabled --quiet changeBackground.service; then
-    systemctl --user enable --now changeBackground.service
-    log "Enabled changeBackground.service"
-  fi
-  if ! systemctl --user is-enabled --quiet changeBackground.timer; then
-    systemctl --user enable --now changeBackground.timer
-    log "Enabled changeBackground.timer"
-  fi
 
-  if ! systemctl --user is-active --quiet awww-daemon.service; then
-    systemctl --user start awww-daemon.service
-  fi
-  if ! systemctl --user is-active --quiet changeBackground.service; then
-    systemctl --user start changeBackground.service
-  fi
-  if ! systemctl --user is-active --quiet changeBackground.timer; then
-    systemctl --user start changeBackground.timer
-  fi
-
+  # Pick up the freshly stowed unit files before enabling them.
   systemctl --user daemon-reload
- 
+
+  # awww needs its cache directory.
+  if [[ ! -d "$HOME/.config/awww/" ]]; then
+    log "Creating awww cache dir"
+    mkdir -p "$HOME/.config/awww/"
+  fi
+
+  # The units that must run in this order: daemon first, then the background changer.
+  local unit
+  for unit in awww-daemon.service changeBackground.service changeBackground.timer; do
+    if ! systemctl --user is-enabled --quiet "$unit"; then
+      systemctl --user enable --now "$unit"
+      log "Enabled $unit"
+    fi
+    if ! systemctl --user is-active --quiet "$unit"; then
+      systemctl --user start "$unit"
+    fi
+  done
+
+  # Everything else that was stowed into the user unit folder.
   local unit_file unit_name
   while IFS= read -r -d '' unit_file; do
     unit_name="$(basename "$unit_file")"
-    log "Enabeld & started: $unit_name"
-    if ! systemctl --user enable --now "$unit_name"; then
+    if systemctl --user enable --now "$unit_name"; then
+      log "Enabled & started: $unit_name"
+    else
       warn "Failed to enable/start $unit_name - continuing with the rest."
     fi
   done < <(find "$unit_src_dir" -maxdepth 1 -type f \( -name '*.service' -o -name '*.timer' \) -print0 | sort -z)
- 
+
+  # Final sanity checks - warn only, never abort.
   if ! systemctl --user is-active --quiet awww-daemon.service; then
     warn "awww-daemon.service does not look active - check 'systemctl --user status awww-daemon.service'."
   fi
@@ -417,37 +569,20 @@ enable_systemd_user_services() {
   fi
 }
 
-### ---------- 8. Enable some defaults and install plugins ----------
-# setting some Defaults
-
-if [[ -d "$HOME/.config/BraveSoftware/" ]] && [[ $(omarchy default browser) == "chromium" ]]; then
-  echo "Setting Brave as default browser"
-  omarchy default browser brave
-fi
-
-install_plugins() {
-  local plug
-  for plug "${PLUGIN_LIST[@]}"; do
-    if ! omarchy plugin list | grep ${plug} > /dev/null ; then
-      omarchy plugin add $plug --enable
-      log "Installing $plug "
-    else
-      log "Plugin $plug is already installed. - skipping"
-      continue
-    fi
-  done
-}
-if () 
-# omarchy plugin add https://github.com/SirJul1337/omarchy-lock-explorer.git --enable
-# omarchy plugin add https://github.com/Pegorim/omaplug.git --enable
-
 ### ---------- Main ----------
+# Runs all steps in order. The order matters: the SSH key must be loaded
+# before the dotfiles are cloned, and the dotfiles must be stowed before
+# the hooks, the audio fix and the systemd units can use them.
 main() {
   ensure_prereqs
   install_packages
   load_ssh_key
   load_dotfiles
   stow_all_packages
+  add_shell_hooks
+  install_audio_fix
+  set_defaults
+  install_plugins
   mount_and_persist_smb_shares
   enable_systemd_user_services
   log "Done."
@@ -460,7 +595,7 @@ main "$@"
 # 1 mount your shares - done
 # 2 configure awww
 # 3 configure systemd background.sh
-# # 4 eval ssh-agent 
+# # 4 eval ssh-agent
 #
 # 1. Create the service file:
 
@@ -492,4 +627,4 @@ main "$@"
 # Host *
 #     AddKeysToAgent yes
 #
-# Now every shell session shares one agent on a stable socket.  You only need to run ssh-add ~/.ssh/id_ed25519 once per login (or it auto-adds via AddKeysToAgent).<D-z>
+# Now every shell session shares one agent on a stable socket.  You only need to run ssh-add ~/.ssh/id_ed25519 once per login (or it auto-adds via AddKeysToAgent).
