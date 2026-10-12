@@ -1,0 +1,11 @@
+[Unit]
+Description=Run copy-data every night
+
+[Timer]
+OnCalendar=*-*-* 18:00:00
+# Catch up at next login if the machine was off at 02:00
+Persistent=true
+RandomizedDelaySec=5min
+
+[Install]
+WantedBy=timers.target

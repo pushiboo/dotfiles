@@ -1,0 +1,11 @@
+[Unit]
+Description=Copy data from SRC to DEST (rsync)
+
+[Service]
+Type=oneshot
+ExecStart=%h/dotfiles/scripts/scripts/bash/rsyncWallpaper/rsync-wallpaper.sh
+Nice=10
+IOSchedulingClass=idle
+
+[Install]
+WantedBy=default.target
