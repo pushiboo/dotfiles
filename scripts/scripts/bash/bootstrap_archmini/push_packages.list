@@ -1,7 +1,6 @@
 awww
 base-devel
 bitwarden
-bitwarden
 brave
 dnsutils
 git
@@ -9,8 +8,10 @@ hyfetch
 kitty
 lazydocker
 lazygit
+lmstudio-bin
 lsof
 nfs-utils
+openbsd-netcat
 qt6-imageformats
 rsync
 spotify
