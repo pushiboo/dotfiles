@@ -110,7 +110,23 @@ return {
       },
     },
   },
-
+  -- Supperssing the @reference, @apply warnings in tailwind, see braves llm.
+  --   This hides the virtual text but the sign/underline may still show. To hide everything for that message, use an autocmd:
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      diagnostics = {
+        virtual_text = {
+          format = function(diagnostic)
+            if diagnostic.message:match("Unknown at rule") then
+              return nil
+            end
+            return diagnostic.message
+          end,
+        },
+      },
+    },
+  },
   -- for typescript, LazyVim also includes extra specs to properly setup lspconfig,
   -- treesitter, mason and typescript.nvim. So instead of the above, you can use:
   { import = "lazyvim.plugins.extras.lang.typescript" },
