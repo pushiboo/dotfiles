@@ -23,7 +23,7 @@
       "type": "integer",
       "format": "uint64",
       "minimum": 0,
-      "default": 300,
+      "default": 500,
       "scan_ignore_paths": ["/mnt/smb/", "node_modules"]
     },
     "command_timeout": {
