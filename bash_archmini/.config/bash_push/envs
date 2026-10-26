@@ -9,7 +9,39 @@ export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 # set Background Vars
 # screenLeft=$(awww query | head -n 1 | cut -d ':' -f 2 | sed 's. ..g')
-screenLeft=$(awww query | cut -d " " -f 9 | head -n 1)
-screenRight=$(awww query | cut -d " " -f 9 | tail -n -1)
-export SCREENLEFT="$screenLeft"
-export SCREENRIGHT="$screenRight"
+# screenLeft=$(awww query | cut -d " " -f 9 | head -n 1)
+# screenRight=$(awww query | cut -d " " -f 9 | tail -n -1)
+# export SCREENLEFT="$screenLeft"
+# export SCREENRIGHT="$screenRight"
+
+export MONGODB_ADMIN="pushAdmin"
+export MONGODB_ADMIN_PASSWORD=$(
+  if [[ -f "${HOME}/docker/mongodb/secrets/db_admin_pwd" ]]; then
+    cat "${HOME}/docker/mongodb/secrets/db_admin_pwd"
+  else
+    echo "YouNeedToCheckYourPasswordFile - HINT, see your bash envs!"
+  fi
+)
+export MONGODB_USER="push"
+export MONGODB_ROOT_USER="root"
+export MONGODB_ROOT_PASSWORD=$(
+  if [[ -f "${HOME}/docker/mongodb/secrets/db_root_pwd" ]]; then
+    cat "${HOME}/docker/mongodb/secrets/db_root_pwd"
+  else
+    echo "YouNeedToCheckYourPasswordFile - HINT, see your bash envs!"
+  fi
+)
+
+
+# Some website tokens
+export VITE_MONGODB_HOST='mongodb.push'
+export VITE_MONGODB_PORT='27017'
+export VITE_MONGODB_ANDPLIDB='vueWithPinia'
+export VITE_MONGODB_ANDPLIADMIN='andreasplichtaAdmin'
+export VITE_MONGODB_ANDPLIPWD=$(
+  if [[ -f "${HOME}/docker/mongodb/secrets/db_andpli_pwd" ]]; then
+    cat "${HOME}/docker/mongodb/secrets/db_andpli_pwd"
+  else
+    echo "YouNeedToCheckYourPasswordFile - HINT, see your bash envs!"
+  fi
+)
