@@ -31,8 +31,8 @@ alias vim=nvim
 alias vi=nvim
 alias svim='sudo -E nvim'
 alias sedit='sudo -E EDITOR=vim'
-alias dfnfs="df -T -t nfs"
-alias dfcifs="df -T -t cifs"
+alias dfnfs="df -Th -t nfs"
+alias dfcifs="df -Th -t cifs"
 alias dfstat="nfsstat -m"
 alias arch="cd /mnt/ds923plus/andreas/arch"
 alias andreas="cd /mnt/ds923plus/andreas"
