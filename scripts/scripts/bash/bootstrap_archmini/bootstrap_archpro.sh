@@ -61,7 +61,8 @@ on_error() {
 trap 'on_error "$?" "$LINENO" "$BASH_COMMAND"' ERR
 
 ### ---------- Defaults (overridable via flags or env vars) ----------
-PACKAGES_FILE="${PACKAGES_FILE:-./push_packages.list}"
+PACKAGES_FILE="${PACKAGES_FILE:-./packages_archpro.list}"
+PACKAGES_AUR_FILE="${PACKAGES_AUR_FILE:-./packages_archpro.aur}"
 SSH_KEY_PATH="${SSH_KEY_PATH:-$HOME/.ssh/archmini_ed25519}"
 DOTFILES_REPO="${DOTFILES_REPO:-}"
 DOTFILES_DIR="${DOTFILES_DIR:-/home/push/dotfiles}"
@@ -86,8 +87,8 @@ set_cifs_links() {
   for link in "${LINK_MOUNTS[@]}"; do
     local linkname=$(basename "$link")
     [ ! -L "$link" ] && ln -s "$link" "${HOME}/${linkname}" || echo "Link $link already exists"
+  done
 }
-
 
 SMB_HOST="${SMB_HOST:-ds923plus.push}"
 SMB_SHARES=(andreas docker photos_shared web)
@@ -100,20 +101,26 @@ SMB_FSTAB_FILE="${SMB_FSTAB_FILE:-/etc/smb-shares.fstab}"
 # Switches set by the --skip-* flags.
 SKIP_DOTFILES=0
 SKIP_STOW=0
+SKIP_PACKAGES=0
+SKIP_AUR_PACKAGES=0
 SKIP_AUDIO_FIX=0
+SKIP_PLUGINS=0
 SKIP_SMB=0
 SKIP_FSTAB=0
 SKIP_SERVICES=0
 
-SYSTEM_PKG="${SYSTEM_PKG:-etc}"        # dotfiles folder that goes to /etc, not into $HOME
-AUDIO_CONF_SRC="${AUDIO_CONF_SRC:-}"   # optional override, default is set in install_audio_fix
+SYSTEM_PKG="${SYSTEM_PKG:-etc}"      # dotfiles folder that goes to /etc, not into $HOME
+AUDIO_CONF_SRC="${AUDIO_CONF_SRC:-}" # optional override, default is set in install_audio_fix
 
 ### ---------- Helpers ----------
 # Coloured output: log = info (blue), warn = warning (yellow, stderr),
 # die = error (red, stderr) and exit.
-log()  { printf '\033[1;34m[push-bootstrap]\033[0m %s\n' "$*"; }
+log() { printf '\033[1;34m[push-bootstrap]\033[0m %s\n' "$*"; }
 warn() { printf '\033[1;33m[push-bootstrap]\033[0m %s\n' "$*" >&2; }
-die()  { printf '\033[1;31m[push-bootstrap]\033[0m %s\n' "$*" >&2; exit 1; }
+die() {
+  printf '\033[1;31m[push-bootstrap]\033[0m %s\n' "$*" >&2
+  exit 1
+}
 
 # Prints the header comment of this file (everything up to the first blank line).
 usage() { sed -n '2,/^$/p' "$0" | sed 's/^# \{0,1\}//'; }
@@ -130,29 +137,90 @@ append_once() {
   if grep -qF -- "$pattern" "$file"; then
     return 0
   fi
-  printf '%s\n' "$text" >> "$file"
+  printf '%s\n' "$text" >>"$file"
   log "Added '$pattern' hook to $file"
 }
 
 ### ---------- Argument parsing ----------
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    -p|--packages)      PACKAGES_FILE="$2"; shift 2 ;;
-    -k|--key)           SSH_KEY_PATH="$2"; shift 2 ;;
-    -r|--repo)          DOTFILES_REPO="$2"; shift 2 ;;
-    -d|--dotfiles-dir)  DOTFILES_DIR="$2"; shift 2 ;;
-    -t|--target)        STOW_TARGET="$2"; shift 2 ;;
-    -b|--backup-dir)    BACKUP_DIR="$2"; shift 2 ;;
-    --smb-credentials)  SMB_CREDENTIALS_FILE="$2"; shift 2 ;;
-    --fstab-file)       SMB_FSTAB_FILE="$2"; shift 2 ;;
-    --skip-dotfiles)    SKIP_DOTFILES=1; shift ;;
-    --skip-stow)        SKIP_STOW=1; shift ;;
-    --skip-audio-fix)   SKIP_AUDIO_FIX=1; shift ;;
-    --skip-smb)         SKIP_SMB=1; shift ;;
-    --skip-fstab)       SKIP_FSTAB=1; shift ;;
-    --skip-services)    SKIP_SERVICES=1; shift ;;
-    -h|--help)          usage; exit 0 ;;
-    *) die "Unknown argument: $1 (see --help)" ;;
+  -p | --packages)
+    PACKAGES_FILE="$2"
+    shift 2
+    ;;
+  -a | --aur-packages)
+    PACKAGES_AUR_FILE="$2"
+    shift 2
+    ;;
+  -k | --key)
+    SSH_KEY_PATH="$2"
+    shift 2
+    ;;
+  -r | --repo)
+    DOTFILES_REPO="$2"
+    shift 2
+    ;;
+  -d | --dotfiles-dir)
+    DOTFILES_DIR="$2"
+    shift 2
+    ;;
+  -t | --target)
+    STOW_TARGET="$2"
+    shift 2
+    ;;
+  -b | --backup-dir)
+    BACKUP_DIR="$2"
+    shift 2
+    ;;
+  --smb-credentials)
+    SMB_CREDENTIALS_FILE="$2"
+    shift 2
+    ;;
+  --fstab-file)
+    SMB_FSTAB_FILE="$2"
+    shift 2
+    ;;
+  --skip-dotfiles)
+    SKIP_DOTFILES=1
+    shift
+    ;;
+  --skip-stow)
+    SKIP_STOW=1
+    shift
+    ;;
+  --skip-packages)
+    SKIP_PACKAGES=1
+    shift
+    ;;
+  --skip-aur-packages)
+    SKIP_AUR_PACKAGES=1
+    shift
+    ;;
+  --skip-audio-fix)
+    SKIP_AUDIO_FIX=1
+    shift
+    ;;
+  --skip-plugins)
+    SKIP_PLUGINS=1
+    shift
+    ;;
+  --skip-smb)
+    SKIP_SMB=1
+    shift
+    ;;
+  --skip-fstab)
+    SKIP_FSTAB=1
+    shift
+    ;;
+  --skip-services)
+    SKIP_SERVICES=1
+    shift
+    ;;
+  -h | --help)
+    usage
+    exit 0
+    ;;
+  *) die "Unknown argument: $1 (see --help)" ;;
   esac
 done
 
@@ -173,9 +241,9 @@ ensure_prereqs() {
   # Map the commands we need to the package that provides them.
   for bin in git openssh stow cifs-utils; do
     case "$bin" in
-      openssh)    command -v ssh-agent >/dev/null 2>&1 || to_install+=(openssh) ;;
-      cifs-utils) command -v mount.cifs >/dev/null 2>&1 || to_install+=(cifs-utils) ;;
-      *)          command -v "$bin" >/dev/null 2>&1 || to_install+=("$bin") ;;
+    openssh) command -v ssh-agent >/dev/null 2>&1 || to_install+=(openssh) ;;
+    cifs-utils) command -v mount.cifs >/dev/null 2>&1 || to_install+=(cifs-utils) ;;
+    *) command -v "$bin" >/dev/null 2>&1 || to_install+=("$bin") ;;
     esac
   done
 
@@ -194,19 +262,50 @@ install_packages() {
   local line pkgs=()
   # "|| [[ -n $line ]]" keeps the last line even without a trailing newline.
   while IFS= read -r line || [[ -n "$line" ]]; do
-    line="${line%%#*}"                # strip comments
-    line="$(echo "$line" | xargs)"    # trim whitespace
+    line="${line%%#*}"             # strip comments
+    line="$(echo "$line" | xargs)" # trim whitespace
     [[ -z "$line" ]] && continue
     pkgs+=("$line")
-  done < "$PACKAGES_FILE"
+  done <"$PACKAGES_FILE"
 
   if [[ ${#pkgs[@]} -eq 0 ]]; then
     warn "Package list $PACKAGES_FILE is empty - skipping install."
     return
   fi
+  if [[ ! $(sudo pacman -Qq "${#pkgs[@]}") ]]; then
+    log "Installing ${#pkgs[@]} package(s) from $PACKAGES_FILE"
+    sudo pacman -S --needed --noconfirm "${pkgs[@]}"
+  else
+    log "Package ${#pkgs[@]} already installed."
+  fi
+}
+install_aur_packages() {
+  [[ -f "$PACKAGES_AUR_FILE" ]] || die "Package list not found: $PACKAGES_AUR_FILE"
 
-  log "Installing ${#pkgs[@]} package(s) from $PACKAGES_FILE"
-  sudo pacman -S --needed --noconfirm "${pkgs[@]}"
+  local line pkgs=()
+  # "|| [[ -n $line ]]" keeps the last line even without a trailing newline.
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    line="${line%%#*}"             # strip comments
+    line="$(echo "$line" | xargs)" # trim whitespace
+    [[ -z "$line" ]] && continue
+    pkgs+=("$line")
+  done <"$PACKAGES_AUR_FILE"
+
+  if [[ ${#pkgs[@]} -eq 0 ]]; then
+    warn "Package list $PACKAGES_AUR_FILE is empty - skipping install."
+    return
+  fi
+
+  # log "Installing ${#pkgs[@]} package(s) from $PACKAGES_AUR_FILE"
+  # yay -S --noconfirm "${pkgs[@]}"
+
+  if [[ $(yay -Q "${#pkgs[@]}" &>/dev/null) ]]; then
+    log "Installing ${#pkgs[@]} package(s) from $PACKAGES_AUR_FILE"
+    yay -S --noconfirm "${pkgs[@]}"
+  else
+    log "AUR-Package ${#pkgs[@]} already installed."
+  fi
+
 }
 
 ### ---------- 2. ssh-agent + private key ----------
@@ -252,11 +351,11 @@ load_dotfiles() {
 # Prints one conflicting path (relative to the stow target) per line.
 detect_conflicts() {
   local pkg_name="$1"
-  stow -n -v 2 -d "$DOTFILES_DIR" -t "$STOW_TARGET" "$pkg_name" 2>&1 \
-    | sed -n -E \
-        -e 's/^[[:space:]]*\*[[:space:]]*cannot stow .* over existing target (.*) since neither a link nor a directory.*/\1/p' \
-        -e 's/^[[:space:]]*\*[[:space:]]*existing target[^:]*:[[:space:]]*(.*)$/\1/p' \
-    | sed -E 's/ +=>.*$//'
+  stow -n -v 2 -d "$DOTFILES_DIR" -t "$STOW_TARGET" "$pkg_name" 2>&1 |
+    sed -n -E \
+      -e 's/^[[:space:]]*\*[[:space:]]*cannot stow .* over existing target (.*) since neither a link nor a directory.*/\1/p' \
+      -e 's/^[[:space:]]*\*[[:space:]]*existing target[^:]*:[[:space:]]*(.*)$/\1/p' |
+    sed -E 's/ +=>.*$//'
 }
 
 # Moves every real (non-symlink) file that would block stowing the package
@@ -297,7 +396,7 @@ stow_all_packages() {
     [[ -d "$dir" ]] || continue
     pkg_name="$(basename "$dir")"
     [[ "$pkg_name" == ".git" ]] && continue
-    [[ "$pkg_name" == "$SYSTEM_PKG" ]] && continue   # installed to /etc by install_audio_fix
+    [[ "$pkg_name" == "$SYSTEM_PKG" ]] && continue # installed to /etc by install_audio_fix
     found=1
 
     backup_conflicts "$dir"
@@ -388,6 +487,11 @@ set_defaults() {
 install_plugins() {
   local plug
 
+  if [[ "$SKIP_PLUGINS" -eq 1 ]]; then
+    log "Skipping plugins (--skip-plugins)"
+    return
+  fi
+
   if ! command -v omarchy >/dev/null 2>&1; then
     warn "omarchy command not found - skipping plugins."
     return
@@ -396,7 +500,7 @@ install_plugins() {
   for plug in "${PLUGIN_LIST[@]}"; do
     # No -q on purpose: with pipefail, grep -q could close the pipe early
     # and make the pipeline report a false failure.
-    if omarchy plugin list | grep -F -- "$plug" > /dev/null; then
+    if omarchy plugin list | grep -F -- "$plug" >/dev/null; then
       log "Plugin $plug is already installed - skipping"
       continue
     fi
@@ -449,7 +553,7 @@ generate_smb_fstab_file() {
       printf '//%s/%s %s cifs credentials=%s,uid=%s,gid=%s,iocharset=utf8,vers=3.0,x-systemd.automount,x-systemd.idle-timeout=60,_netdev,noauto 0 0\n' \
         "$SMB_HOST" "$share" "$SMB_MOUNT_BASE/$share" "$SMB_CREDENTIALS_FILE" "$SMB_UID" "$SMB_GID"
     done
-  } > "$tmp"
+  } >"$tmp"
 
   sudo mkdir -p "$(dirname "$SMB_FSTAB_FILE")"
   sudo cp "$tmp" "$SMB_FSTAB_FILE"
@@ -475,7 +579,7 @@ install_fstab_entries() {
       $0 == beg { skip=1 }
       !skip { print }
       $0 == end { skip=0 }
-    ' /etc/fstab > "$tmp"
+    ' /etc/fstab >"$tmp"
   else
     log "Adding new SMB block to /etc/fstab"
     cp /etc/fstab "$tmp"
@@ -589,6 +693,7 @@ enable_systemd_user_services() {
 main() {
   ensure_prereqs
   install_packages
+  install_aur_packages
   load_ssh_key
   load_dotfiles
   stow_all_packages
