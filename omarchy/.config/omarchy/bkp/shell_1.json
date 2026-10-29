@@ -1,0 +1,93 @@
+{
+  "bar": {
+    "centerAnchor": "omarchy.clock",
+    "layout": {
+      "center": [
+        {"id": "omarchy.indicators"},
+        {"id": "omarchy.keyboard-layout"},
+        {
+          "format": "dddd HH:mm",
+          "formatAlt": "d MMMM 'W'ww yyyy",
+          "id": "omarchy.clock",
+          "verticalFormat": "HH\n—\nmm"
+        },
+        {"id": "omarchy.weather"},
+        {"id": "omaplug"},
+        {"id": "slylem0.locked-in"},
+        {"id": "omarchy.system-update"},
+        {
+          "audioQuality": "320 kbps",
+          "clientId": "",
+          "deviceName": "Omarchy Spotify",
+          "fixedBarWidth": "Off",
+          "id": "quickshell.spotify",
+          "idleShutdownMinutes": 15,
+          "maxBarTextWidth": "240",
+          "scrollBarText": "Off",
+          "scrollSpeed": "1",
+          "shortcutHints": "Off",
+          "shortcutPlayer": "Omarchy Music app",
+          "showArtistName": "Off",
+          "showArtwork": "On",
+          "showLyrics": "On",
+          "showMiniPlayer": "On",
+          "showPausedTrack": "On",
+          "showTrackTitle": "On",
+          "showVinylRecord": "Off"
+        }
+      ],
+      "left": [
+        {"id": "omarchy.menu"},
+        {"id": "omarchy.workspaces"},
+        {
+          "barStyle": "squares",
+          "barsPerColumn": 2,
+          "columns": 1,
+          "id": "gladimdim.ai-limits",
+          "refreshIntervalSec": 600
+        }
+      ],
+      "right": [
+        {"id": "omarchy.tray"},
+        {"id": "omarchy.agents"},
+        {"id": "omarchy.bluetooth"},
+        {"id": "omarchy.network"},
+        {"id": "omarchy.audio"},
+        {"id": "omarchy.monitor"},
+        {"id": "omarchy.power"}
+      ]
+    },
+    "position": "top",
+    "transparent": true
+  },
+  "cloneSourceRestores": [
+    "io.github.sirjul1337.lock-explorer"
+  ],
+  "disabledPlugins": [
+    "omarchy.background",
+    "omarchy.lock"
+  ],
+  "idle": {
+    "lock": 3000,
+    "screensaver": 1500
+  },
+  "plugins": [
+    {
+      "id": "io.github.smoothpixels.cursor-accent"
+    },
+    {
+      "avatar": "/home/push/Pictures/ds923plus/meMySelfAndI/IMG_20250926_160914.jpg",
+      "blankMs": 900000,
+      "bootResync": false,
+      "design": "poster",
+      "favorites": [
+        "poster",
+        "motion"
+      ],
+      "id": "io.github.sirjul1337.lock-explorer",
+      "unlock": "fade",
+      "unlockMs": 800
+    }
+  ],
+  "version": 1
+}

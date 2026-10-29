@@ -1,22 +1,7 @@
 {
-  "version": 1,
-  "idle": {
-    "screensaver": 1500,
-    "lock": 3000
-  },
   "bar": {
-    "position": "top",
-    "transparent": false,
     "centerAnchor": "omarchy.clock",
     "layout": {
-      "left": [
-        {
-          "id": "omarchy.menu"
-        },
-        {
-          "id": "omarchy.workspaces"
-        }
-      ],
       "center": [
         {
           "id": "omarchy.indicators"
@@ -25,39 +10,57 @@
           "id": "omarchy.keyboard-layout"
         },
         {
-          "id": "omarchy.clock",
           "format": "dddd HH:mm",
           "formatAlt": "d MMMM 'W'ww yyyy",
+          "id": "omarchy.clock",
           "verticalFormat": "HH\n—\nmm"
         },
         {
           "id": "omarchy.weather"
         },
         {
-          "id": "omarchy.system-update"
-        },
-        {
           "id": "omaplug"
         },
         {
-          "id": "quickshell.spotify",
+          "id": "slylem0.locked-in"
+        },
+        {
+          "id": "omarchy.system-update"
+        },
+        {
+          "audioQuality": "320 kbps",
+          "clientId": "",
           "deviceName": "Omarchy Spotify",
+          "fixedBarWidth": "Off",
+          "id": "quickshell.spotify",
           "idleShutdownMinutes": 15,
-          "showMiniPlayer": "On",
-          "showVinylRecord": "Off",
-          "shortcutPlayer": "Omarchy Music app",
-          "shortcutHints": "Off",
-          "showLyrics": "On",
-          "showArtwork": "On",
-          "showTrackTitle": "On",
-          "showArtistName": "Off",
-          "showPausedTrack": "On",
+          "maxBarTextWidth": "240",
           "scrollBarText": "Off",
           "scrollSpeed": "1",
-          "maxBarTextWidth": "240",
-          "fixedBarWidth": "Off",
-          "audioQuality": "320 kbps",
-          "clientId": ""
+          "shortcutHints": "Off",
+          "shortcutPlayer": "Omarchy Music app",
+          "showArtistName": "Off",
+          "showArtwork": "On",
+          "showLyrics": "On",
+          "showMiniPlayer": "On",
+          "showPausedTrack": "On",
+          "showTrackTitle": "On",
+          "showVinylRecord": "Off"
+        }
+      ],
+      "left": [
+        {
+          "id": "omarchy.menu"
+        },
+        {
+          "id": "omarchy.workspaces"
+        },
+        {
+          "barStyle": "squares",
+          "barsPerColumn": 2,
+          "columns": 1,
+          "id": "gladimdim.ai-limits",
+          "refreshIntervalSec": 600
         }
       ],
       "right": [
@@ -83,7 +86,20 @@
           "id": "omarchy.power"
         }
       ]
-    }
+    },
+    "position": "top",
+    "transparent": false
+  },
+  "cloneSourceRestores": [
+    "io.github.sirjul1337.lock-explorer"
+  ],
+  "disabledPlugins": [
+    "omarchy.background",
+    "omarchy.lock"
+  ],
+  "idle": {
+    "lock": 3000,
+    "screensaver": 1500
   },
   "plugins": [
     {
@@ -91,23 +107,18 @@
     },
     {
       "id": "io.github.sirjul1337.lock-explorer",
-      "design": "poster",
-      "unlock": "fade",
+      "avatar": "/home/push/Pictures/photos_shared/meMySelfAndI/IMG_20250926_160914.jpg",
       "blankMs": 900000,
-      "unlockMs": 800,
+      "bootResync": false,
+      "design": "poster",
       "favorites": [
         "poster",
         "motion"
       ],
-      "avatar": "/home/push/Pictures/ds923plus/meMySelfAndI/IMG_20250926_160914.jpg",
-      "bootResync": false
+      "unlock": "fade",
+      "unlockMs": 800,
+      "openAs": "full"
     }
   ],
-  "disabledPlugins": [
-    "omarchy.background",
-    "omarchy.lock"
-  ],
-  "cloneSourceRestores": [
-    "io.github.sirjul1337.lock-explorer"
-  ]
+  "version": 1
 }
