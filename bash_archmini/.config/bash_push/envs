@@ -7,6 +7,13 @@ export EDITOR=nvim
 # ssh-agent
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
+# export your links
+export LINK_MOUNTS=(
+  "${HOME}/andreas"
+  "${HOME}/docker"
+  "${HOME}/Pictures/photos_shared"
+  "${HOME}/web"
+)
 # set Background Vars
 # screenLeft=$(awww query | head -n 1 | cut -d ':' -f 2 | sed 's. ..g')
 # screenLeft=$(awww query | cut -d " " -f 9 | head -n 1)

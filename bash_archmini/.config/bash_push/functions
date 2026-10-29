@@ -1,3 +1,16 @@
+# create your links
+# LINK_MOUNTS=(
+#   "${HOME}/andreas"
+#   "${HOME}/docker"
+#   "${HOME}/Pictures/photos_shared"
+# )
+set_cifs_links() {
+  for link in "${LINK_MOUNTS[@]}"; do
+    local linkname=$(basename "$link")
+    [ ! -L "$link" ] && ln -s "$link" "${HOME}/${linkname}" || echo "Link $link already exists"
+  done
+}
+
 # Compression
 compress() { tar -czf "${1%/}.tar.gz" "${1%/}"; }
 alias decompress="tar -xzf"
