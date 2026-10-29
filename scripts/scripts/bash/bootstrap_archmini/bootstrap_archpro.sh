@@ -75,6 +75,19 @@ PLUGIN_LIST=(
   'https://github.com/Pegorim/omaplug.git'
   'https://github.com/SmoothPixels/cursor-accent.git'
 )
+LINK_MOUNTS=(
+  "${HOME}/andreas"
+  "${HOME}/docker"
+  "${HOME}/Pictures/photos_shared"
+  "${HOME}/web"
+)
+
+set_cifs_links() {
+  for link in "${LINK_MOUNTS[@]}"; do
+    local linkname=$(basename "$link")
+    [ ! -L "$link" ] && ln -s "$link" "${HOME}/${linkname}" || echo "Link $link already exists"
+}
+
 
 SMB_HOST="${SMB_HOST:-ds923plus.push}"
 SMB_SHARES=(andreas docker photos_shared web)
