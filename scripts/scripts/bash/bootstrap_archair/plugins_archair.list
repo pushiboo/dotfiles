@@ -1,0 +1,6 @@
+# Omarchy plugins - one Git URL per line ('#' starts a comment).
+# Plugins that are already installed are skipped by bootstrap_archair.sh.
+https://github.com/stappmus/Omarchy-Spotify.git
+https://github.com/SirJul1337/omarchy-lock-explorer.git
+https://github.com/Pegorim/omaplug.git
+https://github.com/SmoothPixels/cursor-accent.git

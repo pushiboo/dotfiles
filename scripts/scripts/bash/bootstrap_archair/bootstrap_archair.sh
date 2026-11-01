@@ -14,7 +14,8 @@
 #  5. Adds the private hooks to hyprland.lua, ~/.bash_profile and ~/.bashrc
 #  6. Installs the Mac Mini CS4208 headphone-jack fix (macmini-audio.conf)
 #     into /etc/modprobe.d - only on machines that have that codec
-#  7. Sets defaults (Brave as default browser) and installs Omarchy plugins
+#  7. Sets defaults (Brave as default browser) and installs the Omarchy plugins
+#     from plugins_archair.list (plugins that are already installed are skipped)
 #  8. Mounts the SMB/CIFS shares on ds923plus.push (andreas, docker,
 #     photos_shared, web) and links them into $HOME (~/andreas, ~/docker,
 #     ~/Pictures/photos_shared, ~/web) -> /mnt/smb/<share>
@@ -35,6 +36,7 @@
 #       --smb-credentials FILE  SMB credentials file        [SMB_CREDENTIALS_FILE] (default: ~/.smbcredentials)
 #       --fstab-file FILE    Standalone file with fstab lines [SMB_FSTAB_FILE]     (default: /etc/smb-shares.fstab)
 #   -a, --aur-packages FILE  AUR package list (yay)         [PACKAGES_AUR_FILE]    (default: ./packages_archair.aur)
+#   -P, --plugins FILE       Omarchy plugin list (Git URLs) [PLUGINS_FILE]         (default: ./plugins_archair.list)
 #       --skip-packages      Do not install the pacman package list
 #       --skip-aur-packages  Do not install the AUR package list
 #       --skip-plugins       Do not install the Omarchy plugins
@@ -46,7 +48,9 @@
 #       --skip-services      Skip enabling/starting the systemd --user units
 #   -h, --help               Show this help and exit
 #
-# Env-only settings: DOTFILES_BRANCH (branch to clone/pull, default: this machine's hostname),
+# Env-only settings: PLUGINS_DIR (where omarchy keeps plugins, default: ~/.config/omarchy/plugins),
+#                    PLUGIN_ADD_FLAGS (flags for 'omarchy plugin add', default: --enable),
+#                    DOTFILES_BRANCH (branch to clone/pull, default: this machine's hostname),
 #                    SYSTEM_PKG (dotfiles folder that goes to /etc, default: etc),
 #                    AUDIO_CONF_SRC (override path of macmini-audio.conf)
 #
@@ -78,13 +82,13 @@ DOTFILES_DIR="${DOTFILES_DIR:-/home/push/dotfiles}"
 STOW_TARGET="${STOW_TARGET:-$HOME}"
 BACKUP_DIR="${BACKUP_DIR:-$HOME/.dotfiles-backup-$(date +%Y%m%d-%H%M%S)}"
 
-# Omarchy plugins (Git URLs) that install_plugins() adds and enables.
-PLUGIN_LIST=(
-  'https://github.com/stappmus/Omarchy-Spotify.git'
-  'https://github.com/SirJul1337/omarchy-lock-explorer.git'
-  'https://github.com/Pegorim/omaplug.git'
-  'https://github.com/SmoothPixels/cursor-accent.git'
-)
+# Omarchy plugins: one Git URL per line in PLUGINS_FILE (same format as the package lists).
+PLUGINS_FILE="${PLUGINS_FILE:-./plugins_archair.list}"
+# Where 'omarchy plugin add' clones plugins; used to detect what is already installed.
+PLUGINS_DIR="${PLUGINS_DIR:-$HOME/.config/omarchy/plugins}"
+# Flags for 'omarchy plugin add'. Use PLUGIN_ADD_FLAGS="--enable --yes" to also skip its confirmation prompt.
+PLUGIN_ADD_FLAGS="${PLUGIN_ADD_FLAGS:---enable}"
+
 # Where the shares should show up in $HOME. The last path component must be the
 # share name; each entry becomes a symlink to $SMB_MOUNT_BASE/<share>.
 LINK_MOUNTS=(
@@ -180,6 +184,7 @@ while [[ $# -gt 0 ]]; do
   case "$1" in
   -p | --packages) need_arg "$@"; PACKAGES_FILE="$2"; shift 2 ;;
   -a | --aur-packages) need_arg "$@"; PACKAGES_AUR_FILE="$2"; shift 2 ;;
+  -P | --plugins) need_arg "$@"; PLUGINS_FILE="$2"; shift 2 ;;
   -k | --key) need_arg "$@"; SSH_KEY_PATH="$2"; shift 2 ;;
   -r | --repo) need_arg "$@"; DOTFILES_REPO="$2"; shift 2 ;;
   -d | --dotfiles-dir) need_arg "$@"; DOTFILES_DIR="$2"; shift 2 ;;
@@ -466,11 +471,54 @@ set_defaults() {
   fi
 }
 
-# Installs and enables every plugin from PLUGIN_LIST that is not installed yet.
-# NOTE: this assumes 'omarchy plugin list' prints the plugin's Git URL; if it
-# only prints names, the grep never matches and plugins get re-added each run.
+# Normalises a Git URL so https://GitHub.com/a/b.git, https://github.com/a/b/
+# and git@github.com:a/b.git all compare equal.
+normalize_git_url() {
+  local u="${1,,}"
+  u="${u%/}"
+  u="${u%.git}"
+  u="${u#https://}"
+  u="${u#http://}"
+  u="${u#ssh://}"
+  u="${u#git@}"
+  if [[ "$u" =~ ^[^/]+: ]]; then
+    u="${u/:/\/}" # scp-style host:owner/repo -> host/owner/repo
+  fi
+  printf '%s\n' "$u"
+}
+
+# Succeeds if the plugin with this Git URL is already installed.
+# 1) 'omarchy plugin add' clones each plugin into PLUGINS_DIR/<id>, so compare
+#    the origin URL of every clone there with the URL from the list.
+# 2) Fallback: in case 'omarchy plugin list' prints the URLs, look there too.
+plugin_installed() {
+  local url="$1" want have dir
+  want="$(normalize_git_url "$url")"
+
+  if [[ -d "$PLUGINS_DIR" ]]; then
+    for dir in "$PLUGINS_DIR"/*/; do
+      [[ -e "${dir}.git" ]] || continue
+      have="$(git -C "$dir" remote get-url origin 2>/dev/null || true)"
+      if [[ -n "$have" && "$(normalize_git_url "$have")" == "$want" ]]; then
+        return 0
+      fi
+    done
+  fi
+
+  # No -q on purpose: with pipefail, grep -q could close the pipe early
+  # and make the pipeline report a false failure.
+  if omarchy plugin list 2>/dev/null | grep -iF -- "$want" >/dev/null; then
+    return 0
+  fi
+
+  return 1
+}
+
+# Reads PLUGINS_FILE (one Git URL per line, '#' starts a comment, blank lines
+# are ignored) and runs 'omarchy plugin add' only for plugins that are not
+# installed yet - the same idea as the package lists.
 install_plugins() {
-  local plug
+  local line plug plugs=() added=0 present=0 failed=0
 
   if [[ "$SKIP_PLUGINS" -eq 1 ]]; then
     log "Skipping plugins (--skip-plugins)"
@@ -482,19 +530,42 @@ install_plugins() {
     return
   fi
 
-  for plug in "${PLUGIN_LIST[@]}"; do
-    # No -q on purpose: with pipefail, grep -q could close the pipe early
-    # and make the pipeline report a false failure.
-    if omarchy plugin list | grep -F -- "$plug" >/dev/null; then
+  if [[ ! -f "$PLUGINS_FILE" ]]; then
+    warn "Plugin list not found: $PLUGINS_FILE - skipping plugins."
+    return
+  fi
+
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    line="${line%%#*}"             # strip comments
+    line="$(echo "$line" | xargs)" # trim whitespace
+    [[ -z "$line" ]] && continue
+    plugs+=("$line")
+  done <"$PLUGINS_FILE"
+
+  if [[ ${#plugs[@]} -eq 0 ]]; then
+    warn "Plugin list $PLUGINS_FILE is empty - skipping."
+    return
+  fi
+
+  for plug in "${plugs[@]}"; do
+    if plugin_installed "$plug"; then
       log "Plugin $plug is already installed - skipping"
+      present=$((present + 1))
       continue
     fi
 
-    log "Installing $plug"
-    if ! omarchy plugin add "$plug" --enable; then
+    log "Installing plugin $plug"
+    # PLUGIN_ADD_FLAGS is split on purpose (it holds several flags).
+    # shellcheck disable=SC2086
+    if omarchy plugin add "$plug" $PLUGIN_ADD_FLAGS; then
+      added=$((added + 1))
+    else
       warn "Failed to install plugin $plug - continuing with the rest."
+      failed=$((failed + 1))
     fi
   done
+
+  log "Plugins: $added installed, $present already present, $failed failed (list: $PLUGINS_FILE)"
 }
 
 ### ---------- 8. Mount SMB/CIFS shares ----------
@@ -659,6 +730,10 @@ enable_systemd_user_services() {
   local unit_file unit_name
   while IFS= read -r -d '' unit_file; do
     unit_name="$(basename "$unit_file")"
+    if [[ "$unit_name" == *.service && -f "${unit_file%.service}.timer" ]]; then
+      log "Skipping $unit_name - it is triggered by ${unit_name%.service}.timer"
+      continue
+    fi
     if systemctl --user enable --now "$unit_name"; then
       log "Enabled & started: $unit_name"
     else
