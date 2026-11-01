@@ -1,9 +1,8 @@
 [Unit]
-Description=Run wallpaper change hourly
+Description=Run wallpaper change every 30 minutes
 Requires=changeBackground.service
 
 [Timer]
-; OnActiveSec=60m
 OnActiveSec=30m
 OnUnitActiveSec=30m
 

@@ -1,13 +1,11 @@
 [Unit]
-Description=Change hourly timer for the wallpaper with hyprpaper
-Wants=changeBackground.timer
-After=graphical-session.target
-;After=default.target
+Description=Change the wallpaper
+Wants=changeBackground.timer awww-daemon.service
+After=graphical-session.target awww-daemon.service
 
 [Service]
 Type=oneshot
-ExecStart=/bin/sh %h/scripts/bash/changeBackground/changeBackground.sh
+ExecStart=/usr/bin/bash %h/scripts/bash/changeBackground/changeBackground.sh
 
 [Install]
 WantedBy=graphical-session.target
-;WantedBy=graphical-session.target
