@@ -32,6 +32,10 @@
 #   -b, --backup-dir DIR     Where conflicting files go     [BACKUP_DIR]           (default: ~/.dotfiles-backup-<timestamp>)
 #       --smb-credentials FILE  SMB credentials file        [SMB_CREDENTIALS_FILE] (default: ~/.smbcredentials)
 #       --fstab-file FILE    Standalone file with fstab lines [SMB_FSTAB_FILE]     (default: /etc/smb-shares.fstab)
+#   -a, --aur-packages FILE  AUR package list (yay)         [PACKAGES_AUR_FILE]    (default: ./packages_archair.aur)
+#       --skip-packages      Do not install the pacman package list
+#       --skip-aur-packages  Do not install the AUR package list
+#       --skip-plugins       Do not install the Omarchy plugins
 #       --skip-dotfiles      Do not clone/pull the dotfiles repo
 #       --skip-stow          Do not stow the dotfiles packages
 #       --skip-audio-fix     Do not install macmini-audio.conf
@@ -48,6 +52,7 @@
 #     --packages /home/push/push_packages.list \
 #     --key /home/push/.ssh/id_ed25519_push \
 #     --repo git@github.com:youruser/dotfiles.git
+#
 
 # -E makes the ERR trap fire for failures inside functions as well,
 # -e exits on errors, -u on unset variables, pipefail on failed pipes.
@@ -61,10 +66,11 @@ on_error() {
 trap 'on_error "$?" "$LINENO" "$BASH_COMMAND"' ERR
 
 ### ---------- Defaults (overridable via flags or env vars) ----------
-PACKAGES_FILE="${PACKAGES_FILE:-./packages_archpro.list}"
-PACKAGES_AUR_FILE="${PACKAGES_AUR_FILE:-./packages_archpro.aur}"
-SSH_KEY_PATH="${SSH_KEY_PATH:-$HOME/.ssh/archmini_ed25519}"
+PACKAGES_FILE="${PACKAGES_FILE:-./packages_archair.list}"
+PACKAGES_AUR_FILE="${PACKAGES_AUR_FILE:-./packages_archair.aur}"
+SSH_KEY_PATH="${SSH_KEY_PATH:-$HOME/.ssh/archair_ed25519}"
 DOTFILES_REPO="${DOTFILES_REPO:-}"
+DOTFILES_BRANCH="${DOTFILES_BRANCH:-$(hostname)}"
 DOTFILES_DIR="${DOTFILES_DIR:-/home/push/dotfiles}"
 STOW_TARGET="${STOW_TARGET:-$HOME}"
 BACKUP_DIR="${BACKUP_DIR:-$HOME/.dotfiles-backup-$(date +%Y%m%d-%H%M%S)}"
@@ -142,84 +148,32 @@ append_once() {
 }
 
 ### ---------- Argument parsing ----------
+# Options that take a value use need_arg to fail with a clear message instead of
+# an "unbound variable" error. Every assignment is followed by ';' so that it
+# really sets the variable (VAR=x shift only sets VAR for the shift command).
+need_arg() { [[ $# -ge 2 && -n "${2:-}" ]] || die "Option $1 needs a value (see --help)"; }
+
 while [[ $# -gt 0 ]]; do
   case "$1" in
-  -p | --packages)
-    PACKAGES_FILE="$2"
-    shift 2
-    ;;
-  -a | --aur-packages)
-    PACKAGES_AUR_FILE="$2"
-    shift 2
-    ;;
-  -k | --key)
-    SSH_KEY_PATH="$2"
-    shift 2
-    ;;
-  -r | --repo)
-    DOTFILES_REPO="$2"
-    shift 2
-    ;;
-  -d | --dotfiles-dir)
-    DOTFILES_DIR="$2"
-    shift 2
-    ;;
-  -t | --target)
-    STOW_TARGET="$2"
-    shift 2
-    ;;
-  -b | --backup-dir)
-    BACKUP_DIR="$2"
-    shift 2
-    ;;
-  --smb-credentials)
-    SMB_CREDENTIALS_FILE="$2"
-    shift 2
-    ;;
-  --fstab-file)
-    SMB_FSTAB_FILE="$2"
-    shift 2
-    ;;
-  --skip-dotfiles)
-    SKIP_DOTFILES=1
-    shift
-    ;;
-  --skip-stow)
-    SKIP_STOW=1
-    shift
-    ;;
-  --skip-packages)
-    SKIP_PACKAGES=1
-    shift
-    ;;
-  --skip-aur-packages)
-    SKIP_AUR_PACKAGES=1
-    shift
-    ;;
-  --skip-audio-fix)
-    SKIP_AUDIO_FIX=1
-    shift
-    ;;
-  --skip-plugins)
-    SKIP_PLUGINS=1
-    shift
-    ;;
-  --skip-smb)
-    SKIP_SMB=1
-    shift
-    ;;
-  --skip-fstab)
-    SKIP_FSTAB=1
-    shift
-    ;;
-  --skip-services)
-    SKIP_SERVICES=1
-    shift
-    ;;
-  -h | --help)
-    usage
-    exit 0
-    ;;
+  -p | --packages) need_arg "$@"; PACKAGES_FILE="$2"; shift 2 ;;
+  -a | --aur-packages) need_arg "$@"; PACKAGES_AUR_FILE="$2"; shift 2 ;;
+  -k | --key) need_arg "$@"; SSH_KEY_PATH="$2"; shift 2 ;;
+  -r | --repo) need_arg "$@"; DOTFILES_REPO="$2"; shift 2 ;;
+  -d | --dotfiles-dir) need_arg "$@"; DOTFILES_DIR="$2"; shift 2 ;;
+  -t | --target) need_arg "$@"; STOW_TARGET="$2"; shift 2 ;;
+  -b | --backup-dir) need_arg "$@"; BACKUP_DIR="$2"; shift 2 ;;
+  --smb-credentials) need_arg "$@"; SMB_CREDENTIALS_FILE="$2"; shift 2 ;;
+  --fstab-file) need_arg "$@"; SMB_FSTAB_FILE="$2"; shift 2 ;;
+  --skip-dotfiles) SKIP_DOTFILES=1; shift ;;
+  --skip-stow) SKIP_STOW=1; shift ;;
+  --skip-packages) SKIP_PACKAGES=1; shift ;;
+  --skip-aur-packages) SKIP_AUR_PACKAGES=1; shift ;;
+  --skip-audio-fix) SKIP_AUDIO_FIX=1; shift ;;
+  --skip-plugins) SKIP_PLUGINS=1; shift ;;
+  --skip-smb) SKIP_SMB=1; shift ;;
+  --skip-fstab) SKIP_FSTAB=1; shift ;;
+  --skip-services) SKIP_SERVICES=1; shift ;;
+  -h | --help) usage; exit 0 ;;
   *) die "Unknown argument: $1 (see --help)" ;;
   esac
 done
@@ -257,9 +211,14 @@ ensure_prereqs() {
 # Reads PACKAGES_FILE (one package per line, '#' starts a comment, blank
 # lines are ignored) and installs everything with pacman.
 install_packages() {
+  if [[ "$SKIP_PACKAGES" -eq 1 ]]; then
+    log "Skipping packages (--skip-packages)"
+    return
+  fi
+
   [[ -f "$PACKAGES_FILE" ]] || die "Package list not found: $PACKAGES_FILE"
 
-  local line pkgs=()
+  local line pkgs=() installed
   # "|| [[ -n $line ]]" keeps the last line even without a trailing newline.
   while IFS= read -r line || [[ -n "$line" ]]; do
     line="${line%%#*}"             # strip comments
@@ -272,14 +231,19 @@ install_packages() {
     warn "Package list $PACKAGES_FILE is empty - skipping install."
     return
   fi
-  if [[ ! $(sudo pacman -Qq "${#pkgs[@]}") ]]; then
-    log "Installing ${#pkgs[@]} package(s) from $PACKAGES_FILE"
-    sudo pacman -S --needed --noconfirm "${pkgs[@]}"
-  else
-    log "Package ${#pkgs[@]} already installed."
-  fi
+  # --needed makes pacman skip packages that are already installed, so this is
+  # safe to re-run and needs no separate "is it installed?" check.
+  log "Installing ${#pkgs[@]} package(s) from $PACKAGES_FILE (already installed ones are skipped)"
+  sudo pacman -S --needed --noconfirm "${pkgs[@]}"
 }
+
 install_aur_packages() {
+  if [[ "$SKIP_AUR_PACKAGES" -eq 1 ]]; then
+    log "Skipping AUR packages (--skip-aur-packages)"
+    return
+  fi
+
+  command -v yay >/dev/null 2>&1 || die "yay not found - install it or use --skip-aur-packages."
   [[ -f "$PACKAGES_AUR_FILE" ]] || die "Package list not found: $PACKAGES_AUR_FILE"
 
   local line pkgs=()
@@ -296,27 +260,25 @@ install_aur_packages() {
     return
   fi
 
-  # log "Installing ${#pkgs[@]} package(s) from $PACKAGES_AUR_FILE"
-  # yay -S --noconfirm "${pkgs[@]}"
-
-  if [[ $(yay -Q "${#pkgs[@]}" &>/dev/null) ]]; then
-    log "Installing ${#pkgs[@]} package(s) from $PACKAGES_AUR_FILE"
-    yay -S --noconfirm "${pkgs[@]}"
-  else
-    log "AUR-Package ${#pkgs[@]} already installed."
-  fi
-
+  log "Installing ${#pkgs[@]} AUR package(s) from $PACKAGES_AUR_FILE (already installed ones are skipped)"
+  yay -S --needed --noconfirm "${pkgs[@]}"
 }
 
 ### ---------- 2. ssh-agent + private key ----------
 # Starts an ssh-agent for this script run and loads SSH_KEY_PATH into it
 # (needed so git can clone/pull the dotfiles repo over SSH).
 load_ssh_key() {
+  if [[ "$SKIP_DOTFILES" -eq 1 ]]; then
+    log "Skipping ssh-agent/key (--skip-dotfiles, no git access needed)"
+    return
+  fi
+
   [[ -f "$SSH_KEY_PATH" ]] || die "SSH key not found: $SSH_KEY_PATH"
   chmod 600 "$SSH_KEY_PATH" 2>/dev/null || true
 
   log "Starting ssh-agent"
   eval "$(ssh-agent -s)" >/dev/null
+  trap 'ssh-agent -k >/dev/null 2>&1 || true' EXIT # do not leave the agent running
 
   log "Loading key: $SSH_KEY_PATH"
   ssh-add "$SSH_KEY_PATH"
@@ -331,14 +293,14 @@ load_dotfiles() {
     return
   fi
 
-  if [[ -d "$DOTFILES_DIR/.git" ]]; then
+  if [[ -d "${DOTFILES_DIR}/.git" ]]; then
     log "Dotfiles repo already present at $DOTFILES_DIR - pulling latest"
-    git -C "$DOTFILES_DIR" pull --ff-only
+    git -C "$DOTFILES_DIR" pull --ff-only origin "$DOTFILES_BRANCH"
   else
     [[ -n "$DOTFILES_REPO" ]] || die "No repo at $DOTFILES_DIR and no --repo/DOTFILES_REPO given."
     log "Cloning $DOTFILES_REPO into $DOTFILES_DIR"
     mkdir -p "$(dirname "$DOTFILES_DIR")"
-    git clone "$DOTFILES_REPO" "$DOTFILES_DIR"
+    git clone -b "$DOTFILES_BRANCH" "$DOTFILES_REPO" "$DOTFILES_DIR"
   fi
 }
 
@@ -348,7 +310,7 @@ load_dotfiles() {
 # that already exist as real (non-symlink) dirs - stow reports the
 # highest-level path it can't safely fold into, which is exactly what
 # needs to be moved out of the way before the real stow run.
-# Prints one conflicting path (relative to the stow target) per line.
+# Prints one conflicting path (relative t:o the stow target) per line.
 detect_conflicts() {
   local pkg_name="$1"
   stow -n -v 2 -d "$DOTFILES_DIR" -t "$STOW_TARGET" "$pkg_name" 2>&1 |

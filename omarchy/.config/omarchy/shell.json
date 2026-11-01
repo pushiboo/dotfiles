@@ -19,13 +19,7 @@
           "id": "omarchy.weather"
         },
         {
-          "id": "omaplug"
-        },
-        {
-          "id": "slylem0.locked-in"
-        },
-        {
-          "id": "omarchy.system-update"
+          "id": "mateus.omaplug"
         },
         {
           "audioQuality": "320 kbps",
@@ -46,6 +40,15 @@
           "showPausedTrack": "On",
           "showTrackTitle": "On",
           "showVinylRecord": "Off"
+        },
+        {
+          "id": "omaplug"
+        },
+        {
+          "id": "slylem0.locked-in"
+        },
+        {
+          "id": "omarchy.system-update"
         }
       ],
       "left": [

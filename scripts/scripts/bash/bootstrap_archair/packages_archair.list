@@ -5,7 +5,6 @@ brave
 dnsutils
 git
 hyfetch
-kitty
 lazydocker
 lazygit
 lmstudio-bin
@@ -14,7 +13,6 @@ nfs-utils
 openbsd-netcat
 qt6-imageformats
 rsync
-spotify
 starship
 stow
 thunderbird

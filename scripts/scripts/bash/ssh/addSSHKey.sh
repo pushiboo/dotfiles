@@ -1,6 +1,6 @@
 #!/bin/bash
 # addKeys.sh — load SSH keys into a systemd-managed ssh-agent
-
+SSHKEY=archair_ed25519
 # --- Socket path ---
 if [[ -z "$XDG_RUNTIME_DIR" ]]; then
   echo "WARNING: XDG_RUNTIME_DIR is not set." >&2
@@ -22,7 +22,7 @@ if ! ssh-add -l &>/dev/null; then
   rc=$?
   case $rc in
     1)  # agent alive, no keys
-      ssh-add "${HOME}/.ssh/archmini_ed25519" || echo "WARNING: not able to load ssh key" >&2
+      ssh-add "${HOME}/.ssh/${SSHKEY}" || echo "WARNING: not able to load ssh key" >&2
       ;;
     2)  # agent unreachable (shouldn't happen if socket exists)
       echo "WARNING: ssh-agent is unreachable despite socket existing." >&2

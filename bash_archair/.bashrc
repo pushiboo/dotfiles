@@ -13,7 +13,6 @@ source "$OMARCHY_PATH/default/bash/rc"
 # Make an alias for invoking commands you use constantly
 # alias p='python'
 [ -e "${HOME}/.pushrc" ] && source "$HOME/.pushrc"
-#[[ -f ~/dotfiles/bash_archmini/.config/bash_push/rc ]] && . ~/dotfiles/bash_archmini/.config/bash_push/rc || echo "warning: ~/dotfiles/bash_archmini/.config/bash_push/rc not found"
 
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/home/push/.lmstudio/bin"
