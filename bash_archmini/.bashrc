@@ -19,3 +19,6 @@ source "$OMARCHY_PATH/default/bash/rc"
 export PATH="$PATH:/home/push/.lmstudio/bin"
 # End of LM Studio CLI section
 
+
+# Hermes Agent command
+case ":$PATH:" in *":$HOME/.local/bin:"*) ;; *) export PATH="$HOME/.local/bin:$PATH" ;; esac
