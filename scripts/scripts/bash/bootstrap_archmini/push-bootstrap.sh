@@ -568,6 +568,30 @@ enable_systemd_user_services() {
     warn "changeBackground.service does not look enabled - check 'systemctl --user status changeBackground.service'."
   fi
 }
+setup_autologin() {
+  local user="${1:-$(logname)}"
+  local session="${2:-omarchy}"
+
+  # Check if any LUKS partition exists
+  if blkid -t TYPE=crypto_LUKS &>/dev/null; then
+    echo "Disk encryption detected – keeping SDDM login."
+    return 0
+  fi
+
+  # No encryption → configure SDDM auto-login
+  echo "No disk encryption – enabling SDDM auto-login for '${user}'."
+  sudo mkdir -p /etc/sddm.conf.d
+  sudo tee /etc/sddm.conf.d/autologin.conf >/dev/null <<EOF
+[Autologin]
+User=${user}
+Session=${session}
+EOF
+
+  # Ensure SDDM is enabled (in case it was masked/disabled)
+  sudo systemctl enable sddm
+
+  echo "Auto-login configured. Reboot to apply."
+}
 
 ### ---------- Main ----------
 # Runs all steps in order. The order matters: the SSH key must be loaded
@@ -585,6 +609,7 @@ main() {
   install_plugins
   mount_and_persist_smb_shares
   enable_systemd_user_services
+  setup_autologin
   log "Done."
 }
 
