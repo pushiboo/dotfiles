@@ -6,14 +6,9 @@ export STARSHIP_CONFIG=~/.config/starship/starship.toml
 export EDITOR=nvim
 # ssh-agent
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
-
-# set Background Vars
-# screenLeft=$(awww query | head -n 1 | cut -d ':' -f 2 | sed 's. ..g')
-# screenLeft=$(awww query | cut -d " " -f 9 | head -n 1)
-# screenRight=$(awww query | cut -d " " -f 9 | tail -n -1)
-# export SCREENLEFT="$screenLeft"
-# export SCREENRIGHT="$screenRight"
-
+# Mammouth Code
+export PATH="$HOME/.mammouth/bin:$PATH"
+# Mongodb
 export MONGODB_ADMIN="pushAdmin"
 export MONGODB_ADMIN_PASSWORD=$(
   if [[ -f "${HOME}/docker/mongodb/secrets/db_admin_pwd" ]]; then
@@ -31,7 +26,6 @@ export MONGODB_ROOT_PASSWORD=$(
     echo "YouNeedToCheckYourPasswordFile - HINT, see your bash envs!"
   fi
 )
-
 
 # Some website tokens
 export VITE_MONGODB_HOST='mongodb.push'
