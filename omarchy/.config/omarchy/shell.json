@@ -5,7 +5,7 @@
     "lock": 3000
   },
   "bar": {
-    "position": "top",
+    "position": "center",
     "transparent": false,
     "centerAnchor": "omarchy.clock",
     "layout": {
@@ -29,6 +29,9 @@
           "format": "dddd HH:mm",
           "formatAlt": "d MMMM 'W'ww yyyy",
           "verticalFormat": "HH\n—\nmm"
+        },
+        {
+          "id": "omarchy.elsewhen"
         },
         {
           "id": "omarchy.weather"
@@ -77,10 +80,10 @@
           "id": "omarchy.audio"
         },
         {
-          "id": "omarchy.monitor"
+          "id": "omarchy.power"
         },
         {
-          "id": "omarchy.power"
+          "id": "omarchy.monitor"
         }
       ]
     }
@@ -104,7 +107,6 @@
     }
   ],
   "disabledPlugins": [
-    "omarchy.background",
     "omarchy.lock"
   ],
   "cloneSourceRestores": [
