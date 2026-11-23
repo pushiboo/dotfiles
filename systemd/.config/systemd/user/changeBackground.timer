@@ -5,7 +5,7 @@ Requires=changeBackground.service
 [Timer]
 ; OnActiveSec=60m
 OnActiveSec=30m
-OnUnitActiveSec=1m
+OnUnitActiveSec=30m
 ; OnActiveSec=2m
 ; OnUnitActiveSec=2m
 
