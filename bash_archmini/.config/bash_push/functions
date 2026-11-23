@@ -1,21 +1,26 @@
 # Compression
-compress() { tar -czf "${1%/}.tar.gz" "${1%/}"; }
-alias decompress="tar -xzf"
+compress() { tar -czf "${1%/}.tar.gz" -- "${1%/}"; }
 
-# creating a yazi shell wrapper as suggested here: https://yazi-rs.github.io/docs/quick-start/
-y() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-	yazi "$@" --cwd-file="$tmp"
-	IFS= read -r -d '' cwd < "$tmp"
-	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
-	rm -f -- "$tmp"
+# Yazi wrapper
+_yazi_wrapper() {
+  local tmp cwd
+  tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+  trap 'rm -f -- "$tmp"' RETURN
+  "$@" --cwd-file="$tmp"
+  IFS= read -r -d '' cwd < "$tmp"
+  [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
 }
+y()  { _yazi_wrapper yazi "$@"; }
+sy() { _yazi_wrapper sudo -E yazi "$@"; }
 
-# same as above but with sudo rigths
-sy() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-	sudo -E yazi "$@" --cwd-file="$tmp"
-	IFS= read -r -d '' cwd < "$tmp"
-	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
-	rm -f -- "$tmp"
+# API check
+apiCheck() {
+  local host="${1:-localhost}"
+  local port="${2:-3000}"
+  local base="${host}:${port}"
+  # local base="http://${host}:${port}"
+  curl -s "${base}/health/ready"
+  echo "curl -s ${base}/health/ready"
+  curl -s "${base}/api/vacations" | head -c 200
+  curl -s "${base}/api" | head -c 200
 }

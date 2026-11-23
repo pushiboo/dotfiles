@@ -53,3 +53,7 @@ alias ssh_adguardRoot="TERM=xterm-256color ssh -i ~/.ssh/archmini_ed25519 root@a
 # lazy stuff
 alias lg="lazygit"
 alias ld="lazydocker"
+
+# decompress
+alias decompress="tar -xzf"
+
