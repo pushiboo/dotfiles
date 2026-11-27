@@ -24,7 +24,7 @@
       "format": "uint64",
       "minimum": 0,
       "default": 500,
-      "scan_ignore_paths": ["/mnt/smb/", "node_modules"]
+      "scan_ignore_paths": ["/mnt/smb/", "node_modules", "nodejs"]
     },
     "command_timeout": {
       "type": "integer",
