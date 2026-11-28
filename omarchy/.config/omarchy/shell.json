@@ -107,7 +107,8 @@
     }
   ],
   "disabledPlugins": [
-    "omarchy.lock"
+    "omarchy.lock",
+    "omarchy.background"
   ],
   "cloneSourceRestores": [
     "io.github.sirjul1337.lock-explorer"
